@@ -1,5 +1,5 @@
 import React from 'react';
-import './button.css';
+// import './button.css';
 
 interface ButtonProps {
   /**
@@ -38,15 +38,15 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={['storybook-button',  ` storybook-button--${size}`, mode].join(' ')}
+      className={'!bg-black text-white'}
       {...props}
     >
       {label}
-      <style jsx>{`
+      {/* <style jsx>{`
         button {
           background-color: ${backgroundColor};
         }
-      `}</style>
+      `}</style> */}
     </button>
   );
 };
