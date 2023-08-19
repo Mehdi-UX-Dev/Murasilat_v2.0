@@ -13,53 +13,41 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Primary: Story = {
-  parameters: {
-    nextjs: {
-      appDirectory: true
-    }
-  },
-
+export const LargePrimary: Story = {
   args: {
-    primary: true,
+    
     label: 'Button',
+    tailwindClasses : "bg-black text-white w-72"
   },
 };
 
 export const Secondary: Story = {
   args: {
     label: 'Button',
+    tailwindClasses: ""
   },
 };
 
 export const Large: Story = {
   args: {
-    size: 'large',
+    tailwindClasses: "",
+
     label: 'Button',
   },
 };
 
 export const Small: Story = {
   args: {
-    size: 'small',
+    tailwindClasses: "",
+
     label: 'Button',
   },
 };
 
-
-export const Warning: Story = {
-  args: {
-    primary: true,
-    label: 'Delete now',
-    backgroundColor: 'red',
-  }
-};

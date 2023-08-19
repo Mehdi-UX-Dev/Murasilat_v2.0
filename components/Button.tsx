@@ -5,15 +5,26 @@ interface ButtonProps {
   /**
    * Is this the principal call to action on the page?
    */
-  primary?: boolean;
+  // primary?: boolean;
   /**
-   * What background color to use
+   * Secondary button to deemphasize on elements that are not primary level important
    */
-  backgroundColor?: string;
+    // secondary?: boolean;
+    /**
+     * Tertiary is used for the least important elements on the page
+     */
+    // tertiary?: boolean
+    /**
+     * Hover State
+     */
+    //?  hover: boolean
+ 
   /**
-   * How large should the button be?
+   * tailwind classes are the specific classes related to every specific story 
+   * e.g. Large primary will add primary color plus the large size amount to the button 
    */
-  size?: 'small' | 'medium' | 'large';
+  tailwindClasses: string;
+
   /**
    * Button contents
    */
@@ -28,25 +39,18 @@ interface ButtonProps {
  * Primary UI component for user interaction
  */
 export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
+  
+  tailwindClasses,
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
       type="button"
-      className={'!bg-black text-white'}
+      className={`${tailwindClasses}`}
       {...props}
     >
       {label}
-      {/* <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style> */}
     </button>
   );
-};
+}
