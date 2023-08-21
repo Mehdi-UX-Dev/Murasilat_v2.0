@@ -1,56 +1,53 @@
 import React from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
-import { BiSolidDashboard } from "react-icons/bi";
 
-const inputCVA = cva(
-  "border border-primary-700 rounded-md h-10 focus:border-primary-900 focus:border-2 focsu",
-  {
-    variants: {
-      // state: {
-      //   /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
-      //   // ErrorState: [],
-      // },
-
-      hasIcon: {
-        true: "absolute right-2 bottom-3 ",
-      },
-
-      fullWidth: {
-        true: "w-96",
-      },
+const inputCVA = cva("border border-primary-700 rounded-md pl-2 h-10 ", {
+  variants: {
+    state: {
+      /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
+      FocusState: " border-primary-900 border-2 text-myAccent-error-500",
+      ErrorState: "border-myAccent-error-300 border-2",
     },
-  }
-);
+
+    fullWidth: {
+      true: "w-full",
+    },
+  },
+});
 
 interface InputProps extends VariantProps<typeof inputCVA> {
   /**
    * Input Label
    */
-  // label: string;
+  label: string;
+
   /**
-   * Assitive Text is only to show errors
+   * input type 
    */
-  // Error? : object
+
+  inputType : string
+
   /**
-   * There are 3 state that can be rendered to UI 1-Default 2-Focused 3-Error
+   * fullwidth option
    */
-  // inputState: string;
-  hasIcon: boolean;
   fullWidth: boolean;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const InputField = ({ fullWidth, hasIcon }: InputProps) => {
+export const InputField = ({ fullWidth,  state, label , inputType }: InputProps) => {
   return (
     <div className="relative">
-      <p>Label</p>
+      <p
+        className={cx('capitalize',{
+          "text-myAccent-error-500": state === "ErrorState",
+        })}
+      >
+        {label}
+      </p>
 
-      {hasIcon && (
-        <BiSolidDashboard size={16} className={"absolute right-2 bottom-3"} />
-      )}
-      <input type="text" className={inputCVA({ fullWidth })}></input>
+      <input type={inputType} className={inputCVA({ state, fullWidth })}></input>
     </div>
   );
 };

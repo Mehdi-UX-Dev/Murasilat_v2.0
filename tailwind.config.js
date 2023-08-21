@@ -46,7 +46,6 @@ module.exports = {
       },
 
       fontFamily: {
-        // sans: ["Amiri", ...defaultTheme.fontFamily.sans],
         rounded: ["Helvetica Rounded"],
         IranSans: ["IRANSans"],
         nazanin: ["B Nazanin"],

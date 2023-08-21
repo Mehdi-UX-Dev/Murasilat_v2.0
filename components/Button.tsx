@@ -3,7 +3,7 @@ import { cva , VariantProps } from 'class-variance-authority';
 
 
 
-const button = cva(['rounded','font-bold'],{
+const button = cva(['rounded','font-bold' , 'capitalize'],{
   variants : {
     intent: {
       primary:[ "bg-primary-900", "text-white", "hover:bg-primary-700"],
@@ -14,7 +14,11 @@ const button = cva(['rounded','font-bold'],{
         small: 'text-sm px-2 py-[6px]',
         medium: 'text-base px-[10px] py-2',
         large: 'text-[18px] px-4 py-[12px] '
+    },
+    fullWidth: {
+      true: 'w-full'
     }
+
   }, 
   defaultVariants : {
     intent: 'primary'
@@ -48,6 +52,7 @@ export const Button = ({
   intent,
   size,
   label,
+  fullWidth,
   ...props
 }: ButtonProps) => {
  
@@ -55,7 +60,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={button({intent, size})}
+      className={button({intent, size,fullWidth})}
       {...props}
     >
       {label}
