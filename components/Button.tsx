@@ -1,36 +1,41 @@
 import React from 'react';
-// import './button.css';
+import { cva , VariantProps } from 'class-variance-authority';
 
-interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  // primary?: boolean;
-  /**
-   * Secondary button to deemphasize on elements that are not primary level important
-   */
-    // secondary?: boolean;
-    /**
-     * Tertiary is used for the least important elements on the page
-     */
-    // tertiary?: boolean
-    /**
-     * Hover State
-     */
-    //?  hover: boolean
- 
-  /**
-   * tailwind classes are the specific classes related to every specific story 
-   * e.g. Large primary will add primary color plus the large size amount to the button 
-   */
-  tailwindClasses: string;
 
+
+const button = cva(['rounded','font-bold'],{
+  variants : {
+    intent: {
+      primary:[ "bg-primary-900", "text-white", "hover:bg-primary-700"],
+      secondary: ["border" ,"border-primary-700" , "hover:bg-primary-700"],
+      tertiary: ['hover:underline']
+    }, 
+    size: {
+        small: 'text-sm px-2 py-[6px]',
+        medium: 'text-base px-[10px] py-2',
+        large: 'text-[18px] px-4 py-[12px] '
+    }
+  }, 
+  defaultVariants : {
+    intent: 'primary'
+  }, 
+  compoundVariants: [
+    {
+      intent: 'primary',
+      size: 'large',
+      className: 'hover:bg-pink-500'
+    },
+
+  ]
+})
+
+interface ButtonProps extends VariantProps <typeof button> {
   /**
    * Button contents
    */
   label: string;
   /**
-   * Optional click handler
+   * ? The operation is still not done
    */
   onClick?: () => void;
 }
@@ -39,15 +44,18 @@ interface ButtonProps {
  * Primary UI component for user interaction
  */
 export const Button = ({
-  
-  tailwindClasses,
+ 
+  intent,
+  size,
   label,
   ...props
 }: ButtonProps) => {
+ 
+  
   return (
     <button
       type="button"
-      className={`${tailwindClasses}`}
+      className={button({intent, size})}
       {...props}
     >
       {label}

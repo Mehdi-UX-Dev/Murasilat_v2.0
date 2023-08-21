@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from '../components/Button';
+import { InputField } from '../../components/Input';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: 'Example/Button',
-  component: Button,
+  title: 'Input',
+  component: InputField,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'centered',
@@ -14,40 +14,21 @@ const meta = {
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof InputField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const LargePrimary: Story = {
+export const Default: Story = {
   args: {
     
-    label: 'Button',
-    tailwindClasses : "bg-black text-white w-72"
+    hasIcon : true,
+    fullWidth : true
+    
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    label: 'Button',
-    tailwindClasses: ""
-  },
-};
 
-export const Large: Story = {
-  args: {
-    tailwindClasses: "",
 
-    label: 'Button',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    tailwindClasses: "",
-
-    label: 'Button',
-  },
-};
 
