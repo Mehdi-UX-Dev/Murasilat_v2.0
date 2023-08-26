@@ -25,40 +25,6 @@ const Card = ({}: MyComponentProps) => {
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
       <section className="relative ">
-        {/**
-         * //* In doubt that I will have a change property in the login page
-         */}
-
-        {/* <BsTranslate
-          size={24}
-          className="text-primary-700 ml-4"
-          onClick={langChange}
-          
-        /> */}
-
-        {/* {langSetting && (
-          <div className="absolute mt-1 bg-primary-100  shadow-md  space-y-2 w-28 z-10  ">
-            <p
-              onClick={() => chooseLang("dari")}
-              className="text-right  hover:bg-primary-200  hover:border-l-2 hover:border-primary-900 py-1 pr-2 hover:font-semibold cursor-pointer"
-            >
-              دری
-            </p>
-            <p
-              onClick={() => chooseLang("pashto")}
-              className="text-right hover:bg-primary-200  hover:border-l-2 hover:border-primary-900 py-1 pr-2 hover:font-semibold cursor-pointer"
-            >
-              پشتو
-            </p>
-            <p
-              onClick={() => chooseLang("english")}
-              className="hover:bg-primary-200  hover:border-l-2 hover:border-primary-900 w-full pl-2 hover:font-semibold cursor-pointer"
-            >
-              English
-            </p>
-          </div>
-        )} */}
-
         <h1 className="font-serif text-4xl text-center font-bold">Log In</h1>
       </section>
       <form onSubmit={consumeContext?.handleSubmit}>

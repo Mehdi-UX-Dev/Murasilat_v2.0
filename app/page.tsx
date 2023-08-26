@@ -22,13 +22,6 @@ export default function Home() {
     msg: "",
   });
 
-  //* i am in doubt to have lang change property in the login page
-  // const [langSettingVisible, setLangeSettingVisible] = useState(false);
-  // const handleLangChange = () => {
-  //   setLangeSettingVisible(!langSettingVisible);
-  // };
-  // const chooseLang = (lang: string) => {};
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
