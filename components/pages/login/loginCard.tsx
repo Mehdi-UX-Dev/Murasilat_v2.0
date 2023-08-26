@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "@/components/Button";
-import { InputField } from "@/components/Input";
+import { Button } from "@/components/UI_Molecules/Button";
+import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { BsTranslate } from "react-icons/bs";

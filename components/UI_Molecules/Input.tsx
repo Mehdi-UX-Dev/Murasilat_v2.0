@@ -1,6 +1,6 @@
 import React from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
-import { useCredentialsContext } from "@/hooks/credentialsContext";
+import { useCredentialsContext } from "../../hooks/credentialsContext";
 
 const inputCVA = cva(
   "border border-primary-700 rounded-md pl-2 h-10 focus:border-2 focus:border-primary-900 ",
@@ -8,9 +8,9 @@ const inputCVA = cva(
     variants: {
       state: {
         /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
-
-        ErrorState: "!border-myAccent-error-300 border-2",
+        /** The Default state is empty cuz we want to override the error state when it is cleared */
         Default: "",
+        ErrorState: "!border-myAccent-error-300 border-2",
       },
 
       fullWidth: {

@@ -43,7 +43,7 @@ interface ButtonProps extends VariantProps <typeof button> {
    * button type
    */
 
-    type : 'submit' | 'reset'| 'button'
+    type? : 'submit' | 'reset'| 'button'
 }
 
 /**

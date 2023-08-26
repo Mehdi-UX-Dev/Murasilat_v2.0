@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/login/loginHeader";
-import Card from "@/components/login/loginCard";
+import Header from "@/components/pages/login/loginHeader";
+import Card from "@/components/pages/login/loginCard";
 import { Credentials } from "@/hooks/credentialsContext";
 import { useRouter } from "next/navigation";
 
