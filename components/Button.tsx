@@ -6,7 +6,7 @@ import { cva , VariantProps } from 'class-variance-authority';
 const button = cva(['rounded','font-bold' , 'capitalize'],{
   variants : {
     intent: {
-      primary:[ "bg-primary-900", "text-white", "hover:bg-primary-700"],
+      primary:[ "bg-primary-900", "text-white", "hover:bg-primary-800"],
       secondary: ["border" ,"border-primary-700" , "hover:bg-primary-700"],
       tertiary: ['hover:underline']
     }, 
@@ -38,17 +38,19 @@ interface ButtonProps extends VariantProps <typeof button> {
    * Button contents
    */
   label: string;
+
   /**
-   * ? The operation is still not done
+   * button type
    */
-  onClick?: () => void;
+
+    type : 'submit' | 'reset'| 'button'
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const Button = ({
- 
+  type,
   intent,
   size,
   label,
@@ -59,9 +61,10 @@ export const Button = ({
   
   return (
     <button
-      type="button"
+      type={type}
       className={button({intent, size,fullWidth})}
       {...props}
+      
     >
       {label}
     </button>
