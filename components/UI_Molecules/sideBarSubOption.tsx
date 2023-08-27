@@ -17,14 +17,14 @@ function SideSubOption({ url, Icon, text }: props) {
     <Link
       href={url}
       className={cx(
-        "flex items-center space-x-4 py-1 px-4 hover:bg-primary-200 ",
+        "flex items-center  space-x-4 py-1 pl-12 hover:bg-primary-200 ",
         {
           "bg-primary-200 border-l-2 border-primary-900 text-primary-900":
             path == url,
         }
       )}
     >
-      <Icon size={24} className="text-primary-400 " />
+      <Icon size={20} className="text-primary-400 " />
       <p className="text-primary-700">{text}</p>
     </Link>
   );

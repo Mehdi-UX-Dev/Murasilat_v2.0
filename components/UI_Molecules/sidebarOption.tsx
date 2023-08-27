@@ -18,9 +18,10 @@ function SideOption({ url, text, Icon, hasDropDown }: props) {
   return (
     <Link
       href={url}
-      className={cx("flex items-center space-x-4 py-1 px-4", {
+      className={cx("flex  items-center space-x-4 py-1.5 pl-10 cursor-text", {
         "bg-primary-200 border-l-2 border-primary-900 text-primary-900":
           path == url,
+          "hover:bg-primary-200 cursor-pointer" : url === '/broadcast' || url === '/dashboard'
       })}
     >
       <Icon size={24} />

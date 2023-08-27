@@ -11,4 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof SideBar>;
 
-export const DefaultState: Story = {};
+export const DefaultState: Story = {
+  args : {
+    
+  }
+};
