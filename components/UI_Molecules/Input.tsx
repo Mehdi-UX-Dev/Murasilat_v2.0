@@ -40,7 +40,13 @@ interface InputProps extends VariantProps<typeof inputCVA> {
   /**
    * Language Support
    */
-  lang?: "RTL" | "LTR";
+  lang?: "RTL" | "LTR", 
+
+  /**
+   * name of the input
+   */
+
+  name : string
 }
 
 /**
@@ -51,6 +57,7 @@ export const InputField = ({
   state,
   label,
   inputType,
+  name,
   lang,
 }: InputProps) => {
   const consumeCredentials = useCredentialsContext();
@@ -60,7 +67,11 @@ export const InputField = ({
    */
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+   
     const { name, value } = event.target;
+    console.log(name,value);
+    
+    
     consumeCredentials?.setCredentials((prev) => ({
       ...prev,
       [name]: value,
@@ -81,7 +92,7 @@ export const InputField = ({
         type={inputType}
         className={inputCVA({ state, fullWidth })}
         onChange={handleChange}
-        name={label?.toLowerCase()}
+        name={name}
         required
       />
     </div>

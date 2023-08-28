@@ -53,6 +53,7 @@ const Card = ({ locale }: propsType) => {
               state={
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
+              name = "username"
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>
@@ -65,6 +66,7 @@ const Card = ({ locale }: propsType) => {
               state={
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
+              name="password"
               // lang={locale == 'en' ? "LTR" : 'RTL'}
             />
             <AiFillEye
