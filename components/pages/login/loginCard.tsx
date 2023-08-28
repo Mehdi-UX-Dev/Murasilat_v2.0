@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
@@ -27,7 +27,10 @@ const Card = ({ locale }: propsType) => {
     submit: "",
     invalid_credentials: "",
   });
-  getDictionary(locale).then((i) => setLang(i.login as langProps));
+
+  useEffect(() => {
+    getDictionary(locale).then((i) => setLang(i.login as langProps));
+  }, [locale]);
 
   // The state for the eye icon to show password
   const [showPasswordState, setShowPasswordState] = useState(false);
@@ -53,7 +56,7 @@ const Card = ({ locale }: propsType) => {
               state={
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
-              name = "username"
+              name="username"
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>

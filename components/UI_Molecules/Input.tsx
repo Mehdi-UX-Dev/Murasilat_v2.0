@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
 import { useCredentialsContext } from "../../hooks/credentialsContext";
 
@@ -40,13 +40,13 @@ interface InputProps extends VariantProps<typeof inputCVA> {
   /**
    * Language Support
    */
-  lang?: "RTL" | "LTR", 
+  lang?: "RTL" | "LTR";
 
   /**
    * name of the input
    */
 
-  name : string
+  name: string;
 }
 
 /**
@@ -67,15 +67,16 @@ export const InputField = ({
    */
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-   
     const { name, value } = event.target;
-    console.log(name,value);
-    
-    
+    console.log(name, value);
+      
+        
     consumeCredentials?.setCredentials((prev) => ({
       ...prev,
       [name]: value,
     }));
+    
+
   };
 
   return (

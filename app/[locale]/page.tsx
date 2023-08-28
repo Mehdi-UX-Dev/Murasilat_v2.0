@@ -68,7 +68,6 @@ export default function Home({ params: { locale } }: PageProps) {
       }, 5000);
     }
 
-    router.replace(baseUrlByLocale.en);
   };
 
   return (
