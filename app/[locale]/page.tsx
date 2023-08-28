@@ -5,6 +5,9 @@ import Header from "@/components/pages/login/loginHeader";
 import Card from "@/components/pages/login/loginCard";
 import { Credentials } from "@/hooks/credentialsContext";
 import { useRouter } from "next/navigation";
+import { Locale } from "@/i18n-config";
+import { getDictionary } from "@/i18n-server";
+import { baseUrlByLocale } from "@/i18n-server";
 
 type error = {
   inputState: "Default" | "ErrorState";
@@ -12,9 +15,14 @@ type error = {
   status: boolean;
 };
 
-export default function Home() {
-  const router = useRouter();
+type PageProps = {
+  params: { locale: Locale };
+};
 
+export default function Home({ params: { locale } }: PageProps) {
+  const router = useRouter();
+    
+  
   const [credentials, setCredentials] = useState<{ [key: string]: string }>({});
   const [errorState, setErrorState] = useState<error>({
     inputState: "Default",
@@ -26,7 +34,6 @@ export default function Home() {
     event
   ) => {
     event.preventDefault();
-    // router.push('/dashboard')
 
     try {
       const res = await fetch(
@@ -57,9 +64,11 @@ export default function Home() {
     } catch (e: any) {
       setErrorState({ inputState: "ErrorState", status: true, msg: e });
       setTimeout(() => {
-        setErrorState({ inputState: "Default", status: false, msg: '' });
+        setErrorState({ inputState: "Default", status: false, msg: "" });
       }, 5000);
     }
+
+    router.replace(baseUrlByLocale.en);
   };
 
   return (
@@ -69,7 +78,7 @@ export default function Home() {
         <Header />
 
         {/* Card and Form */}
-        <Card />
+        <Card  locale={locale}/>
       </div>
     </Credentials.Provider>
   );

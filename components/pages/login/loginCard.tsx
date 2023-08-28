@@ -3,17 +3,31 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import { BsTranslate } from "react-icons/bs";
 import { useCredentialsContext } from "@/hooks/credentialsContext";
+import { getDictionary } from "@/i18n-server";
 
-type MyComponentProps = {
-  // langChange: (param: string) => void;
-  // langSetting: boolean;
-  // chooseLang: (lang: string) => void;
+type propsType = {
+  locale: string;
 };
 
-const Card = ({}: MyComponentProps) => {
+type langProps = {
+  header: string;
+  username: string;
+  password: string;
+  submit: string;
+  invalid_credentials: string;
+};
+
+const Card = ({ locale }: propsType) => {
   const consumeContext = useCredentialsContext();
+  const [lang, setLang] = useState<langProps>({
+    header: "",
+    username: "",
+    password: "",
+    submit: "",
+    invalid_credentials: "",
+  });
+  getDictionary(locale).then((i) => setLang(i.login as langProps));
 
   // The state for the eye icon to show password
   const [showPasswordState, setShowPasswordState] = useState(false);
@@ -25,14 +39,16 @@ const Card = ({}: MyComponentProps) => {
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
       <section className="relative ">
-        <h1 className="font-serif text-4xl text-center font-bold">Log In</h1>
+        <h1 className="font-serif text-4xl text-center font-bold">
+          {lang?.header}
+        </h1>
       </section>
       <form onSubmit={consumeContext?.handleSubmit}>
         <div className="space-y-4 max-w-[320px] mx-auto mt-12">
           <div className="relative">
             <InputField
               inputType="text"
-              label="Username"
+              label={lang.username}
               fullWidth
               state={
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
@@ -44,11 +60,12 @@ const Card = ({}: MyComponentProps) => {
           <div className="relative">
             <InputField
               inputType={showPasswordState ? "text" : "password"}
-              label="password"
+              label={lang.password}
               fullWidth
               state={
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
+              // lang={locale == 'en' ? "LTR" : 'RTL'}
             />
             <AiFillEye
               onClick={showPassword}
@@ -65,7 +82,7 @@ const Card = ({}: MyComponentProps) => {
 
           <Button
             type="submit"
-            label="submit"
+            label={lang.submit}
             intent={"primary"}
             size={"medium"}
             fullWidth

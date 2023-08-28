@@ -1,14 +1,10 @@
 {
-    "PAGE1": "LOGIN",
-    "enter_email": "ایمیل را وارد نمایید",
-    "enter_password": "رمز عبور را وارد نمایید",
-    "email_required": "ایمیل لازم است",
-    "password_required": "رمز عبور لازم است",
-    "forgot_password": "رمز عبور را فراموش کرده اید؟",
+  "login" : {  
+  "header": "ورود",
+    "username": "ایمیل را وارد نمایید",
+    "password": "رمز عبور را وارد نمایید",
     "submit": "ورود به سیستم",
-    "email_please": "لطفا ایمیل درست را وارد نمایید",
-    "8_chars_pass": "رمز عبور باید حداقل 8 حرف باشد",
-    "invalid_credentials": "ایمیل یا رمز عبور اشتباه",
+    "invalid_credentials": "ایمیل یا رمز عبور اشتباه" },
   
     "PAGE2": "DASHBOARD",
     "profile": "نمایه",
@@ -63,7 +59,7 @@
     "professor": "پروفیسور",
     "add_user": "کاربر جدید",
   
-    "**note**": "Add user shit",
+   
   
     "au_Name": "نام",
     "au_name": "نام",
@@ -167,7 +163,7 @@
     "PAGE11": "FORGOT PASSWORD",
     "enter_username": "ایمیل را وارد نمایید",
     "submit_forgotpass": "ارسال",
-    "login": "بازگشت",
+    "button": "بازگشت",
     "reset_link_sent": "!لینک تغییر پسورد به ایمیل شما ارسال گردید",
     "username_doesnt_exist": "ایمیل موجود نیست",
     "username_required": "ایمیل لازم است",

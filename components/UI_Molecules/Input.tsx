@@ -72,18 +72,16 @@ export const InputField = ({
       <p
         className={cx("capitalize", {
           "text-myAccent-error-500": state === "ErrorState",
-          "text-right": lang === "RTL",
         })}
       >
         {label}
       </p>
 
       <input
-        dir={lang}
         type={inputType}
         className={inputCVA({ state, fullWidth })}
         onChange={handleChange}
-        name={label.toLowerCase()}
+        name={label?.toLowerCase()}
         required
       />
     </div>

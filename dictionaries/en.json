@@ -1,14 +1,10 @@
 {
-    "PAGE1": "LOGIN",
-    "enter_email": "enter email address",
-    "enter_password": "enter password",
-    "email_required": "email address is required",
-    "password_required": "password is required",
-    "forgot_password": "forgot password",
+  "login" : {
+    "header": "LOGIN",
+    "username": "enter email address",
+    "password": "enter password",
     "submit": "Login",
-    "email_please": "please type an email address",
-    "8_chars_pass": "password must be at least 8 characters",
-    "invalid_credentials": "invalid credentials",
+    "invalid_credentials": "invalid credentials"},
   
     "PAGE2": "DASHBOARD",
     "profile": "profile",
@@ -168,7 +164,7 @@
     "PAGE11": "FORGOT PASSWORD",
     "enter_username": "enter your username",
     "submit_forgotpass": "Submit",
-    "login": "back",
+    "button": "back",
     "reset_link_sent": "a reset link has been sent to your email!",
     "username_doesnt_exist": "the username does not exist",
     "username_required": "username is required",

@@ -1,14 +1,10 @@
 {
-    "PAGE1": "LOGIN",
-    "enter_email": "ايميل دننه کړئ",
-    "enter_password": "پټ نوم دننه کړئ",
-    "email_required": "ايميل اړین دی",
-    "password_required": "پټ نوم اړین دی",
-    "forgot_password": "پټ نوم درڅخه هیر دی؟",
+  "login": {
+   "header": "ورود",
+    "username": "ايميل دننه کړئ",
+    "password": "پټ نوم دننه کړئ",
     "submit": "ننوتل",
-    "email_please": "مهرباني وکړئ سم ايميل دننه کړئ",
-    "8_chars_pass": "پټ نوم باید لږترلږه 8 حرفه وي",
-    "invalid_credentials": "غلط ايميل یا پټ نوم",
+    "invalid_credentials": "غلط ايميل یا پټ نوم"},
   
     "PAGE2": "DASHBOARD",
     "profile": "پروفایل",
@@ -165,7 +161,7 @@
     "PAGE11": "FORGOT PASSWORD",
     "enter_username": "ايميل دننه کړئ",
     "submit_forgotpass": "سپارل",
-    "login": "بیرته",
+    "button": "بیرته",
     "reset_link_sent": "!د پټ نوم بدلون لینک ستاسو ايميل ته ولیږل شو",
     "username_doesnt_exist": "ايميل شتون نلري",
     "username_required": "ايميل اړین دی",
