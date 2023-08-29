@@ -28,8 +28,8 @@ const Card = ({ locale }: propsType) => {
     invalid_credentials: "",
   });
 
-  useEffect(() => {
-    getDictionary(locale).then((i) => setLang(i.login as langProps));
+  useEffect( () => {
+      getDictionary(locale).then((i) => setLang(i.login as langProps))
   }, [locale]);
 
   // The state for the eye icon to show password
@@ -40,7 +40,10 @@ const Card = ({ locale }: propsType) => {
   };
 
   return (
-    <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
+    <div
+      dir={locale == "en" ? "ltr" : "rtl"}
+      className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 "
+    >
       <section className="relative ">
         <h1 className="font-serif text-4xl text-center font-bold">
           {lang?.header}
@@ -57,6 +60,7 @@ const Card = ({ locale }: propsType) => {
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
               name="username"
+              lang={locale == "en" ? "LTR" : "RTL"}
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>
@@ -70,7 +74,7 @@ const Card = ({ locale }: propsType) => {
                 consumeContext?.errorState.status ? "ErrorState" : "Default"
               }
               name="password"
-              // lang={locale == 'en' ? "LTR" : 'RTL'}
+              lang={locale == "en" ? "LTR" : "RTL"}
             />
             <AiFillEye
               onClick={showPassword}

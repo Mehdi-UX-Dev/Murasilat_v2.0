@@ -3,7 +3,7 @@ import { cva, cx, VariantProps } from "class-variance-authority";
 import { useCredentialsContext } from "../../hooks/credentialsContext";
 
 const inputCVA = cva(
-  "border border-primary-700 rounded-md pl-2 h-10 focus:border-2 focus:border-primary-900 ",
+  "border border-primary-700 rounded-md pl-2 h-10 focus:border-2 focus:border-primary-900  ",
   {
     variants: {
       state: {
@@ -68,32 +68,34 @@ export const InputField = ({
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
-      
-        
+
     consumeCredentials?.setCredentials((prev) => ({
       ...prev,
       [name]: value,
     }));
-    
-
   };
 
+  
+
   return (
-    <div className="relative">
-      <p
-        className={cx("capitalize", {
+    <div className="relative space-y-1">
+      <label
+        className={cx("capitalize ", {
           "text-myAccent-error-500": state === "ErrorState",
         })}
       >
         {label}
-      </p>
+      </label>
 
       <input
         type={inputType}
-        className={inputCVA({ state, fullWidth })}
+        className={cx(inputCVA({ state, fullWidth }), {
+          'pl-4' : lang == "LTR",
+          'pr-8' : lang == "RTL" 
+        })}
         onChange={handleChange}
         name={name}
+        dir={lang}
         required
       />
     </div>

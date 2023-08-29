@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Header from "@/components/pages/login/loginHeader";
 import Card from "@/components/pages/login/loginCard";
 import { Credentials } from "@/hooks/credentialsContext";
 import { useRouter } from "next/navigation";
 import { Locale } from "@/i18n-config";
-import { getDictionary } from "@/i18n-server";
-import { baseUrlByLocale } from "@/i18n-server";
 
 type error = {
   inputState: "Default" | "ErrorState";
@@ -21,8 +19,7 @@ type PageProps = {
 
 export default function Home({ params: { locale } }: PageProps) {
   const router = useRouter();
-    
-  
+
   const [credentials, setCredentials] = useState<{ [key: string]: string }>({});
   const [errorState, setErrorState] = useState<error>({
     inputState: "Default",
@@ -67,7 +64,6 @@ export default function Home({ params: { locale } }: PageProps) {
         setErrorState({ inputState: "Default", status: false, msg: "" });
       }, 5000);
     }
-
   };
 
   return (
@@ -75,9 +71,10 @@ export default function Home({ params: { locale } }: PageProps) {
       <div>
         {/* Header Component */}
         <Header />
-
-        {/* Card and Form */}
-        <Card  locale={locale}/>
+        <Suspense fallback={<p>Loading...</p>}>
+          {/* Card and Form */}
+          <Card locale={locale} />
+        </Suspense>
       </div>
     </Credentials.Provider>
   );
