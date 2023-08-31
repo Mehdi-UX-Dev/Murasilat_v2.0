@@ -1,3 +1,4 @@
+import ID from "@/components/UI_Organisms/ID";
 import SideBar from "@/components/UI_Organisms/sidebar";
 
 export default function DashboardLayout({
@@ -10,7 +11,9 @@ export default function DashboardLayout({
       {/* Include shared UI here e.g. a header or sidebar */}
       <SideBar />
 
-      <div>
+      <div className="grow px-8 pt-8">
+        <ID />
+
         {/* Id goes here */}
         {children}
       </div>
