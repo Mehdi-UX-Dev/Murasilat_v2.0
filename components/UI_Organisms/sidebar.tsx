@@ -13,9 +13,11 @@ import { RiMailDownloadFill } from "react-icons/ri";
 import { Button } from "../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { getDictionary } from "@/i18n-server";
 
 function SideBar() {
   // const router = useRouter();
+
 
   const handleLogOut = () => {
     window.localStorage.removeItem("token");
@@ -23,7 +25,7 @@ function SideBar() {
   };
 
   return (
-    <aside className="w-[240px] shadow-lg grid content-between h-screen pt-4   ">
+    <aside  className="w-[240px] shadow-lg grid content-between h-screen pt-4   ">
       {/* Logo */}
       <Image
         src={Morasilat}

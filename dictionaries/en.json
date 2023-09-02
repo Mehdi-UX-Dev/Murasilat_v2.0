@@ -5,25 +5,25 @@
     "password": " password",
     "submit": "Login",
     "invalid_credentials": "invalid credentials"},
+    
+    
+    "dashboard" : {
+      "dashboard": "dashboard",
+      "write" : "write",
+      "maktoob" : "Maktoob",
+      "istilam" : "Istilam",
+      "pishnihad" : "Pishnihad",
+      "archive": "archive", 
+      "recents": "recent", 
+      "all_sadira" :"All Sadira",
+      "all_warida" : "All Warida", 
+      "broadcast" : "Broadcast", 
+      "create_document" : "Create Document", 
+      "preview_document" : "Preview Document ", 
+      "document_des" : "Create and share with others"
+      },
   
-    "PAGE2": "DASHBOARD",
-    "profile": "profile",
-    "dashboard": "Dashboard",
-    "all_documents": "All Documents",
-    "sadira": "Sadira",
-    "warida": "Warida",
-    "new_documents": "New Documents",
-    "send_document": "Send Document",
-    "create_maktoob": "Create Maktoob",
-    "create_istilam": "Create Istilam",
-    "create_pishnihad": "Create Pishnihad",
-    "users": "Users",
-    "logout": "Logout",
-  
-    "sent": "Sent",
-    "received": "Received",
-    "new": "New",
-  
+ 
     "PAGE3": "PROFILE",
     "change_password": "Change Password",
     "new_password": "New Password",

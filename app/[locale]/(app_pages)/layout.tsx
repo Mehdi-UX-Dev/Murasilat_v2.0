@@ -14,7 +14,6 @@ export default function DashboardLayout({
       <div className="grow px-8 pt-8">
         <ID />
 
-        {/* Id goes here */}
         {children}
       </div>
     </div>

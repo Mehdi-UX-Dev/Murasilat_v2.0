@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@/components/UI_Molecules/Button";
+import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
 import CustomizedSelectComponent from "@/components/pages/documents/customizedSelectComponent";
-import TypeGroup from "@/components/pages/documents/documentTypeRadioButtons";
+
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -69,7 +70,6 @@ function Page() {
           theme="snow"
           modules={modules}
           placeholder="ایجاد مکتوب"
-          
         />
 
         <input
