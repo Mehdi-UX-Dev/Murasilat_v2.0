@@ -1,4 +1,3 @@
-import { Locale } from "@/i18n-config";
 import Link from "next/link";
 import React from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -17,7 +16,6 @@ type props = {
 };
 
 function DashboardButton({ type, path, lang }: props) {
-  console.log(lang);
 
   return (
     <Link  href={path}>

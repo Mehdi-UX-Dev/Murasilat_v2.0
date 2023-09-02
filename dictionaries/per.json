@@ -20,7 +20,8 @@
     "create_document" : "ایجاد سند", 
     "preview_document" : "نمایش سند", 
     "document_des" : "ایجاد کنید و با دیگران به اشتراک بگذارید", 
-    "create" : "ایجاد"
+    "create" : "ایجاد", 
+    "log_out": "خروج"
     },
   
   

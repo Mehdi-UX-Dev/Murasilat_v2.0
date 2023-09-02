@@ -19,7 +19,8 @@
       "broadcast" : "نشر همگانی", 
       "create_document" : "سند جوړ کړئ", 
       "preview_document" : "د مخکتنې سند ", 
-      "document_des" : "Create and share with others"
+      "document_des" : "جوړ کړئ او له نورو سره یې شریک کړئ", 
+      "log_out": "وتل"
       },
   
     "PAGE3": "PROFILE",

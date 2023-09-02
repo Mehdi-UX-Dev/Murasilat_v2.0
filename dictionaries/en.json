@@ -20,7 +20,8 @@
       "broadcast" : "Broadcast", 
       "create_document" : "Create Document", 
       "preview_document" : "Preview Document ", 
-      "document_des" : "Create and share with others"
+      "document_des" : "Create and share with others", 
+      "log_out": "Log Out"
       },
   
  
