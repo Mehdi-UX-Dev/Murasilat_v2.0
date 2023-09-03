@@ -6,7 +6,7 @@ import { Button } from "../UI_Molecules/Button";
 
 function Card() {
   return (
-    <div className="border border-light shadow-md rounded-md w-[442px] p-8">
+    <div  className="border border-light shadow-md rounded-md w-[442px] p-8 ">
       <div className="flex justify-between items-center">
         <div className="text-center">
           <p className="font-bold text-lg ">01</p>

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React from "react";
 import Morasilat from "../../public/images/Morasilat.png";
 import Image from "next/image";
@@ -13,36 +12,30 @@ import { RiMailDownloadFill } from "react-icons/ri";
 import { Button } from "../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 
-type SideProps =  {
-lang : {
-  dashboard: string;
-  write: string;
-  maktoob: string;
-  istilam: string;
-  pishnihad: string;
-  archive: string;
-  recents: string;
-  all_sadira: string;
-  all_warida: string;
-  broadcast: string;
-  create_document: string;
-  preview_document: string;
-  document_des: string;
-  log_out : string
-}
-}
+type SideProps = {
+  lang: {
+    dashboard: string;
+    write: string;
+    maktoob: string;
+    istilam: string;
+    pishnihad: string;
+    archive: string;
+    recents: string;
+    all_sadira: string;
+    all_warida: string;
+    broadcast: string;
+    log_out: string;
+  };
+};
 
-function SideBar({lang } : SideProps) {
-
-
-
+function SideBar({ lang }: SideProps) {
   const handleLogOut = () => {
     window.localStorage.removeItem("token");
     // router.push("/login");
   };
 
   return (
-    <aside  className="w-[240px] shadow-lg grid content-between h-screen pt-4   ">
+    <aside className="w-[240px] shadow-lg grid content-between h-screen pt-4   ">
       {/* Logo */}
       <Image
         src={Morasilat}

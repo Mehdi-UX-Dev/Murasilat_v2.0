@@ -14,7 +14,7 @@ import { getDictionary } from "@/i18n-server";
   const lang =  (await getDictionary(locale)).dashboard
   
   return (
-    <div className="flex">
+    <div  className="flex  flex-row-reverse">
       {/* Include shared UI here e.g. a header or sidebar */}
       <SideBar lang={lang}/>
 

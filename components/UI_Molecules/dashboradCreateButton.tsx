@@ -16,11 +16,10 @@ type props = {
 };
 
 function DashboardButton({ type, path, lang }: props) {
-
   return (
-    <Link  href={path}>
+    <Link href={path}>
       <div className="flex  items-center border border-black h-20 rounded-md py-3 px-4 hover:scale-105 cursor-pointer">
-        <HiOutlineDocumentText size={56} className="text-medium" />
+        <AiOutlinePlusCircle className="text-medium" size={36} />
         <div className="pl-4 pr-6">
           <p className="font-bold font-rounded text-[18px] ">
             {lang.create}{" "}
@@ -32,7 +31,7 @@ function DashboardButton({ type, path, lang }: props) {
           </p>
           <p className="text-medium text-[14px]">{lang.document_des}</p>
         </div>
-        <AiOutlinePlusCircle className="text-medium" size={36} />
+        <HiOutlineDocumentText size={56} className="text-medium" />
       </div>
     </Link>
   );

@@ -18,15 +18,15 @@ function SideOption({ url, text, Icon, hasDropDown }: props) {
   return (
     <Link
       href={url}
-      className={cx("flex  items-center space-x-4 py-1.5 pl-10 cursor-text", {
+      className={cx("flex  items-center  py-1.5 space-x-4 pl-12   cursor-text", {
         "bg-primary-200 border-l-2 border-primary-900 text-primary-900":
           path == url,
-          "hover:bg-primary-200 cursor-pointer" : url === '/broadcast' || url === '/dashboard'
+          "hover:bg-primary-200 !cursor-pointer" : url === '/broadcast' || url === '/dashboard'
       })}
     >
-      <Icon size={24} />
-      <p className="font-bold">{text}</p>
       {hasDropDown && <BiChevronDown />}
+      <p className="font-bold">{text}</p>
+      <Icon size={24} />
     </Link>
   );
 }

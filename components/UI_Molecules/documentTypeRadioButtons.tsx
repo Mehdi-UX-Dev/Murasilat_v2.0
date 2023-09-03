@@ -17,7 +17,7 @@ function TypeGroup() {
       {/* Normal Button*/}
       <div
         onClick={() => handleRadioClick("normal")}
-        className={`space-x-2  text-center `}
+        className={`space-x-2   text-center `}
       >
         <label htmlFor="normal" className="text-lg ">
           عادی
@@ -27,7 +27,7 @@ function TypeGroup() {
           id="normal"
           name="docType"
           value="normal"
-          className="h-4 w-4 !text-red-500 "
+          className="bg-black !border-black border"
         />
       </div>
 
@@ -48,7 +48,7 @@ function TypeGroup() {
 
       <div
         onClick={() => handleRadioClick("announcment")}
-        className={`space-x-2   text-center`}
+        className={`space-x-2    text-center`}
       >
         <label htmlFor="announcment">اعلامیه</label>
         <input
@@ -63,7 +63,7 @@ function TypeGroup() {
       {/* Confidential */}
       <div
         onClick={() => handleRadioClick("confidential")}
-        className={`space-x-2  text-center`}
+        className={`space-x-2    text-center`}
       >
         <label htmlFor="confidential">محرمانه</label>
         <input

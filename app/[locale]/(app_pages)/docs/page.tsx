@@ -5,8 +5,11 @@ import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
 import CustomizedSelectComponent from "@/components/pages/documents/customizedSelectComponent";
 
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill , {Quill} from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
+// const RTLQuill = ReactQuill.Quill.import('core/quill');
+// RTLQuill.defaultOptions.direction = 'rtl';
 
 const modules = {
   toolbar: [
@@ -20,7 +23,7 @@ const modules = {
       { align: "right" },
       { align: "justify" },
     ],
-    [{ direction: "rtl" }],
+    [{ 'direction': 'rtl' }],
     [
       { list: "ordered" },
       { list: "bullet" },
@@ -36,7 +39,13 @@ const modules = {
   },
 };
 
+
 function Page() {
+  
+
+  // console.log(RTLQuill);
+  
+
   const [value, setValue] = useState("");
   return (
     <div className="w-[1136px] mt-6 ">
@@ -66,7 +75,7 @@ function Page() {
         <ReactQuill
           value={value}
           onChange={setValue}
-          className="h-[23rem] overflow-hidden"
+          className="h-[23rem] overflow-hidden  "
           theme="snow"
           modules={modules}
           placeholder="ایجاد مکتوب"
