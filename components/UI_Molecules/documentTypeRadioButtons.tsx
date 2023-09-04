@@ -27,7 +27,7 @@ function TypeGroup() {
           id="normal"
           name="docType"
           value="normal"
-          className="bg-black !border-black border"
+          className="checked:bg-black border border-primary-500 checked:border-black"
         />
       </div>
 
@@ -42,7 +42,7 @@ function TypeGroup() {
           id="emergency"
           name="docType"
           value="emergency"
-          className="w-4 h-4"
+          className="checked:bg-black border checked:border-black"
         />
       </div>
 
@@ -56,7 +56,7 @@ function TypeGroup() {
           id="announcment"
           name="docType"
           value="announcment"
-          className="w-4 h-4"
+          className="checked:bg-black border checked:border-black"
         />
       </div>
 
@@ -71,7 +71,7 @@ function TypeGroup() {
           id="confidential"
           name="docType"
           value="confidential"
-          className="w-4 h-4"
+          className="checked:bg-black border checked:border-black"
         />
       </div>
     </div>

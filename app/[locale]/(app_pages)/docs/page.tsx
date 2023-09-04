@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/UI_Molecules/Button";
 import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
-import CustomizedSelectComponent from "@/components/pages/documents/customizedSelectComponent";
+import CustomizedSelectComponent from "@/components/UI_Organisms/docs_group_pages/customizedSelectComponent";
 
 import React, { useState } from "react";
 import ReactQuill , {Quill} from "react-quill";
