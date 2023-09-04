@@ -1,5 +1,5 @@
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
-import Card from "@/components/UI_Organisms/docs_group_pages/Card";
+import Card from "@/components/UI_Organisms/create_pages/Card";
 import React from "react";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";

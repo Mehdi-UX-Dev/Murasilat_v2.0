@@ -33,7 +33,7 @@ function CustomizedSelectComponent() {
           <BsChevronDown className="mr-3" />
         </div>
         {personInfo.map((person) => (
-          <SelectedPerson key={person.id} info={person} removeSelectedPerson={setPersonInfo} />
+          <SelectedPerson key={person.id} info={person} length={personInfo.length} removeSelectedPerson={setPersonInfo} />
         ))}
       </div>
       <div

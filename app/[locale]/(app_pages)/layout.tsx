@@ -1,5 +1,5 @@
-import ID from "@/components/UI_Organisms/docs_group_pages/ID";
-import SideBar from "@/components/UI_Organisms/docs_group_pages/sidebar";
+import ID from "@/components/UI_Organisms/create_pages/ID";
+import SideBar from "@/components/UI_Organisms/create_pages/sidebar";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 

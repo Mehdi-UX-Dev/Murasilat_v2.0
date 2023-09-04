@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Morasilat from "../../public/images/Morasilat.png";
+import Morasilat from '../../../public/images/Morasilat.png'
 import Image from "next/image";
 import SideOption from "../../UI_Molecules/sidebarOption";
 import { MdDashboard, MdFolder, MdOutgoingMail } from "react-icons/md";

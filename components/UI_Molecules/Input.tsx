@@ -75,12 +75,10 @@ export const InputField = ({
     }));
   };
 
-  
-
   return (
-    <div className="relative space-y-1">
+    <div className=" space-y-1">
       <label
-        className={cx("capitalize ", {
+        className={cx("capitalize block", {
           "text-myAccent-error-500": state === "ErrorState",
         })}
       >
@@ -90,8 +88,8 @@ export const InputField = ({
       <input
         type={inputType}
         className={cx(inputCVA({ state, fullWidth }), {
-          'pl-4' : lang == "LTR",
-          'pr-8' : lang == "RTL" 
+          "pl-4": lang == "LTR",
+          "pr-8": lang == "RTL",
         })}
         onChange={handleChange}
         name={name}

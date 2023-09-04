@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import photo from "../../public/images/photo.jpg";
+import photo from '../../../public/images/photo.jpg'
 
 function ID() {
   return (

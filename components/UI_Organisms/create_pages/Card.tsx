@@ -1,5 +1,5 @@
 import React from "react";
-import photo from "../../public/images/photo.jpg";
+import photo from "../../../public/images/photo.jpg";
 import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
