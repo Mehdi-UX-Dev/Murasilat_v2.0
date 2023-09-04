@@ -54,7 +54,7 @@ function Page() {
       </div> */}
 
       <div className="border border-primary-400 mb-4">
-        <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 ">
+        <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">
           <p>25/04/1402</p>
           <p>01</p>
         </div>

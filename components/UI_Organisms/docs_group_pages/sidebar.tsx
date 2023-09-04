@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import React from "react";
 import Morasilat from "../../public/images/Morasilat.png";
 import Image from "next/image";
-import SideOption from "../UI_Molecules/sidebarOption";
+import SideOption from "../../UI_Molecules/sidebarOption";
 import { MdDashboard, MdFolder, MdOutgoingMail } from "react-icons/md";
-import SideSubOption from "../UI_Molecules/sideBarSubOption";
+import SideSubOption from "../../UI_Molecules/sideBarSubOption";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsBroadcast, BsEnvelopePlusFill } from "react-icons/bs";
 import { FaHistory } from "react-icons/fa";
 import { RiMailDownloadFill } from "react-icons/ri";
-import { Button } from "../UI_Molecules/Button";
+import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 
 type SideProps = {
@@ -35,7 +35,7 @@ function SideBar({ lang }: SideProps) {
   };
 
   return (
-    <aside className="w-[240px] shadow-lg grid content-between h-screen pt-4   ">
+    <aside className="w-[240px] shadow-lg grid content-between  pt-4   ">
       {/* Logo */}
       <Image
         src={Morasilat}

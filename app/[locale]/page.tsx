@@ -1,11 +1,11 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import Header from "@/components/pages/login/loginHeader";
-import Card from "@/components/pages/login/loginCard";
 import { Credentials } from "@/hooks/credentialsContext";
 import { useRouter } from "next/navigation";
 import { Locale } from "@/i18n-config";
+import Header from "@/components/UI_Organisms/login_page/loginHeader";
+import Card from "@/components/UI_Organisms/login_page/loginCard";
 
 type error = {
   inputState: "Default" | "ErrorState";
