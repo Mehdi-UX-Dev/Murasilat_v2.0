@@ -23,6 +23,17 @@
       "document_des" : "Create and share with others", 
       "log_out": "Log Out"
       },
+
+      
+    "list_page" : {
+      "search": "search",
+      "date": "Date",
+      "sender":"Sender",
+      "title": "Title", 
+      "number": "Number", 
+      "content" : "Subject"
+    },
+
   
  
     "PAGE3": "PROFILE",

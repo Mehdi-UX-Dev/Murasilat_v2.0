@@ -1,11 +1,23 @@
 "use client";
 import { InputField } from "@/components/UI_Molecules/Input";
+import { cx } from "class-variance-authority";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiFilter } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 
-function ListTable() {
+type ListProps = {
+  lang: {
+    search: string;
+    date: string;
+    sender: string;
+    title: string;
+    number: string;
+    content: string;
+  };
+};
+
+function ListTable({ lang }: ListProps) {
   const [filterGroupVisible, setFilterGroupVisible] = useState(false);
 
   return (
@@ -16,17 +28,43 @@ function ListTable() {
         <div className="flex justify-end items-end space-x-4">
           <BiFilter
             size={36}
+            // * give the icon a transition of rotating 360 degree 
             onClick={() => setFilterGroupVisible(!filterGroupVisible)}
           />
+        <div className={cx('flex space-x-4', {
+            'flex' : !filterGroupVisible, 
+            'hidden': filterGroupVisible
+        })}>
+          <InputField
+            label={lang.date}
+            lang="LTR"
+            inputType="date"
+            fullWidth
+            name="date"
+          />
+          <InputField
+            label={lang.sender}
+            lang="RTL"
+            inputType="text"
+            fullWidth
+            name="sender"
+          />
+          <InputField
+            label={lang.title}
+            lang="RTL"
+            inputType="text"
+            fullWidth
+            name="title"
+          />
+          </div>
 
           <div className="relative ">
             <InputField
-              label="شماره"
+              label={lang.number}
               inputType="number"
               name="search"
               fullWidth={false}
               lang="RTL"
-              
             />
             <AiOutlineSearch
               size={16}
@@ -34,29 +72,16 @@ function ListTable() {
             />
           </div>
         </div>
-        <div
-          className={` ${
-            filterGroupVisible ? "grid" : "hidden"
-          } justify-items-end space-y-3 mt-4`}
-        >
-          <div>
-            <label htmlFor="">فرستنده</label>
-            <input type="text" className="border border-black" />
-          </div>
-          <div>
-            <label htmlFor="">عنوان</label>
-            <input type="text" className="border border-black" />
-          </div>
-        </div>
+
         {/* table */}
-        <table className="w-full table-auto   mt-4 shadow-lg  ">
+        <table className="w-full table-auto mt-8 shadow-lg">
           <thead className="border-b border-primary-500 bg-primary-500">
             <tr className=" bg-light font-IranSans ">
-              <th>تاریخ</th>
-              <th>عنوان</th>
-              <th>فرستنده</th>
-              <th>موضوع</th>
-              <th>شماره</th>
+              <th>{lang.date}</th>
+              <th>{lang.title}</th>
+              <th>{lang.sender}</th>
+              <th>{lang.content}</th>
+              <th>{lang.number}</th>
             </tr>
           </thead>
           <tbody className="font-nazanin ">

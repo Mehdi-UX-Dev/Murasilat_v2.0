@@ -22,7 +22,18 @@
       "document_des" : "جوړ کړئ او له نورو سره یې شریک کړئ", 
       "log_out": "وتل"
       },
-  
+      
+
+      
+    "list_page" : {
+      "search": "جستجو",
+      "date": "تاریخ",
+      "sender":"مرسل",
+      "title": "عنوان", 
+      "number": "شماره", 
+      "content" : "موضوع"
+    },
+
     "PAGE3": "PROFILE",
     "change_password": "پټ نوم بدل کړی",
     "new_password": "نوئ پټ نوم",
