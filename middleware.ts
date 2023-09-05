@@ -50,7 +50,7 @@ export function middleware(request: NextRequest) {
     localeByHost[geRequestHost(request) ?? ""] ?? i18n.defaultLocale;
 
   // @todo Remove when catch-all ‘not found’ pages are implemented
-  const existingPathnamePatterns = [/^\/$/, /^\/dashboard$/, /^\/docs$/, /^\/create$/  ];
+const existingPathnamePatterns = [/^\/$/, /^\/dashboard$/, /^\/docs$/, /^\/create$/, /^\/admin$/, /^\/admin\/users$/ , /^\/admin\/users\/(\d+)$/   ];
   if (
     !existingPathnamePatterns.some((pathnamePattern) =>
       pathnamePattern.test(newUrl.pathname)
