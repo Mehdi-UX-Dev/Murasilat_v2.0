@@ -13,7 +13,7 @@ import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 
 type SideProps = {
-  lang: {
+  lang?: {
     dashboard: string;
     write: string;
     maktoob: string;
@@ -28,7 +28,7 @@ type SideProps = {
   };
 };
 
-function SideBar({ lang }: SideProps) {
+function SideBar({ lang }: SideProps ) {
   const handleLogOut = () => {
     window.localStorage.removeItem("token");
     // router.push("/login");
@@ -48,7 +48,7 @@ function SideBar({ lang }: SideProps) {
       <div className="space-y-10">
         <SideOption
           url={"/dashboard"}
-          text={lang.dashboard}
+          text={lang?.dashboard}
           Icon={MdDashboard}
           hasDropDown={false}
         />
@@ -57,25 +57,25 @@ function SideBar({ lang }: SideProps) {
         <div className="space-y-3">
           <SideOption
             url={""}
-            text={lang.write}
+            text={lang?.write}
             Icon={BsEnvelopePlusFill}
             hasDropDown={true}
           />
 
           <SideSubOption
             url={"/createMaktoob"}
-            text={lang.maktoob}
+            text={lang?.maktoob}
             Icon={AiOutlinePlus}
           />
           <SideSubOption
             url={"/createIstilam"}
-            text={lang.istilam}
+            text={lang?.istilam}
             Icon={AiOutlinePlus}
           />
 
           <SideSubOption
             url={"/createPishnihad"}
-            text={lang.pishnihad}
+            text={lang?.pishnihad}
             Icon={AiOutlinePlus}
           />
         </div>
@@ -84,25 +84,25 @@ function SideBar({ lang }: SideProps) {
         <div className="space-y-3">
           <SideOption
             url={""}
-            text={lang.archive}
+            text={lang?.archive}
             Icon={MdFolder}
             hasDropDown={true}
           />
 
           <SideSubOption
             url={"/createMaktoob"}
-            text={lang.recents}
+            text={lang?.recents}
             Icon={FaHistory}
           />
           <SideSubOption
             url={"/createIstil"}
-            text={lang.all_sadira}
+            text={lang?.all_sadira}
             Icon={MdOutgoingMail}
           />
 
           <SideSubOption
             url={"/createPishnihad"}
-            text={lang.all_warida}
+            text={lang?.all_warida}
             Icon={RiMailDownloadFill}
           />
         </div>
@@ -111,7 +111,7 @@ function SideBar({ lang }: SideProps) {
 
         <SideOption
           url={"/broadcast"}
-          text={lang.broadcast}
+          text={lang?.broadcast}
           Icon={BsBroadcast}
           hasDropDown={false}
         />
@@ -121,7 +121,7 @@ function SideBar({ lang }: SideProps) {
       <div className="flex pl-10 items-center text-primary-400">
         <BiLogOut size={24} />
         <Button
-          label={lang.log_out}
+          label={lang?.log_out}
           intent="tertiary"
           size="large"
           type="button"

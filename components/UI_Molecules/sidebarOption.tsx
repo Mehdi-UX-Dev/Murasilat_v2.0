@@ -7,7 +7,7 @@ import { BiChevronDown } from "react-icons/bi";
 
 type props = {
   url: string;
-  text: string;
+  text?: string;
   Icon: IconType;
   hasDropDown: boolean;
 };

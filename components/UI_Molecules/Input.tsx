@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
-import { useCredentialsContext } from "../../hooks/credentialsContext";
+import { useMyContext } from "../../hooks/credentialsContext";
 
 const inputCVA = cva(
   "border border-primary-700 rounded-md pl-2 h-10 focus:border-2 focus:border-primary-900  ",
@@ -60,7 +60,7 @@ export const InputField = ({
   name,
   lang,
 }: InputProps) => {
-  const consumeCredentials = useCredentialsContext();
+  const consumeCredentials = useMyContext();
 
   /**
    * handleChange gives the value of input to the credentials context
@@ -69,7 +69,7 @@ export const InputField = ({
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
 
-    consumeCredentials?.setCredentials((prev) => ({
+    consumeCredentials?.setCredentials?.((prev) => ({
       ...prev,
       [name]: value,
     }));

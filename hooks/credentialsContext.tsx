@@ -1,19 +1,21 @@
 import { useContext, createContext, Dispatch, SetStateAction } from "react";
 
-export type CredentialsType = {
+export type ContextTypes = {
   credentials?: { [key: string]: string };
-  setCredentials: Dispatch<
+  setCredentials?: Dispatch<
     SetStateAction<{
       [key: string]: string;
     }>
   >;
-  handleSubmit : React.FormEventHandler<HTMLFormElement> ;
-  errorState : {inputState : 'Default' | 'ErrorState' , msg : string, status : boolean}
+  handleSubmit ?: React.FormEventHandler<HTMLFormElement> ;
+  errorState? : {inputState : 'Default' | 'ErrorState' , msg : string, status : boolean}
+  userModuleState ?: boolean, 
+  setModuleState?:  Dispatch<SetStateAction<boolean>>
 };
 
 
-export const Credentials = createContext<CredentialsType | undefined>(
+export const Credentials = createContext<ContextTypes | undefined>(
   undefined
 );
 
-export const useCredentialsContext = () => useContext(Credentials);
+export const useMyContext = () => useContext(Credentials);

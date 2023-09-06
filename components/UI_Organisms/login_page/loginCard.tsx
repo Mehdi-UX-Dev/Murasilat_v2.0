@@ -3,7 +3,7 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import { useCredentialsContext } from "@/hooks/credentialsContext";
+import { useMyContext } from "@/hooks/credentialsContext";
 import { getDictionary } from "@/i18n-server";
 
 type propsType = {
@@ -19,7 +19,7 @@ type langProps = {
 };
 
 const Card = ({ locale }: propsType) => {
-  const consumeContext = useCredentialsContext();
+  const consumeContext = useMyContext();
   const [lang, setLang] = useState<langProps>({
     header: "",
     username: "",
@@ -57,7 +57,7 @@ const Card = ({ locale }: propsType) => {
               label={lang.username}
               fullWidth
               state={
-                consumeContext?.errorState.status ? "ErrorState" : "Default"
+                consumeContext?.errorState?.status ? "ErrorState" : "Default" 
               }
               name="username"
               lang={locale == "en" ? "LTR" : "RTL"}
@@ -71,7 +71,7 @@ const Card = ({ locale }: propsType) => {
               label={lang.password}
               fullWidth
               state={
-                consumeContext?.errorState.status ? "ErrorState" : "Default"
+                consumeContext?.errorState?.status ? "ErrorState" : "Default"
               }
               name="password"
               lang={locale == "en" ? "LTR" : "RTL"}
@@ -83,7 +83,7 @@ const Card = ({ locale }: propsType) => {
             />
           </div>
 
-          {consumeContext?.errorState.status && (
+          {consumeContext?.errorState?.status && (
             <div className="text-myAccent-error-300 " id="ErrorContainer">
               {consumeContext?.errorState.msg.toString()}
             </div>

@@ -34,7 +34,7 @@ interface ButtonProps extends VariantProps<typeof button> {
   /**
    * Button contents
    */
-  label: string;
+  label?: string;
 
   /**
    * button type

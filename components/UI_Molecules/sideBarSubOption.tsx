@@ -6,7 +6,7 @@ import { IconType } from "react-icons";
 
 type props = {
   url: string;
-  text: string;
+  text?: string;
   Icon: IconType;
 };
 

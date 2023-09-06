@@ -6,7 +6,7 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 type props = {
   type: String;
   path: string;
-  lang: {
+  lang?: {
     document_des: string;
     maktoob?: string;
     istilam?: string;
@@ -22,14 +22,14 @@ function DashboardButton({ type, path, lang }: props) {
         <AiOutlinePlusCircle className="text-medium" size={36} />
         <div className="pl-4 pr-6">
           <p className="font-bold font-rounded text-[18px] ">
-            {lang.create}{" "}
+            {lang?.create}{" "}
             {type == "maktoob"
-              ? lang.maktoob
+              ? lang?.maktoob
               : type == "istilam"
-              ? lang.istilam
-              : lang.pishnihad}
+              ? lang?.istilam
+              : lang?.pishnihad}
           </p>
-          <p className="text-medium text-[14px]">{lang.document_des}</p>
+          <p className="text-medium text-[14px]">{lang?.document_des}</p>
         </div>
         <HiOutlineDocumentText size={56} className="text-medium" />
       </div>
