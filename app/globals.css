@@ -41,3 +41,10 @@ input[type="radio"]:checked {
         -webkit-appearance: none;
         margin: 0;
       }
+
+
+      @layer base {
+        .adminPageInputStyle {
+          @apply border-b w-full focus:ring-0 focus:outline-none focus:border-black
+        }
+      }

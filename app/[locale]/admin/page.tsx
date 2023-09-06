@@ -1,8 +1,10 @@
 "use client";
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
-import { cx } from "class-variance-authority";
-import Link from "next/link";
+import AdminNavigationHeader from "@/components/UI_Organisms/user/navigation";
+
+
+
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -13,24 +15,7 @@ function Administrator() {
 
   return (
     <>
-      <div className="flex justify-center font-bold font-rounded space-x-16 bg-primary-200 pt-4  ">
-        <Link
-          href={"/admin"}
-          className={cx({
-            "border-b-4 border-black ": path == "/admin",
-          })}
-        >
-          Add User
-        </Link>
-        <Link
-          href={"/admin/users"}
-          className={cx({
-            "border-b-4 border-black ": path == "/admin/users",
-          })}
-        >
-          Users List
-        </Link>
-      </div>
+      <AdminNavigationHeader />
       <div className="my-10">
         <div className="drop-shadow-lg bg-white w-[560px]  mx-auto  px-4 py-20">
           <h1 className="text-xl font-bold mb-4">Register User</h1>

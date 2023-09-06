@@ -8,7 +8,7 @@ function geRequestHost(request: NextRequest) {
   return request.headers.get("x-forwarded-host") || request.headers.get("host");
 }
 
-  const localeByHost = Object.fromEntries(
+const localeByHost = Object.fromEntries(
   Object.entries(baseUrlByLocale).map(([locale, baseUrl]) => [
     new URL(baseUrl).host,
     locale,
@@ -36,8 +36,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-
-  //? dont know what does this condition do 
+  //? dont know what does this condition do
   if (
     i18n.locales.some((locale) => newUrl.pathname.startsWith(`/${locale}/`))
   ) {
@@ -50,7 +49,15 @@ export function middleware(request: NextRequest) {
     localeByHost[geRequestHost(request) ?? ""] ?? i18n.defaultLocale;
 
   // @todo Remove when catch-all ‘not found’ pages are implemented
-const existingPathnamePatterns = [/^\/$/, /^\/dashboard$/, /^\/docs$/, /^\/create$/, /^\/admin$/, /^\/admin\/users$/ , /^\/admin\/users\/(\d+)$/   ];
+  const existingPathnamePatterns = [
+    /^\/$/,
+    /^\/dashboard$/,
+    /^\/docs$/,
+    /^\/create$/,
+    /^\/admin$/,
+    /^\/admin\/users$/,
+    /^\/admin\/users\/(\d+)$/,
+  ];
   if (
     !existingPathnamePatterns.some((pathnamePattern) =>
       pathnamePattern.test(newUrl.pathname)
