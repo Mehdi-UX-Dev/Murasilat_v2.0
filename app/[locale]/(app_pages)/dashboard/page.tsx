@@ -30,7 +30,9 @@ type langProps = {
 
 function Dashboard({ params: { locale } }: PageProps) {
   // ? how to destructure the value directly
-  const value = useMyContext();
+  const myContext = useMyContext();
+  console.log(myContext?.userModuleState);
+  
 
   const [lang, setDashLang] = useState<langProps | undefined>(undefined);
   useEffect(() => {
@@ -41,11 +43,13 @@ function Dashboard({ params: { locale } }: PageProps) {
   });
 
   return (
-    <div className="relative space-y-8 blur  ">
+    <div className=" space-y-8  ">
+      {myContext?.userModuleState && (
+        <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
+          <UserInfo />
+        </div>
+      )}
 
-      <div className="fixed inset-0  w-full top-1/2  ">
-          <UserInfo/>
-      </div>
       <div className="flex justify-end space-x-4 text-right mt-8">
         <DashboardButton lang={lang} type="maktoob" path="/maktoob" />
         <DashboardButton lang={lang} type="istilam" path="/istilam" />

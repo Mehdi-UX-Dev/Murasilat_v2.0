@@ -41,7 +41,7 @@ export default function DashboardLayout({
   }, [locale]);
   return (
     <Credentials.Provider value={{ userModuleState, setModuleState }}>
-      <div className="flex  flex-row-reverse min-h-screen bg-primary-300  bg-opacity-50">
+      <div className="flex  flex-row-reverse min-h-screen  ">
         {/* Include shared UI here e.g. a header or sidebar */}
         <SideBar lang={lang} />
 
