@@ -1,6 +1,9 @@
 import React from "react";
+import { DocValueTypes } from "@/app/[locale]/(app_pages)/create/[type]/page";
 
-function TypeGroup() {
+type docValue = {setDocValue : React.Dispatch<React.SetStateAction<DocValueTypes>>}
+
+function TypeGroup({setDocValue} : docValue ) {
   const handleRadioClick = (item: string) => {
     console.log(item);
 

@@ -53,7 +53,7 @@ export function middleware(request: NextRequest) {
     /^\/$/,
     /^\/dashboard$/,
     /^\/docs$/,
-    /^\/create$/,
+    /^\/create\/\w+$/,
     /^\/admin$/,
     /^\/admin\/users$/,
     /^\/admin\/users\/(\d+)$/,

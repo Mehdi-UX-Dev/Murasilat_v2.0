@@ -8,7 +8,7 @@ type PageProps = {
 };
 
 async function Page({ params: { locale } }: PageProps) {
-  const lang = await (await getDictionary(locale)).list_page;
+  const lang = (await getDictionary(locale)).list_page;
   return (
     <div className="">
       {/* the header must be with the id in the same row  */}

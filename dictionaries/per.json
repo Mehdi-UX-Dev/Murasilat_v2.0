@@ -23,6 +23,23 @@
     "create" : "ایجاد", 
     "log_out": "خروج"
     },
+
+    "Write_Page" : {
+      "Create_Maktoob": "ایجاد مکتوب",
+      "Create_Istilam": "ایجاد استعلام",
+      "Create_Pishniahd": "ایجاد پيشنهاد"
+    },
+  
+    "list_page" : {
+      "search": "جستجو",
+      "date": "تاریخ",
+      "sender":"فرستنده",
+      "title": "عنوان", 
+      "number": "شماره", 
+      "content" : "موضوع"
+
+    },
+
   
   
     "PAGE3": "PROFILE",
@@ -41,15 +58,7 @@
     "passwords_dont_match": "رمزهای عبور مطابقت ندارند",
     "save_changes": "ذخیره",
   
-    "list_page" : {
-      "search": "جستجو",
-      "date": "تاریخ",
-      "sender":"فرستنده",
-      "title": "عنوان", 
-      "number": "شماره", 
-      "content" : "موضوع"
-
-    },
+   
 
     "PAGE4": "USERS",
     "search_bar": "جستجو",

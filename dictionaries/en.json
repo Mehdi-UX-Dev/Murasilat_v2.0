@@ -34,6 +34,12 @@
       "content" : "Subject"
     },
 
+    "Write_Page" : {
+      "Create_Maktoob": "Create Maktoob",
+      "Create_Istilam": "Create Istilam",
+      "Create_Pishniahd": "Create Pishnihad"
+    },
+
   
  
     "PAGE3": "PROFILE",
