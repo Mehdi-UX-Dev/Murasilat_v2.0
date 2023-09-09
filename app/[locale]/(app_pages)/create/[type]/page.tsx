@@ -4,7 +4,7 @@ import { Button } from "@/components/UI_Molecules/Button";
 import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
 import CustomizedSelectComponent from "@/components/UI_Organisms/create_pages/customizedSelectComponent";
 import modules from "../../../../../Quill.module.";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../../../../app/quill.rtl.css";
@@ -20,12 +20,19 @@ type DocumentTypeProps = {
   params: { type: string };
 };
 
+export type personProps = {
+  id: number;
+  name: string;
+  position: string;
+  image: string;
+};
+
 export type DocValueTypes = {
   date: string;
   docNumber: number;
   docType: "normal" | "emergency" | "announcment" | "confidential";
   quillValue: string;
-  sender: Array<object>;
+  recieverList: Array<personProps>;
   title: string;
   summary: string;
   file?: File;
@@ -33,23 +40,30 @@ export type DocValueTypes = {
 
 function Page({ params: { type } }: DocumentTypeProps) {
   // Create a new Date object representing the current date
-  const currentDate = new Date();
-
-  const shamsiDate = currentDate.toLocaleDateString("fa-IR", options);
-  // console.log(RTLQuill);
+  const shamsiDate = new Date().toLocaleDateString("fa-IR", options);
 
   const [docValue, setDocValue] = useState<DocValueTypes>({
     date: shamsiDate,
     docNumber: 1,
     docType: "normal",
     quillValue: "",
-    sender: [],
+    recieverList: [],
     title: "",
     summary: "",
   });
 
   const handleDocSumbit = () => {
     fetch("", {});
+  };
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const { name, value } = event.target;
+    setDocValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   return (
     <form onSubmit={handleDocSumbit} className="w-[1136px] mt-6 mx-auto ">
@@ -61,7 +75,10 @@ function Page({ params: { type } }: DocumentTypeProps) {
 
         <div className="flex items-center border border-b-0 border-primary-300  pl-2 ">
           <TypeGroup setDocValue={setDocValue} />
-          <CustomizedSelectComponent />
+          <CustomizedSelectComponent
+            recieverList={docValue.recieverList}
+            setDocValue={setDocValue}
+          />
         </div>
 
         <input
@@ -69,6 +86,8 @@ function Page({ params: { type } }: DocumentTypeProps) {
           className="w-full border border-b-0 border-primary-400 pr-4 py-2"
           placeholder="ایجاد مکتوب"
           dir="rtl"
+          onChange={handleInputChange}
+          name="title"
         />
 
         {/* the quill editor is still not good in design, needs work */}
@@ -91,6 +110,7 @@ function Page({ params: { type } }: DocumentTypeProps) {
           className="w-full border-t  border-primary-400 pr-4 py-2"
           placeholder="ایجاد مکتوب"
           dir="rtl"
+          name="summary"
         />
       </div>
       <div className="flex justify-end space-x-4">

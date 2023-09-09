@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import photo from "../../public/images/photo.jpg";
+import { DocValueTypes } from "@/app/[locale]/(app_pages)/create/[type]/page";
 type personProps = {
   id: number;
   name: string;
@@ -11,18 +12,21 @@ type personProps = {
 function Person({
   setPersonInfo,
 }: {
-  setPersonInfo: React.Dispatch<React.SetStateAction<personProps[]>>;
+  setPersonInfo: React.Dispatch<React.SetStateAction<DocValueTypes>>;
 }) {
   const handlePersonClick = () => {
-    setPersonInfo((info: personProps[]) => [
-      ...info,
-      {
-        id: 1,
-        name: "محمد مهدی واحد",
-        position: "استاد دستیار",
-        image: "../../public/images/photo.jpg",
-      },
-    ]);
+    setPersonInfo((info: DocValueTypes) => ({
+      ...info, 
+      recieverList: [
+        ...info.recieverList,
+        {
+          id: 1,
+          name: "محمد مهدی واحد",
+          position: "استاد دستیار",
+          image: "../../public/images/photo.jpg",
+        },
+      ]
+    }));
   };
 
   return (

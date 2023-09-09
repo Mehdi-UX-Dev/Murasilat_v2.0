@@ -2,22 +2,23 @@ import React, { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import Person from "@/components/UI_Molecules/personSendList";
 import SelectedPerson from "@/components/UI_Molecules/personSelectedAvatar";
+import { DocValueTypes, personProps } from "@/app/[locale]/(app_pages)/create/[type]/page";
 
 
 //* type person is used several times, so export it as a default type to reduce redundancy 
-type personProps = {
-  id: number;
-  name: string;
-  position: string;
-  image: string;
-};
 
-function CustomizedSelectComponent() {
+
+type recieverListProps ={
+  recieverList : Array<personProps>, 
+  setDocValue : React.Dispatch<React.SetStateAction<DocValueTypes>>
+}
+
+function CustomizedSelectComponent({recieverList, setDocValue} : recieverListProps) {
   const [listVisbile, setListVisible] = useState(true);
   const showList = () => {
     setListVisible(!listVisbile);
   };
-  const [personInfo, setPersonInfo] = useState<personProps[]>([]);
+  // const [personInfo, setPersonInfo] = useState<personProps[]>([]);
 
   return (
     <div
@@ -32,15 +33,15 @@ function CustomizedSelectComponent() {
           <p> ارسال به</p>
           <BsChevronDown className="mr-3" />
         </div>
-        {personInfo.map((person) => (
-          <SelectedPerson key={person.id} info={person} length={personInfo.length} removeSelectedPerson={setPersonInfo} />
+        {recieverList.map((person) => (
+          <SelectedPerson key={person.id} info={person} length={recieverList.length} removeSelectedPerson={setDocValue} />
         ))}
       </div>
       <div
         hidden={listVisbile}
         className="bg-primary-100 shadow-lg w-72  py-4  space-y-4 "
       >
-        <Person setPersonInfo={setPersonInfo} />
+        <Person setPersonInfo={setDocValue} />
         <div className="border border-primary-400" />
       </div>
     </div>

@@ -3,15 +3,10 @@ import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import photo from "../../public/images/photo.jpg";
 import { cx } from "class-variance-authority";
-type personProps = {
-  id: number;
-  name: string;
-  position: string;
-  image: string;
-};
+import { DocValueTypes } from "@/app/[locale]/(app_pages)/create/[type]/page";
 
 type SelectedPersonProps = {
-  removeSelectedPerson: React.Dispatch<React.SetStateAction<personProps[]>>;
+  removeSelectedPerson: React.Dispatch<React.SetStateAction<DocValueTypes>>;
   info: {
     id: number;
     name: string;
@@ -29,10 +24,23 @@ function SelectedPerson({
   // const filteredData =  prev.filter(list => list.id)
 
   const handlePersonRemoval = () => {
-    removeSelectedPerson((personInfo: personProps[]) =>
-      personInfo.filter((list) => list.id != info.id)
-    );
+    removeSelectedPerson((personInfo: DocValueTypes) => ({
+      ...personInfo,
+      recieverList: personInfo.recieverList.filter(
+        (list) => list.id != info.id
+      ),
+    }));
   };
+
+  // const handlePersonRemoval = () => {
+  //   removeSelectedPerson((personInfo: DocValueTypes) => {
+  //     // const updatedReceiverList =
+  //     return {
+  //       ...personInfo,
+  //       receiverList: personInfo.recieverList.filter((list) => list.id !== info.id)
+  //     };
+  //   });
+  // };
 
   return (
     <div className="flex items-center bg-primary-300 p-2 rounded-full">
