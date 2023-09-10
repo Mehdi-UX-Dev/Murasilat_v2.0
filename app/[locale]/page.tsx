@@ -71,10 +71,8 @@ export default function Home({ params: { locale } }: PageProps) {
       <div>
         {/* Header Component */}
         <Header />
-        <Suspense fallback={<p>Loading...</p>}>
-          {/* Card and Form */}
-          <Card locale={locale} />
-        </Suspense>
+        {/* Card and Form */}
+        <Card locale={locale} />
       </div>
     </Credentials.Provider>
   );

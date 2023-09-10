@@ -4,7 +4,7 @@ import { Button } from "@/components/UI_Molecules/Button";
 import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
 import CustomizedSelectComponent from "@/components/UI_Organisms/create_pages/customizedSelectComponent";
 import modules from "../../../../../Quill.module.";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../../../../app/quill.rtl.css";
@@ -38,7 +38,7 @@ export type DocValueTypes = {
   file?: File;
 };
 
-function Page({ params: { type } }: DocumentTypeProps) {
+function Page() {
   // Create a new Date object representing the current date
   const shamsiDate = new Date().toLocaleDateString("fa-IR", options);
 

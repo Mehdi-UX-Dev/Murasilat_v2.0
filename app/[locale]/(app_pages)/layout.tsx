@@ -5,7 +5,7 @@ import { Credentials } from "@/hooks/credentialsContext";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 type langProps = {
   dashboard: string;

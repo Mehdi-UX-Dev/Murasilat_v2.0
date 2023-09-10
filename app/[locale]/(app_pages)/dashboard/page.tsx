@@ -1,7 +1,7 @@
 "use client";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import Card from "@/components/UI_Organisms/create_pages/Card";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { useMyContext } from "@/hooks/credentialsContext";
@@ -31,8 +31,6 @@ type langProps = {
 function Dashboard({ params: { locale } }: PageProps) {
   // ? how to destructure the value directly
   const myContext = useMyContext();
-  console.log(myContext?.userModuleState);
-  
 
   const [lang, setDashLang] = useState<langProps | undefined>(undefined);
   useEffect(() => {
@@ -40,7 +38,7 @@ function Dashboard({ params: { locale } }: PageProps) {
       const res = (await getDictionary(locale)).dashboard;
       setDashLang(res);
     })();
-  });
+  }, [locale]);
 
   return (
     <div className=" space-y-8  ">
