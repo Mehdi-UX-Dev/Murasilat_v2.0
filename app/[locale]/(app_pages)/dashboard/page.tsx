@@ -1,11 +1,13 @@
 "use client";
-import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
+// const DashboardButton = React.lazy(() => import( "@/components/UI_Molecules/dashboradCreateButton"))
+
 import Card from "@/components/UI_Organisms/create_pages/Card";
 import React, { Suspense, useEffect, useState } from "react";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { useMyContext } from "@/hooks/credentialsContext";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
+import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 
 type PageProps = {
   params: { locale: Locale };
@@ -41,23 +43,29 @@ function Dashboard({ params: { locale } }: PageProps) {
   }, [locale]);
 
   return (
-    <div className=" space-y-8  ">
-      {myContext?.userModuleState && (
-        <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-          <UserInfo />
+    lang && (
+      <div className=" space-y-8  ">
+        {myContext?.userModuleState && (
+          <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
+            <UserInfo />
+          </div>
+        )}
+
+        <div className="flex justify-end space-x-4 text-right mt-8">
+          <DashboardButton lang={lang} type="maktoob" path="/maktoob" />
+          <DashboardButton lang={lang} type="istilam" path="/istilam" />
+          <DashboardButton
+            lang={lang}
+            type="iishnihad"
+            path="/pishnihad"
+          />{" "}
         </div>
-      )}
 
-      <div className="flex justify-end space-x-4 text-right mt-8">
-        <DashboardButton lang={lang} type="maktoob" path="/maktoob" />
-        <DashboardButton lang={lang} type="istilam" path="/istilam" />
-        <DashboardButton lang={lang} type="iishnihad" path="/pishnihad" />
+        <div className="flex justify-end">
+          <Card />
+        </div>
       </div>
-
-      <div className="flex justify-end">
-        <Card />
-      </div>
-    </div>
+    )
   );
 }
 

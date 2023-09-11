@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { Button } from "@/components/UI_Molecules/Button";
 import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";

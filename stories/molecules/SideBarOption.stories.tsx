@@ -11,4 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof SideOption>;
 
-export const DefaultSideState: Story = {};
+export const DefaultSideState: Story = {
+  args: {
+    url: "",
+  },
+};
