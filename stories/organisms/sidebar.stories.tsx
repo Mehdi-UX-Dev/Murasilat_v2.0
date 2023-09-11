@@ -12,5 +12,19 @@ export default meta;
 type Story = StoryObj<typeof SideBar>;
 
 export const DefaultState: Story = {
-  args: {},
+  args: {
+    lang: {
+      dashboard: "dashboard",
+      write: "",
+      maktoob: "",
+      istilam: "",
+      pishnihad: "",
+      archive: "",
+      recents: "",
+      all_sadira: "",
+      all_warida: "",
+      broadcast: "",
+      log_out: "",
+    },
+  },
 };

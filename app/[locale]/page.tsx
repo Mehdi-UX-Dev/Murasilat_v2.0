@@ -1,11 +1,13 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Credentials } from "@/hooks/credentialsContext";
 import { useRouter } from "next/navigation";
 import { Locale } from "@/i18n-config";
 import Header from "@/components/UI_Organisms/login_page/loginHeader";
 import Card from "@/components/UI_Organisms/login_page/loginCard";
+import CardSuspense from "@/components/suspenseOrganisms/Card";
+import { getDictionary } from "@/i18n-server";
 
 type error = {
   inputState: "Default" | "ErrorState";
@@ -17,6 +19,14 @@ type PageProps = {
   params: { locale: Locale };
 };
 
+export type langProps = {
+  header: string;
+  username: string;
+  password: string;
+  submit: string;
+  invalid_credentials: string;
+};
+
 export default function Home({ params: { locale } }: PageProps) {
   const router = useRouter();
 
@@ -26,6 +36,15 @@ export default function Home({ params: { locale } }: PageProps) {
     status: false,
     msg: "",
   });
+
+  const [lang, setLang] = useState<langProps | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const res = (await getDictionary(locale)).login;
+      setLang(res);
+    })();
+  }, [locale]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
@@ -72,7 +91,11 @@ export default function Home({ params: { locale } }: PageProps) {
         {/* Header Component */}
         <Header />
         {/* Card and Form */}
-        <Card locale={locale} />
+        <Suspense
+          fallback={<p className="bg-red-500 h-screen text-2xl">Loading...</p>}
+        >
+          {lang && <Card lang={lang} />}
+        </Suspense>
       </div>
     </Credentials.Provider>
   );

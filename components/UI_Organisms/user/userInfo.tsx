@@ -4,7 +4,7 @@ import React from "react";
 import photo from "../../../public/images/photo.jpg";
 import { BsTranslate } from "react-icons/bs";
 import { GiCancel } from "react-icons/gi";
-import { useMyContext } from "@/hooks/credentialsContext";
+import { useMyContext } from "../../../hooks/credentialsContext";
 
 // !there is a problem in between the flex and grid of this PAGE at the div 2 and 3rd
 //? may be due to the small size of the page i will make it a module which could be shown on instant on list page

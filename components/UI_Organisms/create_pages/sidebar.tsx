@@ -9,7 +9,7 @@ import { FaHistory } from "react-icons/fa";
 import { RiMailDownloadFill } from "react-icons/ri";
 import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
-import SideOption from "@/components/UI_Molecules/sidebarOption";
+import SideOption from "../../UI_Molecules/sidebarOption"
 
 type SideProps = {
   lang?: {

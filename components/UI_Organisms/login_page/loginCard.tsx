@@ -1,36 +1,18 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { useMyContext } from "@/hooks/credentialsContext";
-import { getDictionary } from "@/i18n-server";
+import { langProps } from "@/app/[locale]/page";
 
-type propsType = {
-  locale: string;
+type CardProps = {
+  lang: langProps | undefined;
 };
 
-type langProps = {
-  header: string;
-  username: string;
-  password: string;
-  submit: string;
-  invalid_credentials: string;
-};
-
-const Card = ({ locale }: propsType) => {
+const Card = ({ lang }: CardProps) => {
   const consumeContext = useMyContext();
-  const [lang, setLang] = useState<langProps>({
-    header: "",
-    username: "",
-    password: "",
-    submit: "",
-    invalid_credentials: "",
-  });
-
-  useEffect( () => {
-      getDictionary(locale).then((i) => setLang(i.login as langProps))
-  }, [locale]);
 
   // The state for the eye icon to show password
   const [showPasswordState, setShowPasswordState] = useState(false);
@@ -40,10 +22,7 @@ const Card = ({ locale }: propsType) => {
   };
 
   return (
-    <div
-      dir={locale == "en" ? "ltr" : "rtl"}
-      className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 "
-    >
+    <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
       <section className="relative ">
         <h1 className="font-serif text-4xl text-center font-bold">
           {lang?.header}
@@ -54,13 +33,13 @@ const Card = ({ locale }: propsType) => {
           <div className="relative">
             <InputField
               inputType="text"
-              label={lang.username}
+              label={lang?.username}
               fullWidth
               state={
-                consumeContext?.errorState?.status ? "ErrorState" : "Default" 
+                consumeContext?.errorState?.status ? "ErrorState" : "Default"
               }
               name="username"
-              lang={locale == "en" ? "LTR" : "RTL"}
+              // lang={locale == "en" ? "LTR" : "RTL"}
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>
@@ -68,13 +47,13 @@ const Card = ({ locale }: propsType) => {
           <div className="relative">
             <InputField
               inputType={showPasswordState ? "text" : "password"}
-              label={lang.password}
+              label={lang?.password}
               fullWidth
               state={
                 consumeContext?.errorState?.status ? "ErrorState" : "Default"
               }
               name="password"
-              lang={locale == "en" ? "LTR" : "RTL"}
+              // lang={locale == "en" ? "LTR" : "RTL"}
             />
             <AiFillEye
               onClick={showPassword}
@@ -91,7 +70,7 @@ const Card = ({ locale }: propsType) => {
 
           <Button
             type="submit"
-            label={lang.submit}
+            label={lang?.submit}
             intent={"primary"}
             size={"medium"}
             fullWidth
