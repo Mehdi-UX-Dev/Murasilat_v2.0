@@ -6,9 +6,11 @@ export default function Loading() {
     <div>
       <div className="flex space-x-4 justify-end mt-8">
         <DashboardDocumentButtonSuspense />
+        <DashboardDocumentButtonSuspense />
+        <DashboardDocumentButtonSuspense />
       </div>
-      <div className="flex space-x-4 ">
-        <CardSuspense/>
+      <div className="flex space-x-4 justify-end mt-8">
+        <CardSuspense />
       </div>
     </div>
   );

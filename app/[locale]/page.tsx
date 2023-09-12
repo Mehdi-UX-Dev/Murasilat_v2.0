@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Locale } from "@/i18n-config";
 import Header from "@/components/UI_Organisms/login_page/loginHeader";
 import Card from "@/components/UI_Organisms/login_page/loginCard";
-import CardSuspense from "@/components/suspenseOrganisms/Card";
 import { getDictionary } from "@/i18n-server";
 
 type error = {
@@ -27,7 +26,7 @@ export type langProps = {
   invalid_credentials: string;
 };
 
-export default function Home({ params: { locale } }: PageProps) {
+function Home({ params: { locale } }: PageProps) {
   const router = useRouter();
 
   const [credentials, setCredentials] = useState<{ [key: string]: string }>({});
@@ -90,13 +89,15 @@ export default function Home({ params: { locale } }: PageProps) {
       <div>
         {/* Header Component */}
         <Header />
-        {/* Card and Form */}
         <Suspense
           fallback={<p className="bg-red-500 h-screen text-2xl">Loading...</p>}
         >
+          {/* Card and Form */}
           {lang && <Card lang={lang} />}
         </Suspense>
       </div>
     </Credentials.Provider>
   );
 }
+
+export default Home;
