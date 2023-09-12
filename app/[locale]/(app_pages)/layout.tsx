@@ -30,9 +30,9 @@ type langProps = {
 };
 
 type Write_Page_Doc_Type = {
-  Create_Maktoob: string;
-  Create_Istilam: string;
-  Create_Pishniahd: string;
+  create_maktoob: string;
+  create_istilam: string;
+  create_pishniahd: string;
 };
 
 export default function DashboardLayout({
@@ -45,9 +45,10 @@ export default function DashboardLayout({
   const [userModuleState, setModuleState] = useState(false);
   const path = usePathname();
   const [lang, setLang] = useState<langProps | undefined>(undefined);
-  const [writePageDocType, setWritePageDocType] =
-    useState<Write_Page_Doc_Type>();
-  const writePageDocTypePathChecker = /^\/create/;
+  const [writePageDocType, setWritePageDocType] = useState<
+    Write_Page_Doc_Type | undefined
+  >(undefined);
+  const writePageDocTypePathChecker = /^\/write/;
 
   useEffect(() => {
     (async () => {
@@ -60,11 +61,10 @@ export default function DashboardLayout({
   useEffect(() => {
     (async () => {
       const writePageDocTypeResponse = (await getDictionary(locale)).Write_Page;
+
       setWritePageDocType(writePageDocTypeResponse);
     })();
   }, [locale]);
-
-  console.log(lang);
 
   return (
     <Credentials.Provider value={{ userModuleState, setModuleState }}>
@@ -80,10 +80,10 @@ export default function DashboardLayout({
             {writePageDocTypePathChecker.test(path) && (
               <p className="mr-8 font-IranSans text-3xl font-bold">
                 {path === "/create/createMaktoob"
-                  ? writePageDocType?.Create_Maktoob
+                  ? writePageDocType?.create_maktoob
                   : path == "/create/createIstilam"
-                  ? writePageDocType?.Create_Istilam
-                  : writePageDocType?.Create_Pishniahd}
+                  ? writePageDocType?.create_istilam
+                  : writePageDocType?.create_pishniahd}
               </p>
             )}
           </div>

@@ -101,3 +101,5 @@ function Home({ params: { locale } }: PageProps) {
 }
 
 export default Home;
+
+

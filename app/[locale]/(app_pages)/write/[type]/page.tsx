@@ -1,13 +1,15 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/UI_Molecules/Button";
 import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
 import CustomizedSelectComponent from "@/components/UI_Organisms/create_pages/customizedSelectComponent";
 import modules from "../../../../../Quill.module.";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../../../../app/quill.rtl.css";
+import { getDictionary } from "@/i18n-server";
+import { Locale } from "@/i18n-config";
 
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -38,7 +40,16 @@ export type DocValueTypes = {
   file?: File;
 };
 
-function Page() {
+type Write_Page_Lang_Props = {
+  send_document: string;
+  preview_draft: string;
+  title: string;
+  send_to: string;
+  summary: string;
+  quill_placeholder: string;
+};
+
+function Page({ params: { locale } }: { params: { locale: Locale } }) {
   // Create a new Date object representing the current date
   const shamsiDate = new Date().toLocaleDateString("fa-IR", options);
 
@@ -55,6 +66,16 @@ function Page() {
   const handleDocSumbit = () => {
     fetch("", {});
   };
+
+  const [lang, setLang] = useState<Write_Page_Lang_Props>();
+  
+
+  useEffect(() => {
+    (async () => {
+      const writePageDocTypeResponse = (await getDictionary(locale)).Write_Page;
+      setLang(writePageDocTypeResponse);
+    })();
+  }, [locale]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -84,7 +105,7 @@ function Page() {
         <input
           type="text"
           className="w-full border border-b-0 border-primary-400 pr-4 py-2"
-          placeholder="ایجاد مکتوب"
+          placeholder={lang?.title}
           dir="rtl"
           onChange={handleInputChange}
           name="title"
@@ -102,20 +123,21 @@ function Page() {
           className="h-[23rem] overflow-hidden  "
           theme="snow"
           modules={modules}
-          placeholder="ایجاد مکتوب"
+          placeholder={lang?.quill_placeholder || "write"}
+          // placeholder="write"
         />
 
         <input
           type="text"
           className="w-full border-t  border-primary-400 pr-4 py-2"
-          placeholder="ایجاد مکتوب"
+          placeholder={lang?.summary}
           dir="rtl"
           name="summary"
         />
       </div>
       <div className="flex justify-end space-x-4">
-        <Button intent="secondary" label="ایجاد مکتوب" />
-        <Button label="ایجاد مکتوب" size="large" />
+        <Button intent="secondary" label={lang?.preview_draft} />
+        <Button label={lang?.send_document} size="large" />
       </div>
       {/*  */}
     </form>

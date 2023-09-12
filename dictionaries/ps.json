@@ -35,9 +35,15 @@
     },
 
     "Write_Page" : {
-      "Create_Maktoob": "مکتوب جوړ کړئ",
-      "Create_Istilam": "اسټیلام جوړ کړئ",
-      "Create_Pishniahd": "پشنهاد جوړ کړئ"
+      "create_maktoob": "مکتوب جوړ کړئ",
+      "create_istilam": "اسټیلام جوړ کړئ",
+      "create_pishniahd": "پشنهاد جوړ کړئ", 
+      "send_document" : "سند ولېږئ", 
+      "preview_draft" : "مسوده کتنه",
+      "title" : "عنوان", 
+      "send_to" : " لیږل", 
+      "summary": "لنډیز",
+      "quill_placeholder":"خپل محتوا ولیکئ"
     },
 
 
