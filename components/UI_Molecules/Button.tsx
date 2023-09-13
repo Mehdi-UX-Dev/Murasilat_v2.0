@@ -45,7 +45,7 @@ interface ButtonProps extends VariantProps<typeof button> {
   /**
    * to manage button
    * */
-  handleClick?: () => void;
+  handleClick?:   React.MouseEventHandler<HTMLButtonElement>;
 }
 
 /**

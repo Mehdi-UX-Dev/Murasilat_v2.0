@@ -1,16 +1,16 @@
 "use client";
-const ID = React.lazy(
-  () => import("@/components/UI_Organisms/create_pages/ID")
-);
+const ID = React.lazy(() => import("@/components/UI_Organisms/write_page/ID"));
 const SideBar = React.lazy(
-  () => import("@/components/UI_Organisms/create_pages/sidebar")
+  () => import("@/components/UI_Organisms/write_page/sidebar")
 );
+import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import SideBarSuspense from "@/components/suspenseOrganisms/sideBarSuspense";
 import { Credentials } from "@/hooks/credentialsContext";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { usePathname } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
+import { useMyContext } from "../../../hooks/credentialsContext";
 
 type langProps = {
   dashboard: string;
@@ -42,6 +42,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
   params: { locale: Locale };
 }) {
+  const myContext = useMyContext();
   const [userModuleState, setModuleState] = useState(false);
   const path = usePathname();
   const [lang, setLang] = useState<langProps | undefined>(undefined);
@@ -70,9 +71,11 @@ export default function DashboardLayout({
     <Credentials.Provider value={{ userModuleState, setModuleState }}>
       <div className="flex  flex-row-reverse min-h-screen  ">
         {/* Include shared UI here e.g. a header or sidebar */}
+
         <Suspense fallback={<SideBarSuspense />}>
           {lang && <SideBar lang={lang} />}
         </Suspense>
+
 
         <div className="grow px-8 pt-8">
           <div className="flex items-center">

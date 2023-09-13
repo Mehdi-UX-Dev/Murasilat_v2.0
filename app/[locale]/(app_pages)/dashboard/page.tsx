@@ -1,7 +1,7 @@
 "use client";
 // const DashboardButton = React.lazy(() => import( "@/components/UI_Molecules/dashboradCreateButton"))
 
-import Card from "@/components/UI_Organisms/create_pages/Card";
+import Card from "@/components/UI_Organisms/write_page/Card";
 import React, { Suspense, useEffect, useState } from "react";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
