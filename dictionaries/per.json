@@ -37,6 +37,20 @@
 
     },
 
+
+    "pdf": {
+        "moh": "وزارت تحصیلات عالی", 
+        "kudirectorate": "ریاست پوهنتون کابل", 
+        "faculty_directorate" : "comes from the server and set auto", 
+        "office": "comes from the server and set auto", 
+        "faculty_info": "comes from the server and set auto", 
+        "address": "آدرس", 
+        "phone": "شماره", 
+        "webiste":"ویب سایت", 
+        "doc_number": " شماره مکتوب", 
+        "doc_date": " تاریخ مکتوب", 
+        "warida_num": "نمبر رسیدات"
+    }, 
   
   
     "list_page" : {

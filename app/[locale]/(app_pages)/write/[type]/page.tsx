@@ -12,17 +12,9 @@ import { getDictionary } from "@/i18n-server";
 import { Locale } from "@/i18n-config";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import { useMyContext } from "../../../../../hooks/credentialsContext";
+import {GetQamariDate, GetShamsiDate} from "@/date-converter";
 
-const options: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  calendar: "persian",
-};
 
-type DocumentTypeProps = {
-  params: { type: string };
-};
 
 export type personProps = {
   id: number;
@@ -54,7 +46,7 @@ type Write_Page_Lang_Props = {
 function Page({ params: { locale } }: { params: { locale: Locale } }) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
-  const shamsiDate = new Date().toLocaleDateString("fa-IR", options);
+  const shamsiDate = GetShamsiDate()
 
   const [docValue, setDocValue] = useState<DocValueTypes>({
     date: shamsiDate,

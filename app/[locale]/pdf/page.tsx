@@ -1,42 +1,90 @@
 "use client";
 
-import React from "react";
-import { Document, Page, Text, View, PDFViewer } from "@react-pdf/renderer";
-import { createTw } from "react-pdf-tailwind";
+import React, { useEffect, useRef, useState } from "react";
+import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
+import Image from "next/image";
+import kabulUni from "../../../public/images/KabulUni.png";
+import MOH from "../../../public/images/moh.jpg";
+import { Locale } from "@/i18n-config";
+import { getDictionary } from "@/i18n-server";
+import  { GetShamsiDate, GetQamariDate } from "@/date-converter";
 
-const tw = createTw({});
+type langProps = {
+  moh: string;
+  kudirectorate: string;
+  faculty_directorate: string;
+  office: string;
+  faculty_info: string;
+  address: string;
+  phone: string;
+  webiste: string;
+  doc_number: string;
+  doc_date: string;
+  warida_num: string;
+};
 
+const HelloWorldPDF = ({
+  params: { locale },
+}: {
+  params: { locale: Locale };
+}) => {
+  const shamsiDate = GetShamsiDate()
+  const qamariDate = GetQamariDate()
+  useEffect(() => {
+    const generatePDF = async () => {
+      const doc = new jsPDF();
+      const element = document.getElementById("myElement");
 
+      // Generate HTML2PDF
+      html2pdf().from(element).toContainer(doc).output("datauristring");
+    };
 
-export default function Pdf() {
+    generatePDF();
+  }, []);
+
+  const [lang, setLang] = useState<langProps>();
+
+  useEffect(() => {
+    (async () => {
+      const res = (await getDictionary(locale)).pdf;
+      setLang(res);
+    })();
+  }, [locale]);
+
   return (
-    <PDFViewer width="100%" height="700px">
-      <Document>
-        <Page size="A4" style={tw("p-4 flex flex-row flex-wrap gap-4")}>
-          {[...Array(12)].map((_, i) => (
-            <View
-              key={i}
-              style={tw("flex-1 min-w-[200pt] p-4 flex-col bg-blue-100")}
-              wrap={false}
-            >
-              <Text style={tw("text-2xl font-bold text-custom")}>
-                Section {i + 1}
-              </Text>
-              <Text style={tw("text-sm")}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                semper efficitur libero in laoreet. Sed iaculis, magna suscipit
-                placerat commodo, risus turpis tincidunt ligula, ac euismod
-                justo sem id risus. Nullam euismod vestibulum leo, mollis
-                maximus sapien luctus in. Vivamus malesuada vulputate ornare.
-                Mauris ut accumsan felis. Vivamus enim urna, ultrices eu eros
-                ac, bibendum vehicula eros. Praesent ipsum orci, molestie
-                gravida tristique at, dapibus vitae est. Phasellus lectus nulla,
-                consequat eu mi ut, tempus pulvinar neque.
-              </Text>
-            </View>
-          ))}
-        </Page>
-      </Document>
-    </PDFViewer>
+    <div id="myElement" className="text-center">
+      <div className="flex justify-between mx-8 mt-6">
+        <Image src={MOH} alt="person" className="h-24 w-24 object-cover" />
+        <div className="font-semibold font-IranSans space-y-1">
+          <p>د لوړو زده کړو وزارت</p>
+          <p>د کابل پوهنتون ریاست</p>
+          <p>د کمپیوټر ساینس پوهنځی</p>
+          <p>دیپارتمنت انجنیری نرم افزار</p>
+        </div>
+        <Image src={kabulUni} alt="person" className="h-24 w-24 object-cover" />
+      </div>
+
+      <div className="flex justify-end ">
+        <section>
+          <div className="flex justify-end ">
+            <p>(1)</p>
+            <p>:{lang?.doc_number}</p>
+          </div>
+          <div className="flex space-x-1">
+            <div className="flex space-x-2">
+              <p> {qamariDate}</p>
+              <p>:مطابق</p>
+            </div>
+            <div className="flex space-x-2">
+              <p> {shamsiDate}</p>
+              <p>:{lang?.doc_date}</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   );
-}
+};
+
+export default HelloWorldPDF;

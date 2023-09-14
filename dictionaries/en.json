@@ -47,6 +47,19 @@
 
     },
 
+    "pdf": {
+      "moh": "not in english", 
+      "kudirectorate": "not in english", 
+      "faculty_directorate" : "comes from the server and set auto", 
+      "office": "comes from the server and set auto", 
+      "faculty_info": "comes from the server and set auto", 
+      "address": "Address", 
+      "phone": "Phone", 
+      "webiste":"Webiste",
+      "doc_number": " شماره مکتوب", 
+      "doc_date": " تاریخ مکتوب", 
+      "warida_num": "نمبر رسیدات"
+  }, 
   
  
     "PAGE3": "PROFILE",
