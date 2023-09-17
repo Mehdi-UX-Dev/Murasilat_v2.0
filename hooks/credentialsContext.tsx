@@ -10,7 +10,9 @@ export type ContextTypes = {
   handleSubmit ?: React.FormEventHandler<HTMLFormElement> ;
   errorState? : {inputState : 'Default' | 'ErrorState' , msg : string, status : boolean}
   userModuleState ?: boolean, 
-  setModuleState?:  Dispatch<SetStateAction<boolean>>
+  setModuleState?:  Dispatch<SetStateAction<boolean>>,
+  passwordState?: boolean,
+  setShowPasswordState?: Dispatch<SetStateAction<boolean>>
 };
 
 

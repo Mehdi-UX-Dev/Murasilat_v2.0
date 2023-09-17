@@ -69,15 +69,14 @@ export default function DashboardLayout({
 
   return (
     <Credentials.Provider value={{ userModuleState, setModuleState }}>
-      <div className="flex  flex-row-reverse min-h-screen  ">
+      <div className="flex  flex-row-reverse   ">
         {/* Include shared UI here e.g. a header or sidebar */}
 
         <Suspense fallback={<SideBarSuspense />}>
           {lang && <SideBar lang={lang} />}
         </Suspense>
 
-
-        <div className="grow px-8 pt-8">
+        <div className="grow pt-8">
           <div className="flex items-center">
             <ID setModuleState={setModuleState} />
             {writePageDocTypePathChecker.test(path) && (

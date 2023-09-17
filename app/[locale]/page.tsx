@@ -7,6 +7,7 @@ import { Locale } from "@/i18n-config";
 import Header from "@/components/UI_Organisms/login_page/loginHeader";
 import Card from "@/components/UI_Organisms/login_page/loginCard";
 import { getDictionary } from "@/i18n-server";
+import CardV3 from "@/components/UI_Organisms/login_page/loginCardV3";
 
 type error = {
   inputState: "Default" | "ErrorState";
@@ -89,12 +90,10 @@ function Home({ params: { locale } }: PageProps) {
       <div>
         {/* Header Component */}
         <Header />
-        <Suspense
-          fallback={<p className="bg-red-500 h-screen text-2xl">Loading...</p>}
-        >
+          {/* //! Suspense did not work on the card component why? */}
           {/* Card and Form */}
           {lang && <Card lang={lang} />}
-        </Suspense>
+          {/* <CardV3/> */}
       </div>
     </Credentials.Provider>
   );

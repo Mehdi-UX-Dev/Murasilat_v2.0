@@ -36,7 +36,7 @@ function SideBar({ lang }: SideProps) {
   
 
   return (
-    <aside className="w-[240px] shadow-lg grid content-between  pt-4   ">
+    <aside className="w-[240px] border-l  grid content-between  pt-4 fixed h-screen ">
       {/* Logo */}
       <Image
         src={Morasilat}

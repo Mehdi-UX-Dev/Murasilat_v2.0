@@ -14,13 +14,6 @@ type CardProps = {
 const Card = ({ lang }: CardProps) => {
   const consumeContext = useMyContext();
 
-  // The state for the eye icon to show password
-  const [showPasswordState, setShowPasswordState] = useState(false);
-
-  const showPassword = () => {
-    setShowPasswordState(!showPasswordState);
-  };
-
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
       <section className="relative ">
@@ -45,7 +38,7 @@ const Card = ({ lang }: CardProps) => {
 
           <div className="relative">
             <InputField
-              inputType={showPasswordState ? "text" : "password"}
+              inputType={consumeContext?.passwordState ? "text" : "password"}
               label={lang?.password}
               fullWidth
               state={
@@ -54,7 +47,7 @@ const Card = ({ lang }: CardProps) => {
               name="password"
             />
             <AiFillEye
-              onClick={showPassword}
+              onClick={consumeContext?.setShowPasswordState}
               size={16}
               className={"absolute right-2 bottom-3"}
             />

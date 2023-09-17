@@ -11,7 +11,7 @@ function ID({
 
   return (
     <section
-      className="flex  space-x-6 justify-en grow"
+      className="flex  space-x-6 ml-4"
       onClick={handleUserModule}
     >
       <div className="space-y-1 text-right">
