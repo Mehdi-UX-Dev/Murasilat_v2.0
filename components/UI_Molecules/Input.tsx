@@ -1,30 +1,28 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
 import { useMyContext } from "../../hooks/credentialsContext";
 
-const inputCVA = cva(
-  "border border-primary-700 rounded-md pl-2 h-10 focus:border-2 focus:border-primary-900  ",
-  {
-    variants: {
-      state: {
-        /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
-        /** The Default state is empty cuz we want to override the error state when it is cleared */
-        Default: "",
-        ErrorState: "!border-myAccent-error-300 border-2",
-      },
-
-      fullWidth: {
-        true: "w-full",
-      },
+const inputCVA = cva("",{
+  variants: {
+    state: {
+      /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
+      /** The Default state is empty cuz we want to override the error state when it is cleared */
+      Default:
+        "border border-primary-700 rounded-md pr-8 h-10 focus:border-2 focus:border-primary-900",
+      ErrorState: "!border-myAccent-error-300 border-2",
     },
-  }
-);
+
+    fullWidth: {
+      true: "w-full",
+    },
+  },
+});
 
 interface InputProps extends VariantProps<typeof inputCVA> {
   /**
    * Input Label
    */
-  label: string;
+  label?: string;
 
   /**
    * Default HTML input types
@@ -58,7 +56,6 @@ export const InputField = ({
   label,
   inputType,
   name,
-  lang,
 }: InputProps) => {
   const consumeCredentials = useMyContext();
 
@@ -76,7 +73,7 @@ export const InputField = ({
   };
 
   return (
-    <div className=" space-y-1">
+    <div dir="auto" className=" space-y-1">
       <label
         className={cx("capitalize block", {
           "text-myAccent-error-500": state === "ErrorState",
@@ -87,13 +84,9 @@ export const InputField = ({
 
       <input
         type={inputType}
-        className={cx(inputCVA({ state, fullWidth }), {
-          "pl-4": lang == "LTR",
-          "pr-8": lang == "RTL",
-        })}
+        className={inputCVA({ state, fullWidth })}
         onChange={handleChange}
         name={name}
-        dir={lang}
         required
       />
     </div>

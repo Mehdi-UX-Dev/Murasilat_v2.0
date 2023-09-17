@@ -28,7 +28,7 @@ const Card = ({ lang }: CardProps) => {
           {lang?.header}
         </h1>
       </section>
-      <form onSubmit={consumeContext?.handleSubmit}>
+      <form dir="rtl" onSubmit={consumeContext?.handleSubmit}>
         <div className="space-y-4 max-w-[320px] mx-auto mt-12">
           <div className="relative">
             <InputField
@@ -39,7 +39,6 @@ const Card = ({ lang }: CardProps) => {
                 consumeContext?.errorState?.status ? "ErrorState" : "Default"
               }
               name="username"
-              // lang={locale == "en" ? "LTR" : "RTL"}
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>
@@ -53,7 +52,6 @@ const Card = ({ lang }: CardProps) => {
                 consumeContext?.errorState?.status ? "ErrorState" : "Default"
               }
               name="password"
-              // lang={locale == "en" ? "LTR" : "RTL"}
             />
             <AiFillEye
               onClick={showPassword}
