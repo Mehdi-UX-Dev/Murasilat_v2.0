@@ -3,13 +3,14 @@ import DashboardDocumentButtonSuspense from "../../../../components/suspenseOrga
 
 export default function Loading() {
   return (
-    <div>
-      <div className="flex space-x-4 justify-end mt-8">
+    <div dir="rtl" className=" fixed right-72">
+      <div className="flex space-x-4  mt-8">
         <DashboardDocumentButtonSuspense />
         <DashboardDocumentButtonSuspense />
         <DashboardDocumentButtonSuspense />
       </div>
-      <div className="flex space-x-4 justify-end mt-8">
+      <div className="flex space-x-4  mt-8">
+        <CardSuspense />
         <CardSuspense />
       </div>
     </div>

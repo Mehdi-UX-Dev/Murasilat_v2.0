@@ -42,7 +42,7 @@ function Dashboard({ params: { locale } }: PageProps) {
 
   const scrollRight = () => {
     containerRef.current.scrollLeft += 100;
-  }
+  };
   const [lang, setDashLang] = useState<langProps | undefined>(undefined);
   useEffect(() => {
     (async () => {
@@ -72,11 +72,11 @@ function Dashboard({ params: { locale } }: PageProps) {
 
         <div
           ref={containerRef}
-          // transition is not working properly 
+          // transition is not working properly
           className="relative transition-transform duration-300 ease-in-out flex space-x-4 max-w-7xl overflow-x-auto py-2 shadow-lg scrollbar-hide "
         >
           <AiOutlineLeft
-            className="fixed top-1/2 left-8 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-70 z-10"
+            className="fixed top-1/2 left-8 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollLeft}
           />
@@ -87,7 +87,7 @@ function Dashboard({ params: { locale } }: PageProps) {
           <Card />
           <Card />
           <AiOutlineRight
-            className="fixed top-1/2 right-[260px] text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-70 z-10"
+            className="fixed  top-1/2 right-[260px] text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollRight}
           />

@@ -77,7 +77,7 @@ export default function DashboardLayout({
         </Suspense>
 
         <div className="grow pt-8">
-          <div className="flex items-center">
+          <div className="flex justify-between mr-[256px] items-center">
             <ID setModuleState={setModuleState} />
             {writePageDocTypePathChecker.test(path) && (
               <p className="mr-8 font-IranSans text-3xl font-bold">

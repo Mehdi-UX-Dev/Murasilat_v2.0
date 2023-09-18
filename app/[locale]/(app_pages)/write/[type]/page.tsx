@@ -99,7 +99,7 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
           <UserInfo />
         </div>
       )}
-      <form onSubmit={handleDocSumbit} className="w-[1136px] mt-6 mx-auto ">
+      <form onSubmit={handleDocSumbit} className="w-[1136px] mt-12 ml-24  ">
         <div className="border border-primary-400 mb-4">
           <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">
             <p>{shamsiDate}</p>
