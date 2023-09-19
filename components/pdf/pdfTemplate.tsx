@@ -1,17 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
-import kabulUni from '../../public/images/KabulUni.png'
-import MOH from '../../public/images/moh.jpg'
+import kabulUni from "../../public/images/KabulUni.png";
+import MOH from "../../public/images/moh.jpg";
 import { GetQamariDate, GetShamsiDate } from "@/date-converter";
-import { localeProps } from "@/universalTypes";
+import { langProps_PDF } from "@/universalTypes";
+function PDFTemplate({ body, ...lang }: langProps_PDF & { body?: string }) {
 
+  console.log(typeof body);
+  
+  const shamsiDate = GetShamsiDate();
+  const qamariDate = GetQamariDate();
 
-function generatePDF({params : locale} : localeProps) {
-    
-    const shamsiDate = GetShamsiDate()
-    const qamariDate = GetQamariDate()
   return (
-    <div id="myElement" className="mx-4 grid grid-rows-5">
+    <div id="myElement" className=" mt-auto  grid grid-rows-5 bg-white w-1/2">
       {/*  */}
       <section id="header" className="row-span-1">
         <div className="flex justify-between mx-8 mt-4 text-center">
@@ -71,12 +74,14 @@ function generatePDF({params : locale} : localeProps) {
         <div className="w-full border-b-2 border-black  mt-4"></div>
       </section>
 
-      {/*  */}
-      <section id="body" className="row-span-3"></section>
+      {/* quill content  */}
+
+      <section id="body" className="row-span-3 text-right pr-4 pt-2">
+        {body}
+      </section>
       {/*  */}
       <section id="footer" className="row-span-1">
         <div className="w-full border-b border-black  mt-4"></div>
-
         <div className="flex justify-between mx-8">
           <div>
             <p>Computer Science Faculty of Kabul University</p>
@@ -96,4 +101,4 @@ function generatePDF({params : locale} : localeProps) {
   );
 }
 
-export default generatePDF;
+export default PDFTemplate;

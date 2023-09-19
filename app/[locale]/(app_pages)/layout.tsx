@@ -49,7 +49,8 @@ export default function DashboardLayout({
   const [writePageDocType, setWritePageDocType] = useState<
     Write_Page_Doc_Type | undefined
   >(undefined);
-  const writePageDocTypePathChecker = /^\/write/;
+  const writePagePathChecker = /^\/write/;
+  const archivePagePathChecker = /^\/archive/;
 
   useEffect(() => {
     (async () => {
@@ -76,10 +77,10 @@ export default function DashboardLayout({
           {lang && <SideBar lang={lang} />}
         </Suspense>
 
-        <div className="grow pt-8">
+        <div className="grow mt-8 ">
           <div className="flex justify-between mr-[256px] items-center">
             <ID setModuleState={setModuleState} />
-            {writePageDocTypePathChecker.test(path) && (
+            {writePagePathChecker.test(path) && (
               <p className="mr-8 font-IranSans text-3xl font-bold">
                 {path === "/create/createMaktoob"
                   ? writePageDocType?.create_maktoob
@@ -87,6 +88,10 @@ export default function DashboardLayout({
                   ? writePageDocType?.create_istilam
                   : writePageDocType?.create_pishniahd}
               </p>
+            )}
+
+            {archivePagePathChecker.test(path) && (
+              <h1 className="font-IranSans text-4xl ">لیست تمام صادره</h1>
             )}
           </div>
 

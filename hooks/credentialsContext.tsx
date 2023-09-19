@@ -1,6 +1,6 @@
 import { useContext, createContext, Dispatch, SetStateAction } from "react";
 
-export type ContextTypes = {
+ type ContextTypes = {
   credentials?: { [key: string]: string };
   setCredentials?: Dispatch<
     SetStateAction<{
@@ -12,11 +12,12 @@ export type ContextTypes = {
   userModuleState ?: boolean, 
   setModuleState?:  Dispatch<SetStateAction<boolean>>,
   passwordState?: boolean,
-  setShowPasswordState?: Dispatch<SetStateAction<boolean>>
+  setShowPasswordState?: Dispatch<SetStateAction<boolean>>,
+
 };
 
 
-export const Credentials = createContext<ContextTypes | undefined>(
+ export const Credentials = createContext<ContextTypes | undefined>(
   undefined
 );
 

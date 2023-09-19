@@ -12,8 +12,9 @@ import { getDictionary } from "@/i18n-server";
 import { Locale } from "@/i18n-config";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import { useMyContext } from "../../../../../hooks/credentialsContext";
-import {GetQamariDate, GetShamsiDate} from "@/date-converter";
-
+import { GetQamariDate, GetShamsiDate } from "@/date-converter";
+import PDFTemplate from "@/components/pdf/pdfTemplate";
+import { langProps_PDF } from "@/universalTypes";
 
 
 export type personProps = {
@@ -46,7 +47,7 @@ type Write_Page_Lang_Props = {
 function Page({ params: { locale } }: { params: { locale: Locale } }) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
-  const shamsiDate = GetShamsiDate()
+  const shamsiDate = GetShamsiDate();
 
   const [docValue, setDocValue] = useState<DocValueTypes>({
     date: shamsiDate,
@@ -63,6 +64,8 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
   };
 
   const [lang, setLang] = useState<Write_Page_Lang_Props>();
+  const [pdfLang, setPdfLang] = useState<langProps_PDF>();
+  const [showPdfModal, setShowPdfModal] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -70,6 +73,14 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
       setLang(writePageDocTypeResponse);
     })();
   }, [locale]);
+
+  useEffect(() => {
+    (async () => {
+      const res = (await getDictionary(locale)).pdf
+      setPdfLang(res);
+    })();
+  }, [locale]);
+
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -85,20 +96,33 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
     HTMLButtonElement
   > = (event) => {
     event.preventDefault();
-    console.log("in the preview");
+    setShowPdfModal(true);
   };
 
   const handleNot: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     console.log("in the not");
   };
-  return (
+
+  return showPdfModal ? (
+    <div
+      onClick={() => {
+        setShowPdfModal(false);
+      }}
+    >
+      <div className="  fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+        <PDFTemplate {...pdfLang}  body={docValue.quillValue} />
+      </div>
+    </div>
+  ) : (
     <div>
       {myContext?.userModuleState && (
         <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
           <UserInfo />
         </div>
       )}
+
+      {/*  */}
       <form onSubmit={handleDocSumbit} className="w-[1136px] mt-12 ml-24  ">
         <div className="border border-primary-400 mb-4">
           <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">
@@ -125,17 +149,16 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
 
           {/* the quill editor is still not good in design, needs work */}
           <ReactQuill
-            value={docValue.quillValue}
-            onChange={(value) =>
+            onChange={(value) => {
               setDocValue((item: DocValueTypes) => ({
                 ...item,
-                quillValue: value,
-              }))
-            }
+                quillValue: value
+              }));
+            }}
             className="h-[23rem] overflow-hidden  "
             theme="snow"
             modules={modules}
-            placeholder={lang?.quill_placeholder}
+            // placeholder={lang?.quill_placeholder}
           />
 
           <input
