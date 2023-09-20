@@ -16,7 +16,6 @@
   }
 }
 
-
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -25,26 +24,55 @@ input[type="radio"] {
   width: 1em;
   height: 1em;
   border-radius: 25%;
-
 }
 
 input[type="radio"]:checked {
   background-size: 50% 50%;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('../public/check.svg');
+  background-image: url("../public/check.svg");
 }
 
-  /* //*for the arrows in the number input type */
-  input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
+/* //*for the arrows in the number input type */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+@layer base {
+  .adminPageInputStyle {
+    @apply border-b w-full focus:ring-0 focus:outline-none focus:border-black;
+  }
+}
 
-      @layer base {
-        .adminPageInputStyle {
-          @apply border-b w-full focus:ring-0 focus:outline-none focus:border-black
-        }
-      }
+@layer utilities {
+  .quill-container ol {
+    @apply list-disc pl-4;
+  }
+  .quill-container ul {
+    @apply list-disc pl-4;
+  }
+  .quill-container h1 {
+    @apply text-2xl font-bold;
+  }
+  .quill-container h2 {
+    @apply text-xl font-bold;
+  }
+  .quill-container h3 {
+    @apply text-lg font-bold;
+  }
+  .quill-container h4 {
+    @apply text-base font-bold;
+  }
+  .quill-container h5 {
+    @apply text-sm font-bold;
+  }
+  .quill-container h6 {
+    @apply text-xs font-bold;
+  }
+
+  .quill-container > p span .ql-size-huge {
+    @apply bg-red-500 !text-red-500;
+  }
+}

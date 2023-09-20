@@ -5,14 +5,55 @@ import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { useMyContext } from "@/hooks/credentialsContext";
-import { langProps } from "@/app/[locale]/page";
+import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
 
-type CardProps = {
-  lang: langProps | undefined;
-};
 
-const Card = ({ lang }: CardProps) => {
+const Card = ({...lang}) => {
   const consumeContext = useMyContext();
+  const [credentials, setCredentials] = useState<credentialsProps_LOGIN>({});
+  const [errorState, setErrorState] = useState<errorProps_LOGIN>({
+    inputState: "Default",
+    status: false,
+    msg: "",
+  });
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
+    event.preventDefault();
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/login`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true.toString(),
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            email: credentials.username,
+            password: credentials.password,
+          }),
+        }
+      );
+
+      const nextRes = await res.json();
+
+      if (nextRes.success) {
+        window.localStorage.setItem("token", nextRes.token);
+      } else {
+        throw new Error(nextRes.message);
+      }
+    } catch (e: any) {
+      setErrorState({ inputState: "ErrorState", status: true, msg: e });
+      setTimeout(() => {
+        setErrorState({ inputState: "Default", status: false, msg: "" });
+      }, 5000);
+    }
+  };
 
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
@@ -21,7 +62,7 @@ const Card = ({ lang }: CardProps) => {
           {lang?.header}
         </h1>
       </section>
-      <form dir="rtl" onSubmit={consumeContext?.handleSubmit}>
+      <form dir="rtl" onSubmit={handleSubmit}>
         <div className="space-y-4 max-w-[320px] mx-auto mt-12">
           <div className="relative">
             <InputField

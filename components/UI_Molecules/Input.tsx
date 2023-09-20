@@ -45,6 +45,12 @@ interface InputProps extends VariantProps<typeof inputCVA> {
    */
 
   name: string;
+
+  /**
+   * the handle Change event 
+   */
+
+  handleChange? : React.ChangeEventHandler<HTMLInputElement>
 }
 
 /**
@@ -56,6 +62,7 @@ export const InputField = ({
   label,
   inputType,
   name,
+  handleChange
 }: InputProps) => {
   const consumeCredentials = useMyContext();
 
@@ -63,14 +70,7 @@ export const InputField = ({
    * handleChange gives the value of input to the credentials context
    */
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { name, value } = event.target;
-
-    consumeCredentials?.setCredentials?.((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+ 
 
   return (
     <div dir="auto" className=" space-y-1">

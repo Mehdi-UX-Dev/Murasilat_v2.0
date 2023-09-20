@@ -7,49 +7,25 @@ import modules from "../../../../../Quill.module.";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "../../../../../app/quill.rtl.css";
+// import "../../../../../app/quill.rtl.css";
 import { getDictionary } from "@/i18n-server";
-import { Locale } from "@/i18n-config";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import { useMyContext } from "../../../../../hooks/credentialsContext";
-import { GetQamariDate, GetShamsiDate } from "@/date-converter";
+import { GetShamsiDate } from "@/date-converter";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
-import { langProps_PDF } from "@/universalTypes";
+import {
+  langProps_PDF,
+  langProps_WRITE,
+  localeProps,
+  writtenDocumentValues_PROPS,
+} from "@/universalTypes";
 
-
-export type personProps = {
-  id: number;
-  name: string;
-  position: string;
-  image: string;
-};
-
-export type DocValueTypes = {
-  date: string;
-  docNumber: number;
-  docType: "normal" | "emergency" | "announcment" | "confidential";
-  quillValue: string;
-  recieverList: Array<personProps>;
-  title: string;
-  summary: string;
-  file?: File;
-};
-
-type Write_Page_Lang_Props = {
-  send_document: string;
-  preview_draft: string;
-  title: string;
-  send_to: string;
-  summary: string;
-  quill_placeholder: string;
-};
-
-function Page({ params: { locale } }: { params: { locale: Locale } }) {
+function Page({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
 
-  const [docValue, setDocValue] = useState<DocValueTypes>({
+  const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: shamsiDate,
     docNumber: 1,
     docType: "normal",
@@ -63,7 +39,7 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
     fetch("", {});
   };
 
-  const [lang, setLang] = useState<Write_Page_Lang_Props>();
+  const [lang, setLang] = useState<langProps_WRITE>();
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
   const [showPdfModal, setShowPdfModal] = useState(false);
 
@@ -76,11 +52,10 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
 
   useEffect(() => {
     (async () => {
-      const res = (await getDictionary(locale)).pdf
+      const res = (await getDictionary(locale)).pdf;
       setPdfLang(res);
     })();
   }, [locale]);
-
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -111,7 +86,7 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
       }}
     >
       <div className="  fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-        <PDFTemplate {...pdfLang}  body={docValue.quillValue} />
+        <PDFTemplate {...pdfLang} body={docValue.quillValue} />
       </div>
     </div>
   ) : (
@@ -121,7 +96,6 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
           <UserInfo />
         </div>
       )}
-
       {/*  */}
       <form onSubmit={handleDocSumbit} className="w-[1136px] mt-12 ml-24  ">
         <div className="border border-primary-400 mb-4">
@@ -150,15 +124,14 @@ function Page({ params: { locale } }: { params: { locale: Locale } }) {
           {/* the quill editor is still not good in design, needs work */}
           <ReactQuill
             onChange={(value) => {
-              setDocValue((item: DocValueTypes) => ({
+              setDocValue((item: writtenDocumentValues_PROPS) => ({
                 ...item,
-                quillValue: value
+                quillValue: value,
               }));
             }}
             className="h-[23rem] overflow-hidden  "
             theme="snow"
             modules={modules}
-            // placeholder={lang?.quill_placeholder}
           />
 
           <input

@@ -3,51 +3,28 @@ const ID = React.lazy(() => import("@/components/UI_Organisms/write_page/ID"));
 const SideBar = React.lazy(
   () => import("@/components/UI_Organisms/write_page/sidebar")
 );
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import SideBarSuspense from "@/components/suspenseOrganisms/sideBarSuspense";
 import { Credentials } from "@/hooks/credentialsContext";
-import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { usePathname } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-import { useMyContext } from "../../../hooks/credentialsContext";
-
-type langProps = {
-  dashboard: string;
-  write: string;
-  maktoob: string;
-  istilam: string;
-  pishnihad: string;
-  archive: string;
-  recents: string;
-  all_sadira: string;
-  all_warida: string;
-  broadcast: string;
-  create_document: string;
-  preview_document: string;
-  document_des: string;
-  log_out: string;
-};
-
-type Write_Page_Doc_Type = {
-  create_maktoob: string;
-  create_istilam: string;
-  create_pishniahd: string;
-};
+import {
+  langProps_DASHBOARD,
+  localeProps,
+  writtenDocumentTypeProps_LAYOUT,
+} from "@/universalTypes";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: Locale };
-}) {
-  const myContext = useMyContext();
+} & localeProps) {
   const [userModuleState, setModuleState] = useState(false);
   const path = usePathname();
-  const [lang, setLang] = useState<langProps | undefined>(undefined);
+  const [lang, setLang] = useState<langProps_DASHBOARD | undefined>(undefined);
   const [writePageDocType, setWritePageDocType] = useState<
-    Write_Page_Doc_Type | undefined
+    writtenDocumentTypeProps_LAYOUT | undefined
   >(undefined);
   const writePagePathChecker = /^\/write/;
   const archivePagePathChecker = /^\/archive/;
