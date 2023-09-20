@@ -1,14 +1,13 @@
 import React from "react";
 import { cva, cx, VariantProps } from "class-variance-authority";
-import { useMyContext } from "../../hooks/credentialsContext";
 
-const inputCVA = cva("h-10 pr-8",{
+const inputCVA = cva("h-10 pr-8", {
   variants: {
     state: {
       /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
       /** The Default state is empty cuz we want to override the error state when it is cleared */
       Default:
-        "border border-primary-700 rounded-md  focus:border-2 focus:border-primary-900",
+        "border border-primary-700 rounded-md   focus:border-2 focus:border-primary-900",
       ErrorState: "!border-myAccent-error-300 border-2 ",
     },
 
@@ -47,10 +46,15 @@ interface InputProps extends VariantProps<typeof inputCVA> {
   name: string;
 
   /**
-   * the handle Change event 
+   * the handle Change event
    */
 
-  handleChange? : React.ChangeEventHandler<HTMLInputElement>
+  handleChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * disabled property
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -62,15 +66,12 @@ export const InputField = ({
   label,
   inputType,
   name,
-  handleChange
+  handleChange,
+  disabled,
 }: InputProps) => {
-  const consumeCredentials = useMyContext();
-
   /**
    * handleChange gives the value of input to the credentials context
    */
-
- 
 
   return (
     <div dir="auto" className=" space-y-1">
@@ -88,6 +89,7 @@ export const InputField = ({
         onChange={handleChange}
         name={name}
         required
+        disabled={disabled}
       />
     </div>
   );

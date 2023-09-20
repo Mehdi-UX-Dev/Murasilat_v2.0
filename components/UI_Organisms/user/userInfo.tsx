@@ -14,7 +14,7 @@ function UserInfo() {
   const handleChange = () => {};
   const handleModuleState = () => myContext?.setModuleState?.(false);
   return (
-    <div className=" grid grid-cols-3   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
+    <div className=" grid grid-cols-3 z-20   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
       <GiCancel
         className="absolute left-2 top-3 text-primary-400 cursor-pointer"
         size={32}

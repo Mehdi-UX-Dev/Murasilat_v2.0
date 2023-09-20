@@ -4,18 +4,16 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import { useMyContext } from "@/hooks/credentialsContext";
 import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
 
-
-const Card = ({...lang}) => {
-  const consumeContext = useMyContext();
+const Card = ({ ...lang }) => {
   const [credentials, setCredentials] = useState<credentialsProps_LOGIN>({});
   const [errorState, setErrorState] = useState<errorProps_LOGIN>({
     inputState: "Default",
     status: false,
     msg: "",
   });
+  const [passwordState, setShowPasswordState] = useState(false);
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
@@ -55,11 +53,19 @@ const Card = ({...lang}) => {
     }
   };
 
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto  px-4 py-20 ">
       <section className="relative ">
         <h1 className="font-serif text-4xl text-center font-bold">
-          {lang?.header}
+          {lang.header}
         </h1>
       </section>
       <form dir="rtl" onSubmit={handleSubmit}>
@@ -67,42 +73,37 @@ const Card = ({...lang}) => {
           <div className="relative">
             <InputField
               inputType="text"
-              label={lang?.username}
+              label={lang.username}
               fullWidth
-              state={
-                consumeContext?.errorState?.status ? "ErrorState" : "Default"
-              }
+              state={errorState.status ? "ErrorState" : "Default"}
               name="username"
+              handleChange={handleChange}
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>
 
           <div className="relative">
             <InputField
-              inputType={consumeContext?.passwordState ? "text" : "password"}
-              label={lang?.password}
+              inputType={passwordState ? "text" : "password"}
+              label={lang.password}
               fullWidth
-              state={
-                consumeContext?.errorState?.status ? "ErrorState" : "Default"
-              }
+              state={errorState.status ? "ErrorState" : "Default"}
               name="password"
             />
             <AiFillEye
-              onClick={consumeContext?.setShowPasswordState}
+              onClick={() => setShowPasswordState(!passwordState)}
               size={16}
               className={"absolute right-2 bottom-3"}
             />
           </div>
 
-          {consumeContext?.errorState?.status && (
-            <div className="text-myAccent-error-300 " id="ErrorContainer">
-              {consumeContext?.errorState.msg.toString()}
-            </div>
-          )}
+          <div className="text-myAccent-error-300 " id="ErrorContainer">
+            {errorState.msg.toString()}
+          </div>
 
           <Button
             type="submit"
-            label={lang?.submit}
+            label={lang.submit}
             intent={"primary"}
             size={"medium"}
             fullWidth

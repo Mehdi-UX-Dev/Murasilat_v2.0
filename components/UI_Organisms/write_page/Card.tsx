@@ -31,7 +31,7 @@ function Card() {
       </div>
 
       <div className="flex items-center ml-auto space-x-4">
-        <MdBookmarkBorder size={48} className="" />
+        <MdBookmarkBorder size={48} />
         <Button intent="secondary" label="خواندن" size="medium" fullWidth />
       </div>
     </div>

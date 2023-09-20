@@ -1,38 +1,15 @@
 "use client";
-// const DashboardButton = React.lazy(() => import( "@/components/UI_Molecules/dashboradCreateButton"))
 
 import Card from "@/components/UI_Organisms/write_page/Card";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/i18n-server";
 import { useMyContext } from "@/hooks/credentialsContext";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
 
-type PageProps = {
-  params: { locale: Locale };
-};
-
-type langProps = {
-  dashboard: string;
-  write: string;
-  maktoob: string;
-  istilam: string;
-  pishnihad: string;
-  archive: string;
-  recents: string;
-  all_sadira: string;
-  all_warida: string;
-  broadcast: string;
-  create_document: string;
-  preview_document: string;
-  document_des: string;
-  log_out: string;
-};
-
-function Dashboard({ params: { locale } }: PageProps) {
-  // ? how to destructure the value directly
+function Dashboard({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   const containerRef = useRef<HTMLDivElement>(null!);
 
@@ -43,7 +20,9 @@ function Dashboard({ params: { locale } }: PageProps) {
   const scrollRight = () => {
     containerRef.current.scrollLeft += 100;
   };
-  const [lang, setDashLang] = useState<langProps | undefined>(undefined);
+  const [lang, setDashLang] = useState<langProps_DASHBOARD | undefined>(
+    undefined
+  );
   useEffect(() => {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;
@@ -55,7 +34,7 @@ function Dashboard({ params: { locale } }: PageProps) {
     lang && (
       <div className=" space-y-8 mr-[256px]">
         {myContext?.userModuleState && (
-          <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
+          <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
             <UserInfo />
           </div>
         )}

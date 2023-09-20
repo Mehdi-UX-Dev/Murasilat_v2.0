@@ -18,7 +18,6 @@ function ListTable({ ...lang }: langProps_ARCHIVE) {
   }, []);
   const paginate = ({ selected }: { selected: number }) =>
     setCurrentPage(selected + 1);
-  console.log(currentPage);
 
   return (
     <div className="mr-[240px]">
@@ -77,7 +76,9 @@ function ListTable({ ...lang }: langProps_ARCHIVE) {
           previousLabel={"<<"}
           nextLabel={">>"}
           containerClassName={" flex justify-center gap-8 mt-8"}
-          pageLinkClassName={" px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  "}
+          pageLinkClassName={
+            " px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  "
+          }
           previousLinkClassName={"font-bold"}
           nextLinkClassName={"font-bold"}
           activeLinkClassName={"border-b-4 border-primary-900 "}

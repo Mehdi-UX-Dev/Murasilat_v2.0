@@ -9,18 +9,33 @@ import { BiFilter } from "react-icons/bi";
 
 function SearchBar({ ...lang }: langProps_ARCHIVE) {
   const [filterGroupVisible, setFilterGroupVisible] = useState(false);
+  const Filter = (filterType) => {
+    switch (filterType) {
+      case "id":
+        console.log(filterType);
+        break;
+      case "sender":
+        console.log(filterType);
+        break;
+      case "date":
+        console.log(filterType);
+        break;
+      case "title":
+        console.log(filterType);
+    }
+  };
 
   return (
-    <div className="flex items-center  justify-center space-x-4 ">
+    <div className="flex items-center  justify-end space-x-4 ">
       <BiFilter
         size={36}
         // * give the icon a transition of rotating 360 degree
         onClick={() => setFilterGroupVisible(!filterGroupVisible)}
       />
       <div
-        className={cx(" space-x-4", {
-          flex: !filterGroupVisible,
-          hidden: filterGroupVisible,
+        className={cx("space-x-4", {
+          flex: filterGroupVisible,
+          hidden: !filterGroupVisible,
         })}
       >
         <InputField
@@ -30,6 +45,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="date"
           fullWidth
           name="date"
+          handleChange={() => Filter("date")}
         />
         <InputField
           state="Default"
@@ -38,6 +54,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="text"
           fullWidth
           name="sender"
+          handleChange={() => Filter("sender")}
         />
         <InputField
           state="Default"
@@ -46,6 +63,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="text"
           fullWidth
           name="title"
+          handleChange={() => Filter("title")}
         />
       </div>
 
@@ -57,6 +75,8 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           name="search"
           fullWidth={false}
           lang="RTL"
+          disabled={filterGroupVisible}
+          handleChange={() => Filter("id")}
         />
         <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />
       </div>

@@ -4,7 +4,7 @@ const SideBar = React.lazy(
   () => import("@/components/UI_Organisms/write_page/sidebar")
 );
 import SideBarSuspense from "@/components/suspenseOrganisms/sideBarSuspense";
-import { Credentials } from "@/hooks/credentialsContext";
+import { Context } from "@/hooks/credentialsContext";
 import { getDictionary } from "@/i18n-server";
 import { usePathname } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
@@ -46,16 +46,16 @@ export default function DashboardLayout({
   }, [locale]);
 
   return (
-    <Credentials.Provider value={{ userModuleState, setModuleState }}>
-      <div className="flex  flex-row-reverse   ">
-        {/* Include shared UI here e.g. a header or sidebar */}
+    <div className="flex  flex-row-reverse   ">
+      {/* Include shared UI here e.g. a header or sidebar */}
 
-        <Suspense fallback={<SideBarSuspense />}>
-          {lang && <SideBar lang={lang} />}
-        </Suspense>
+      <Suspense fallback={<SideBarSuspense />}>
+        {lang && <SideBar lang={lang} />}
+      </Suspense>
 
+      <Context.Provider value={{ userModuleState, setModuleState }}>
         <div className="grow mt-8 ">
-          <div className="flex justify-between mr-[256px] items-center">
+          <div className="flex justify-between items-center">
             <ID setModuleState={setModuleState} />
             {writePagePathChecker.test(path) && (
               <p className="mr-8 font-IranSans text-3xl font-bold">
@@ -74,7 +74,7 @@ export default function DashboardLayout({
 
           {children}
         </div>
-      </div>
-    </Credentials.Provider>
+      </Context.Provider>
+    </div>
   );
 }
