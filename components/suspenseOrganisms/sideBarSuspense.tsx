@@ -2,7 +2,7 @@ import React from "react";
 
 function SideBarSuspense() {
   return (
-    <div className="animate-pulse grid  content-between py-10 pr-5 shadow-lg w-[240px] fixed h-screen ">
+    <div className="animate-pulse grid  content-between py-10 pr-5 shadow-lg w-[240px] h-screen ">
       <div className="space-y-2 mx-auto">
         <div className="rounded-full h-14 w-14 bg-primary-700"></div>
         <div className="h-2 w-14 bg-primary-700 rounded"></div>

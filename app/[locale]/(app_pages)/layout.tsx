@@ -46,7 +46,7 @@ export default function DashboardLayout({
   }, [locale]);
 
   return (
-    <div className="flex  flex-row-reverse   ">
+    <div className="flex  flex-row-reverse ">
       {/* Include shared UI here e.g. a header or sidebar */}
 
       <Suspense fallback={<SideBarSuspense />}>
@@ -54,7 +54,8 @@ export default function DashboardLayout({
       </Suspense>
 
       <Context.Provider value={{ userModuleState, setModuleState }}>
-        <div className="grow mt-8 ">
+        {/* //? why does adding the class overflow work in here */}
+        <div className="mt-8 mr-4 overflow-auto">
           <div className="flex justify-between items-center">
             <ID setModuleState={setModuleState} />
             {writePagePathChecker.test(path) && (
@@ -71,8 +72,7 @@ export default function DashboardLayout({
               <h1 className="font-IranSans text-4xl ">لیست تمام صادره</h1>
             )}
           </div>
-
-          {children}
+          <div className="">{children}</div>
         </div>
       </Context.Provider>
     </div>

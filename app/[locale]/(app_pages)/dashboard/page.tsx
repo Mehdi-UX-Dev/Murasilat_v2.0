@@ -32,7 +32,8 @@ function Dashboard({ params: { locale } }: localeProps) {
 
   return (
     lang && (
-      <div className=" space-y-8 mr-[256px]">
+      <div className=" space-y-8">
+        {/* //? can not the user info be used in the layout ?? */}
         {myContext?.userModuleState && (
           <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
             <UserInfo />
@@ -49,47 +50,53 @@ function Dashboard({ params: { locale } }: localeProps) {
           />{" "}
         </div>
 
-        <div
-          ref={containerRef}
-          // transition is not working properly
-          className="relative transition-transform duration-300 ease-in-out flex space-x-4 max-w-7xl overflow-x-auto py-2 shadow-lg scrollbar-hide "
-        >
+        <div className="relative flex  ">
+          {" "}
           <AiOutlineLeft
-            className="fixed top-1/2 left-8 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
+            className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollLeft}
           />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <div
+            ref={containerRef}
+            // transition is not working properly
+            className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
+          >
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </div>
           <AiOutlineRight
-            className="fixed  top-1/2 right-[260px] text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
+            className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollRight}
           />
         </div>
 
-        <div
-          ref={containerRef}
-          // transition is not working properly
-          className="relative transition-transform duration-300 ease-in-out flex space-x-4 max-w-7xl overflow-x-auto py-2 shadow-lg scrollbar-hide "
-        >
+        <div className="relative flex  ">
+          {" "}
           <AiOutlineLeft
-            className="fixed top-1/2 left-8 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
+            className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollLeft}
           />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <div
+            ref={containerRef}
+            // transition is not working properly
+            className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
+          >
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </div>
           <AiOutlineRight
-            className="fixed  top-1/2 right-[260px] text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
+            className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
             onClick={scrollRight}
           />
