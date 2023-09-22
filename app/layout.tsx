@@ -15,7 +15,11 @@ export default function RootLayout({
   return (
     //  fetch the language preference here and then pass as dir property to all other props
     <html>
-      <body>{children}</body>
+      {/* <h1 className="flex justify-center items-center text-2xl font-bold h-screen lg:hidden bg-primary-900 text-white ">
+        Not available in small screens...Pls go to a large screen
+      </h1> */}
+
+      <body className="hidden lg:block">{children}</body>
     </html>
   );
 }

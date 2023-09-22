@@ -1,7 +1,7 @@
 import { useContext, createContext, Dispatch, SetStateAction } from "react";
 
 type ContextTypes = {
-  Data: {};
+  data: {};
   setData: Dispatch<SetStateAction<{}>>;
 };
 

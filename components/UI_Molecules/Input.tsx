@@ -49,7 +49,7 @@ interface InputProps extends VariantProps<typeof inputCVA> {
    * the handle Change event
    */
 
-  handleChange?: React.ChangeEventHandler<HTMLInputElement>;
+  handleChange?: (value : string) => void;
 
   /**
    * disabled property
@@ -69,10 +69,6 @@ export const InputField = ({
   handleChange,
   disabled,
 }: InputProps) => {
-  /**
-   * handleChange gives the value of input to the credentials context
-   */
-
   return (
     <div dir="auto" className=" space-y-1">
       <label
@@ -86,7 +82,9 @@ export const InputField = ({
       <input
         type={inputType}
         className={inputCVA({ state, fullWidth })}
-        onChange={handleChange}
+        onChange={(event) => {
+          handleChange && handleChange(event.target.value);
+        }}
         name={name}
         required
         disabled={disabled}

@@ -50,7 +50,7 @@ export default function DashboardLayout({
       {/* Include shared UI here e.g. a header or sidebar */}
 
       <Suspense fallback={<SideBarSuspense />}>
-        {lang && <SideBar lang={lang} />}
+        {lang && <SideBar {...lang} />}
       </Suspense>
 
       <Context.Provider value={{ userModuleState, setModuleState }}>

@@ -8,7 +8,7 @@ async function Home({ params: { locale } }: localeProps) {
   const lang = (await getDictionary(locale)).login;
 
   return (
-    <div>
+    <div >
       <Header />
       <Card {...lang} />
     </div>

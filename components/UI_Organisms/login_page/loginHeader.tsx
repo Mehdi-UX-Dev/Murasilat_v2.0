@@ -6,7 +6,7 @@ import Morasilat from "img/Morasilat.png";
 
 const Header = () => {
   return (
-      <header className="flex justify-between items-center mx-8 mt-4">
+      <header className="flex justify-between items-center mx-auto mt-4 max-w-5xl ">
         <div>
           <Image src={Morasilat} alt="Morasilat" height={96} width={96} />
         </div>

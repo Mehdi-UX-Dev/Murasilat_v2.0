@@ -93,12 +93,26 @@ export type credentialsProps_LOGIN = {
   [key: string]: string;
 };
 
-
-// LOGIN PAGE lang props 
+// LOGIN PAGE lang props
 export type langProps_LOGIN = {
   header: string;
   username: string;
   password: string;
   submit: string;
   invalid_credentials: string;
+};
+
+// lang props for SideBar
+export type langProps_SideBar = {
+  dashboard: string;
+  write: string;
+  maktoob: string;
+  istilam: string;
+  pishnihad: string;
+  archive: string;
+  recents: string;
+  all_sadira: string;
+  all_warida: string;
+  broadcast: string;
+  log_out: string;
 };

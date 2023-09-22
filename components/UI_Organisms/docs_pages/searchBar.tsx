@@ -9,19 +9,23 @@ import { BiFilter } from "react-icons/bi";
 
 function SearchBar({ ...lang }: langProps_ARCHIVE) {
   const [filterGroupVisible, setFilterGroupVisible] = useState(false);
-  const Filter = (filterType) => {
+  const data = [];
+  const Filter = (filterType: string, value: string) => {
+    console.log(value);
+    console.log(filterType);
+
     switch (filterType) {
       case "id":
-        console.log(filterType);
+        data.filter((list) => list === value);
         break;
       case "sender":
-        console.log(filterType);
+        data.filter((list) => list === value);
         break;
       case "date":
-        console.log(filterType);
+        data.filter((list) => list === value);
         break;
       case "title":
-        console.log(filterType);
+        data.filter((list) => list === value);
     }
   };
 
@@ -45,7 +49,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="date"
           fullWidth
           name="date"
-          handleChange={() => Filter("date")}
+          handleChange={(value) => Filter("date", value)}
         />
         <InputField
           state="Default"
@@ -54,7 +58,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="text"
           fullWidth
           name="sender"
-          handleChange={() => Filter("sender")}
+          handleChange={(value) => Filter("sender", value)}
         />
         <InputField
           state="Default"
@@ -63,7 +67,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           inputType="text"
           fullWidth
           name="title"
-          handleChange={() => Filter("title")}
+          handleChange={(value) => Filter("title", value)}
         />
       </div>
 
@@ -76,7 +80,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
           fullWidth={false}
           lang="RTL"
           disabled={filterGroupVisible}
-          handleChange={() => Filter("id")}
+          handleChange={(value) => Filter("id", value)}
         />
         <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />
       </div>
