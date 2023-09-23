@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { Locale } from "./i18n-config";
 
 export type localeProps = {
@@ -115,4 +116,19 @@ export type langProps_SideBar = {
   all_warida: string;
   broadcast: string;
   log_out: string;
+};
+
+export type sideBarSubOptionProps_SIDEBAR = {
+  url: string;
+  text?: string;
+  Icon: IconType;
+  customClassName?: string;
+};
+
+export type sideBarOptionProps_SIDEBAR = {
+  url: string;
+  text?: string;
+  Icon: IconType;
+  hasDropDown: boolean;
+  customClassName?: string;
 };

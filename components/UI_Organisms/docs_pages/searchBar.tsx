@@ -30,7 +30,7 @@ function SearchBar({ ...lang }: langProps_ARCHIVE) {
   };
 
   return (
-    <div className="flex items-center  justify-end space-x-4 ">
+    <div className="flex items-end  justify-end space-x-4 ">
       <BiFilter
         size={36}
         // * give the icon a transition of rotating 360 degree

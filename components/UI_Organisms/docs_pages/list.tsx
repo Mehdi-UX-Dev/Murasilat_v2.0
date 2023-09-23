@@ -20,13 +20,10 @@ function ListTable({ ...lang }: langProps_ARCHIVE) {
     setCurrentPage(selected + 1);
 
   return (
-    <div className="mr-[240px]">
-      {/*  */}
-      <div className="grow text-right mx-12">
-        {/* <Id /> */}
-
+    <div>
+      <div >
         {/* table */}
-        <table className="w-full table-auto mt-8 shadow-lg">
+        <table className="w-full text-center table-auto mt-8 shadow-lg">
           <thead className="border-b border-primary-500 bg-primary-500">
             <tr className=" bg-light font-IranSans ">
               <th>{lang.date}</th>

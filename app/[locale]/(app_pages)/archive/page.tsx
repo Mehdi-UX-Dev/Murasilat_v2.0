@@ -8,7 +8,7 @@ async function Page({ params: { locale } }: localeProps) {
   const lang = (await getDictionary(locale)).list_page;
 
   return (
-    <div>
+    <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
       <SearchBar {...lang} />
       <ListTable {...lang} />
     </div>

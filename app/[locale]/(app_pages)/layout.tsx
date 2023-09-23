@@ -55,7 +55,7 @@ export default function DashboardLayout({
 
       <Context.Provider value={{ userModuleState, setModuleState }}>
         {/* //? why does adding the class overflow work in here */}
-        <div className="mt-8 mr-4 overflow-auto">
+        <div className="mt-8 overflow-y-auto mr-4 max-h-screen grow  ">
           <div className="flex justify-between items-center">
             <ID setModuleState={setModuleState} />
             {writePagePathChecker.test(path) && (
