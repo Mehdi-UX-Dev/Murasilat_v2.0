@@ -5,8 +5,14 @@ import React from "react";
 import kabulUni from "../../public/images/KabulUni.png";
 import MOH from "../../public/images/moh.jpg";
 import { GetQamariDate, GetShamsiDate } from "@/date-converter";
-import { langProps_PDF } from "@/universalTypes";
-function PDFTemplate({ body, ...lang }: langProps_PDF & { body: string }) {
+import { PDFProps_PDFTemplate, langProps_PDF } from "@/universalTypes";
+import Label from "../UI_Molecules/docTypeLabel_PDFTemplatePage";
+
+function PDFTemplate({
+  body,
+  docType,
+  ...lang
+}: langProps_PDF & PDFProps_PDFTemplate) {
   const shamsiDate = GetShamsiDate();
   const qamariDate = GetQamariDate();
 
@@ -47,18 +53,28 @@ function PDFTemplate({ body, ...lang }: langProps_PDF & { body: string }) {
             </div>
             <div className="flex justify-end">
               <div className="flex gap-8  mr-10">
-                {[...Array(4)].map((_, k) => (
-                  <div className="flex items-center space-x-1" key={k}>
-                    <div className="border rouned border-black w-8 h-5  relative">
-                      {k === 1 && (
-                        <p className="absolute bottom-0 left-2 text-2xl font-bold ">
-                          ✓
-                        </p>
-                      )}
-                    </div>
-                    <label htmlFor="">{k}</label>
-                  </div>
-                ))}
+                <div className="flex items-center space-x-3">
+                  {Array.of(
+                    "confidential",
+                    "announcment",
+                    "emergency",
+                    "normal"
+                  ).map((type) => (
+                    <>
+                      <div
+                        key={type}
+                        className="border rouned border-black w-8 h-5  relative"
+                      >
+                        {type == docType && (
+                          <p className="absolute bottom-0 left-2 text-2xl font-bold ">
+                            ✓
+                          </p>
+                        )}
+                      </div>
+                      <Label type={type} />
+                    </>
+                  ))}
+                </div>
               </div>
               <div className="flex space-x-1">
                 <p>(1)</p>
@@ -75,12 +91,13 @@ function PDFTemplate({ body, ...lang }: langProps_PDF & { body: string }) {
 
       <section
         dangerouslySetInnerHTML={{
-          __html: body,
+          __html: body || "",
         }}
         id="body"
         className="row-span-3 pr-4 pt-2 quill-container"
       ></section>
 
+    
       {/*  */}
       <section id="footer" className="row-span-1">
         <div className="w-full border-b border-black  mt-4"></div>

@@ -53,11 +53,14 @@ export function middleware(request: NextRequest) {
     /^\/$/,
     /^\/dashboard$/,
     /^\/archive$/,
-    /^\/write\/\w+$/,
+    /^\/write\/writeMaktoob$/,
+    /^\/write\/writePishnihad$/,
+    /^\/write\/writeIstilam$/,
+
     /^\/admin$/,
     /^\/admin\/users$/,
     /^\/admin\/users\/(\d+)$/,
-    /^\/pdf$/
+    /^\/pdf$/,
   ];
   if (
     !existingPathnamePatterns.some((pathnamePattern) =>

@@ -48,18 +48,18 @@ function SideBar({ ...lang }: langProps_SideBar) {
           />
 
           <SideSubOption
-            url={"create/createMaktoob"}
+            url={"/write/writeMaktoob"}
             text={lang?.maktoob}
             Icon={AiOutlinePlus}
           />
           <SideSubOption
-            url={"create/createIstilam"}
+            url={"/write/writeIstilam"}
             text={lang?.istilam}
             Icon={AiOutlinePlus}
           />
 
           <SideSubOption
-            url={"create/createPishnihad"}
+            url={"/write/writePishnihad"}
             text={lang?.pishnihad}
             Icon={AiOutlinePlus}
           />
@@ -75,19 +75,19 @@ function SideBar({ ...lang }: langProps_SideBar) {
           />
 
           <SideSubOption
-            url={"/docs/recents"}
+            url={"/archive/recents"}
             text={lang?.recents}
             Icon={FaHistory}
             customClassName="pl-6"
           />
           <SideSubOption
-            url={"/docs/all_sadira"}
+            url={"/archive/all_sadira"}
             text={lang?.all_sadira}
             Icon={MdOutgoingMail}
           />
 
           <SideSubOption
-            url={"/docs/all_warida"}
+            url={"/archive/all_warida"}
             text={lang?.all_warida}
             Icon={RiMailDownloadFill}
           />

@@ -35,9 +35,9 @@
     },
 
     "Write_Page" : {
-      "create_maktoob": "مکتوب جوړ کړئ",
-      "create_istilam": "اسټیلام جوړ کړئ",
-      "create_pishniahd": "پشنهاد جوړ کړئ", 
+      "write_maktoob": "مکتوب جوړ کړئ",
+      "write_istilam": "اسټیلام جوړ کړئ",
+      "write_pishniahd": "پشنهاد جوړ کړئ", 
       "send_document" : "سند ولېږئ", 
       "preview_draft" : "مسوده کتنه",
       "title" : "عنوان", 

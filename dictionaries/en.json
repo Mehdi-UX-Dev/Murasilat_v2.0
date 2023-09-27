@@ -35,9 +35,9 @@
     },
 
     "Write_Page" : {
-      "create_maktoob": "Create Maktoob",
-      "create_istilam": "Create Istilam",
-      "create_pishniahd": "Create Pishnihad",
+      "write_maktoob": "Create Maktoob",
+      "write_istilam": "Create Istilam",
+      "write_pishniahd": "Create Pishnihad",
       "send_document" : "Send Document", 
       "preview_draft" : "Preview Draft",
       "title" : "Title", 

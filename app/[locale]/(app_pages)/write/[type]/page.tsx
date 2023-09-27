@@ -14,6 +14,7 @@ import { useMyContext } from "../../../../../hooks/credentialsContext";
 import { GetShamsiDate } from "@/date-converter";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
 import {
+  PDFProps_PDFTemplate,
   langProps_PDF,
   langProps_WRITE,
   localeProps,
@@ -85,7 +86,11 @@ function Page({ params: { locale } }: localeProps) {
       }}
     >
       <div className="  fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-        <PDFTemplate {...pdfLang} body={docValue.quillValue} />
+        <PDFTemplate
+          {...pdfLang}
+          body={docValue.quillValue}
+          docType={docValue.docType}
+        />
       </div>
     </div>
   ) : (

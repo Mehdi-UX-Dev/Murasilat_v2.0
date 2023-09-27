@@ -57,14 +57,14 @@ export default function DashboardLayout({
         {/* //? why does adding the class overflow work in here */}
         <div className="mt-8 overflow-y-auto mr-4 max-h-screen grow  ">
           <div className="flex justify-between items-center">
-            <ID setModuleState={setModuleState} />
+            <ID />
             {writePagePathChecker.test(path) && (
               <p className="mr-8 font-IranSans text-3xl font-bold">
-                {path === "/create/createMaktoob"
-                  ? writePageDocType?.create_maktoob
-                  : path == "/create/createIstilam"
-                  ? writePageDocType?.create_istilam
-                  : writePageDocType?.create_pishniahd}
+                {path === "/write/writeMaktoob"
+                  ? writePageDocType?.write_maktoob
+                  : path == "/write/writeIstilam"
+                  ? writePageDocType?.write_istilam
+                  : writePageDocType?.write_pishniahd}
               </p>
             )}
 

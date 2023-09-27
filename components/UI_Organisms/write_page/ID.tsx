@@ -1,19 +1,15 @@
+"use client";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useState } from "react";
 import photo from "../../../public/images/photo.jpg";
+import { useMyContext } from "@/hooks/credentialsContext";
 
-function ID({
-  setModuleState,
-}: {
-  setModuleState: Dispatch<SetStateAction<boolean>>;
-}) {
-  const handleUserModule = () => setModuleState((value) => !value);
+function ID() {
+  const context = useMyContext();
+  const handleUserModule = () =>
+    context?.setModuleState && context?.setModuleState((value) => !value);
 
   return (
-    <section
-      className="flex space-x-6 ml-4"
-      onClick={handleUserModule}
-    >
+    <section className="flex space-x-6 ml-4" onClick={handleUserModule}>
       <div className="space-y-1 text-right">
         <p className="font-bold font-rounded text-2xl  ">محمد مهدی واحد</p>
         <p className="font-bold text-lg font-rounded text-primary-600">

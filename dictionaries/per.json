@@ -25,10 +25,10 @@
     },
 
     "Write_Page" : {
-      "create_maktoob": "ایجاد مکتوب",
-      "create_istilam": "ایجاد استعلام",
-      "create_pishniahd": "ایجاد پيشنهاد", 
-      "send_document" : "ارسال مکتوب", 
+      "write_maktoob": "ایجاد مکتوب",
+      "write_istilam": "ایجاد استعلام",
+      "write_pishniahd": "ایجاد پيشنهاد", 
+      "write_document" : "ارسال مکتوب", 
       "preview_draft" : "نمایش پیش سند",
       "title" : "عنوان", 
       "send_to" : "ارسال به", 

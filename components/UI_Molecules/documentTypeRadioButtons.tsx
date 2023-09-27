@@ -1,16 +1,18 @@
+import { writtenDocumentValues_PROPS } from "@/universalTypes";
 import React from "react";
-import { DocValueTypes } from "@/app/[locale]/(app_pages)/create/[type]/page";
 
-type docValue = {
-  setDocValue: React.Dispatch<React.SetStateAction<DocValueTypes>>;
+type setDocValue = {
+  setDocValue: React.Dispatch<
+    React.SetStateAction<writtenDocumentValues_PROPS>
+  >;
 };
 
-function TypeGroup({ setDocValue }: docValue) {
+function TypeGroup({ setDocValue }: setDocValue) {
   const handleRadioClick: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    const { name, value } = event.target;
-    setDocValue((prev: DocValueTypes) => ({
+    const { value } = event.target;
+    setDocValue((prev: writtenDocumentValues_PROPS) => ({
       ...prev,
       docType: value as "normal" | "emergency" | "announcment" | "confidential",
     }));

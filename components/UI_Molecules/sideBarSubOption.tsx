@@ -4,9 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-
-
-function SideSubOption({ url, Icon, text, customClassName }: sideBarSubOptionProps_SIDEBAR) {
+function SideSubOption({
+  url,
+  Icon,
+  text,
+  customClassName,
+}: sideBarSubOptionProps_SIDEBAR) {
   const path = usePathname();
 
   return (
@@ -22,7 +25,7 @@ function SideSubOption({ url, Icon, text, customClassName }: sideBarSubOptionPro
       )}
     >
       <Icon size={20} className="text-primary-400 " />
-      <p className="text-primary-700 mr-2">{text}</p>  
+      <p className="text-primary-700 mr-2">{text}</p>
     </Link>
   );
 }

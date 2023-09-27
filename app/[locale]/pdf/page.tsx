@@ -30,112 +30,28 @@ const PDF = ({ params: { locale } }: { params: { locale: Locale } }) => {
   }, [locale]);
 
   return (
-    <div id="myElement" className="space-y-4">
-      <div>
-        <h1 className="font-sans text-center text-4xl font-bold mb-8">
-          Todo List
-        </h1>
-        <div className="flex ml-20 space-x-40 text-2xl font-sans font-semibold ">
-          <h1>Day:</h1>
-          <h1>Date:</h1>
-        </div>
-
-        <table className="mx-auto w-11/12  mt-8  text-center">
-          <thead className="bg-primary-100">
-            <tr className="">
-              <th className="border w-40 p-2 ">Time</th>
-              <th className="border p-2 ">Task</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr className=" ">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-          </tbody>
-        </table>
+    <div id="myElement" className="flex">
+      <div className="border w-72 h-96 border-black">
+        <div className="border h-10 border-black text-center">Pishnihad</div>
+        <div></div>
       </div>
-
-      {/*  */}
-      <div>
-        <h1 className="font-sans text-center text-4xl font-bold mb-8">
-          Todo List
-        </h1>
-        <div className="flex ml-20 space-x-40 text-2xl font-sans font-semibold ">
-          <h1>Day:</h1>
-          <h1>Date:</h1>
+      <div className="border w-72 relative  h-96 border-black">
+        <div className="border  h-10 border-black text-center  ">
+          Directions
         </div>
-
-        <table className="mx-auto w-11/12  mt-8  text-center">
-          <thead className="bg-primary-100">
-            <tr className="">
-              <th className="border w-40 p-2 ">Time</th>
-              <th className="border p-2 ">Task</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr className=" ">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      {/*  */}
-      <div>
-        <h1 className="font-sans text-center text-4xl font-bold mb-8">
-          Todo List
-        </h1>
-        <div className="flex ml-20 space-x-40 text-2xl font-sans font-semibold ">
-          <h1>Day:</h1>
-          <h1>Date:</h1>
-        </div>
-
-        <table className="mx-auto w-11/12  mt-8  text-center">
-          <thead className="bg-primary-100">
-            <tr className="">
-              <th className="border w-40 p-2 ">Time</th>
-              <th className="border p-2 ">Task</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr className=" ">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-            <tr className="">
-              <td className="border p-5 border-primary-700"></td>
-              <td className="border p-5 border-primary-700"></td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="h-[382px] top-0 right-0 w-4 absolute border border-black"></div>
       </div>
     </div>
   );
 };
 
 export default PDF;
+
+export const html = ` <div className="border w-72 h-96 border-black">
+<div className="border h-10 border-black text-center">Pishnihad</div><div></div> </div>
+<div className="border w-72 relative  h-96 border-black">
+<div className="border  h-10 border-black text-center  ">
+  Directions
+</div>
+<div className="h-[382px] top-0 right-0 w-4 absolute border border-black"></div>
+</div> `;

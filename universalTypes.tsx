@@ -76,9 +76,9 @@ export type langProps_DASHBOARD = {
 
 // 3 types of document that is rendered on layout page
 export type writtenDocumentTypeProps_LAYOUT = {
-  create_maktoob: string;
-  create_istilam: string;
-  create_pishniahd: string;
+  write_maktoob: string;
+  write_istilam: string;
+  write_pishniahd: string;
 };
 
 // login page input field error state props
@@ -131,4 +131,11 @@ export type sideBarOptionProps_SIDEBAR = {
   Icon: IconType;
   hasDropDown: boolean;
   customClassName?: string;
+};
+
+// pdf page language props
+
+export type PDFProps_PDFTemplate = {
+  body?: string;
+  docType: "normal" | "emergency" | "announcment" | "confidential";
 };
