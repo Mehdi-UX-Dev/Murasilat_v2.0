@@ -49,7 +49,7 @@ interface InputProps extends VariantProps<typeof inputCVA> {
    * the handle Change event
    */
 
-  handleChange?: (value : string) => void;
+  handleChange?: (value: string, name: string) => void;
 
   /**
    * disabled property
@@ -83,7 +83,7 @@ export const InputField = ({
         type={inputType}
         className={inputCVA({ state, fullWidth })}
         onChange={(event) => {
-          handleChange && handleChange(event.target.value);
+          handleChange && handleChange(event.target.value, event.target.name);
         }}
         name={name}
         required

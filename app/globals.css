@@ -72,7 +72,7 @@ input::-webkit-inner-spin-button {
     @apply text-xs font-bold;
   }
 
-  .quill-container > p span .ql-size-huge {
+ .quill-container  span.ql-size-huge {
     @apply bg-red-500 !text-red-500;
   }
 }

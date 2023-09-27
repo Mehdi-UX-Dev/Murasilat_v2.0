@@ -53,8 +53,7 @@ const Card = ({ ...lang }) => {
     }
   };
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (value: string, name: string ) => {
     setCredentials((prev) => ({
       ...prev,
       [name]: value,
@@ -77,7 +76,7 @@ const Card = ({ ...lang }) => {
               fullWidth
               state={errorState.status ? "ErrorState" : "Default"}
               name="username"
-              handleChange={handleChange}
+              handleChange={(value, name) => handleChange(value, name)}
             />
             <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
           </div>

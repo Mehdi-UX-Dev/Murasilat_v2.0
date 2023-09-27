@@ -98,7 +98,7 @@ function Page({ params: { locale } }: localeProps) {
       {/*  */}
       <form
         onSubmit={handleDocSumbit}
-        className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12   "
+        className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12 ml-4   "
       >
         <div className="border border-primary-400 mb-4">
           <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">

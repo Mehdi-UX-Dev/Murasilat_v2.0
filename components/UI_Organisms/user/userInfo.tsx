@@ -5,14 +5,23 @@ import photo from "../../../public/images/photo.jpg";
 import { BsTranslate } from "react-icons/bs";
 import { GiCancel } from "react-icons/gi";
 import { useMyContext } from "../../../hooks/credentialsContext";
+import { useRouter, usePathname } from "next/navigation";
 
 // !there is a problem in between the flex and grid of this PAGE at the div 2 and 3rd
 //? may be due to the small size of the page i will make it a module which could be shown on instant on list page
 
 function UserInfo() {
   const myContext = useMyContext();
+  const router = useRouter()
+  const pathname = usePathname()
   const handleChange = () => {};
   const handleModuleState = () => myContext?.setModuleState?.(false);
+  const changeLanguage = () => {
+      router.push('http://ps.localhost:3000/dashboard')
+      console.log(router, pathname);
+           
+  }
+
   return (
     <div className=" grid grid-cols-3 z-20   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
       <GiCancel
@@ -78,12 +87,13 @@ function UserInfo() {
             className="w-full border-b ring-0 outline-none  "
             name="language"
             id="language"
+            onChange={changeLanguage}
           >
             <option value="" hidden>
               {/* the preferred lang will come here from the server */}
             </option>
             <option value="persian">دری</option>
-            <option value="pashto">پشتو</option>
+            <option value="pashto" >پشتو</option>
           </select>
         </div>
       </div>
