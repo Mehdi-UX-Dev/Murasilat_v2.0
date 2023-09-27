@@ -54,7 +54,7 @@ input::-webkit-inner-spin-button {
     @apply list-disc pl-4;
   }
   .quill-container h1 {
-    @apply text-2xl font-bold;
+    @apply text-4xl font-bold;
   }
   .quill-container h2 {
     @apply text-xl font-bold;
@@ -72,7 +72,23 @@ input::-webkit-inner-spin-button {
     @apply text-xs font-bold;
   }
 
- .quill-container  span.ql-size-huge {
-    @apply bg-red-500 !text-red-500;
+  .quill-container span.ql-size-huge {
+    @apply text-4xl;
+  }
+
+  .quill-container span.ql-size-large {
+    @apply text-2xl;
+  }
+
+  .quill-container span.ql-size-small {
+    @apply text-xl;
+  }
+
+  .quill-container .ql-align-center {
+    @apply text-center;
+  }
+
+  .quill-container .ql-align-right {
+    @apply text-right;
   }
 }

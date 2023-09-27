@@ -10,8 +10,6 @@ function PDFTemplate({ body, ...lang }: langProps_PDF & { body: string }) {
   const shamsiDate = GetShamsiDate();
   const qamariDate = GetQamariDate();
 
-  console.log(body);
-
   return (
     <div id="myElement" className=" mt-auto  grid grid-rows-5 bg-white w-1/2">
       {/*  */}
@@ -76,7 +74,9 @@ function PDFTemplate({ body, ...lang }: langProps_PDF & { body: string }) {
       {/* quill content  */}
 
       <section
-        dangerouslySetInnerHTML={{ __html: body }}
+        dangerouslySetInnerHTML={{
+          __html: body,
+        }}
         id="body"
         className="row-span-3 pr-4 pt-2 quill-container"
       ></section>

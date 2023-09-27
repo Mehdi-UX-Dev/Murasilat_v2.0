@@ -134,6 +134,7 @@ function Page({ params: { locale } }: localeProps) {
             className="h-[23rem] overflow-hidden  "
             theme="snow"
             modules={modules}
+            value={docValue.quillValue}
           />
 
           <input
