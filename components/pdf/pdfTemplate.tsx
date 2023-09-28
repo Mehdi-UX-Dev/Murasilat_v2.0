@@ -7,6 +7,9 @@ import MOH from "../../public/images/moh.jpg";
 import { GetQamariDate, GetShamsiDate } from "@/date-converter";
 import { PDFProps_PDFTemplate, langProps_PDF } from "@/universalTypes";
 import Label from "../UI_Molecules/docTypeLabel_PDFTemplatePage";
+import { usePathname } from "next/navigation";
+import MaktoobFormat from "./maktoobFormat";
+import IstilamFormat from "./istilamFormat";
 
 function PDFTemplate({
   body,
@@ -15,6 +18,7 @@ function PDFTemplate({
 }: langProps_PDF & PDFProps_PDFTemplate) {
   const shamsiDate = GetShamsiDate();
   const qamariDate = GetQamariDate();
+  const path = usePathname();
 
   return (
     <div id="myElement" className=" mt-auto  grid grid-rows-5 bg-white w-1/2">
@@ -52,34 +56,39 @@ function PDFTemplate({
               </div>
             </div>
             <div className="flex justify-end">
-              <div className="flex gap-8  mr-10">
-                <div className="flex items-center space-x-3">
-                  {Array.of(
-                    "confidential",
-                    "announcment",
-                    "emergency",
-                    "normal"
-                  ).map((type) => (
-                    <>
-                      <div
-                        key={type}
-                        className="border rouned border-black w-8 h-5  relative"
-                      >
-                        {type == docType && (
-                          <p className="absolute bottom-0 left-2 text-2xl font-bold ">
-                            ✓
-                          </p>
-                        )}
-                      </div>
-                      <Label type={type} />
-                    </>
-                  ))}
-                </div>
-              </div>
-              <div className="flex space-x-1">
-                <p>(1)</p>
-                <p>:{lang?.warida_num}</p>
-              </div>
+              {path === "/write/writeMaktoob" && (
+                <>
+                  {" "}
+                  <div className="flex gap-8  mr-10">
+                    <div className="flex items-center space-x-3">
+                      {Array.of(
+                        "confidential",
+                        "announcment",
+                        "emergency",
+                        "normal"
+                      ).map((type) => (
+                        <>
+                          <div
+                            key={type}
+                            className="border rouned border-black w-8 h-5  relative"
+                          >
+                            {type == docType && (
+                              <p className="absolute bottom-0 left-2 text-2xl font-bold ">
+                                ✓
+                              </p>
+                            )}
+                          </div>
+                          <Label type={type} />
+                        </>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex space-x-1">
+                    <p>(1)</p>
+                    <p>:{lang?.warida_num}</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -88,16 +97,10 @@ function PDFTemplate({
       </section>
 
       {/* quill content  */}
+      {path === "/write/writeMaktoob" && <MaktoobFormat body={body} />}
 
-      <section
-        dangerouslySetInnerHTML={{
-          __html: body || "",
-        }}
-        id="body"
-        className="row-span-3 pr-4 pt-2 quill-container"
-      ></section>
+      {path === "/write/writeIstilam" && <IstilamFormat body={body}/>}
 
-    
       {/*  */}
       <section id="footer" className="row-span-1">
         <div className="w-full border-b border-black  mt-4"></div>

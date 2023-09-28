@@ -19,7 +19,7 @@ function SideBar({ ...lang }: langProps_SideBar) {
   };
 
   return (
-    <aside className="w-[240px] border-l grid max-h-screen  content-between  ">
+    <aside className="w-[240px] border-l grid  h-screen max-h-screen content-between  ">
       {/* Logo */}
       <Image
         src={Morasilat}
