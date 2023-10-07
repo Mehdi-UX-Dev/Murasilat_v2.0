@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/UI_Organisms/write_page/Card";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/i18n-server";
 import { useMyContext } from "@/hooks/credentialsContext";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
@@ -9,6 +9,8 @@ import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDocuments } from "@/context/features/documentSlice";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
@@ -31,29 +33,31 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const [documents, setDocuments] = useState<object[]>([]);
+  const { documents, loading, error } = useSelector((store) => store.documents);
   console.log(documents);
-  
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-          accept: "application/json",
-        },
-      })
-      .then(
-        (res) => {
-          console.log(res.data);
-          setDocuments(res.data);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    // axios
+    //   .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization:
+    //         "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+    //       accept: "application/json",
+    //     },
+    //   })
+    //   .then(
+    //     (res) => {
+    //       console.log(res.data);
+    //       setDocuments(res.data);
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
+
+    dispatch(fetchDocuments());
   }, []);
 
   return (
@@ -67,12 +71,20 @@ function Dashboard({ params: { locale } }: localeProps) {
         )}
 
         <div className="flex justify-end space-x-4 text-right mt-8">
-          <DashboardButton lang={lang} type="maktoob" path="/maktoob" />
-          <DashboardButton lang={lang} type="istilam" path="/istilam" />
+          <DashboardButton
+            lang={lang}
+            type="maktoob"
+            path="/write/writeMaktoob"
+          />
+          <DashboardButton
+            lang={lang}
+            type="istilam"
+            path="/write/writeIstilam"
+          />
           <DashboardButton
             lang={lang}
             type="iishnihad"
-            path="/pishnihad"
+            path="/write/writeIstilam"
           />{" "}
         </div>
 
@@ -108,9 +120,7 @@ function Dashboard({ params: { locale } }: localeProps) {
             ref={containerRef}
             // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
-          >
-            
-          </div>
+          ></div>
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}

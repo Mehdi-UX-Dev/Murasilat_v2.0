@@ -26,7 +26,6 @@ const localeByHost = Object.fromEntries(
 
 export function middleware(request: NextRequest) {
   const newUrl = new URL(request.url);
-  // newURl = http://localhost:3000/
 
   if (
     ["/browserconfig.xml", "/manifest.json", "/robots.txt"].includes(

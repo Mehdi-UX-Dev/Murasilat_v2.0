@@ -3,7 +3,6 @@ const SideBar = React.lazy(
   () => import("@/components/UI_Organisms/write_page/sidebar")
 );
 import SideBarSuspense from "@/components/suspenseOrganisms/sideBarSuspense";
-import { Context } from "@/hooks/credentialsContext";
 import { getDictionary } from "@/i18n-server";
 import React, { Suspense, useEffect, useState } from "react";
 import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
@@ -33,14 +32,11 @@ export default function DashboardLayout({
         {lang && <SideBar {...lang} />}
       </Suspense>
 
-      <Context.Provider value={{ userModuleState, setModuleState }}>
-        {/* //? why does adding the class overflow work in here */}
-        <div className="mt-8 overflow-y-auto mr-4 max-h-screen grow  ">
-          <Header />
-
-          {children}
-        </div>
-      </Context.Provider>
+      {/* //? why does adding the class overflow work in here */}
+      <div className="mt-8 overflow-y-auto mr-4 max-h-screen grow  ">
+        <Header />
+        {children}
+      </div>
     </div>
   );
 }

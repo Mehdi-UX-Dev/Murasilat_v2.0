@@ -1,6 +1,8 @@
-import Head from "next/head";
+"use client"
 import "./globals.css";
 import type { Metadata } from "next";
+import { Provider } from "react-redux";
+import store from "@/context/store";
 
 export const metadata: Metadata = {
   title: "Morasilat",
@@ -13,13 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    //  fetch the language preference here and then pass as dir property to all other props
     <html>
-      {/* <h1 className="flex justify-center items-center text-2xl font-bold h-screen lg:hidden bg-primary-900 text-white ">
-        Not available in small screens...Pls go to a large screen
-      </h1> */}
-
-      <body className="hidden lg:block">{children}</body>
+      <body className="hidden lg:block">
+        <Provider store={store}>
+        {children}
+        </Provider>
+        </body>
     </html>
   );
 }

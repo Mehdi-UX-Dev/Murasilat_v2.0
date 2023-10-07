@@ -21,11 +21,17 @@ import {
   writtenDocumentValues_PROPS,
 } from "@/universalTypes";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchReceivers,
+  writeDocument,
+} from "@/context/features/documentSlice";
 
 function Page({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -50,16 +56,22 @@ function Page({ params: { locale } }: localeProps) {
   const [recieverList, setRecieverList] = useState<object[]>([]);
 
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
-    date: shamsiDate,
-    docNumber: 1,
-    docType: "normal",
-    quillValue: "",
+    date: new Date(),
+    urgency: "N",
+    content: "",
     title: "",
     summary: "",
   });
 
   const handleDocSumbit = () => {
-    fetch("", {});
+    dispatch(
+      writeDocument({
+        documentData: docValue,
+        callback: () => {
+          alert("Document created successfully");
+        },
+      })
+    );
   };
 
   const [lang, setLang] = useState<langProps_WRITE>();
@@ -72,6 +84,10 @@ function Page({ params: { locale } }: localeProps) {
       setLang(writePageDocTypeResponse);
     })();
   }, [locale]);
+
+  useEffect(() => {
+    dispatch(fetchReceivers());
+  },[]);
 
   useEffect(() => {
     (async () => {
@@ -110,8 +126,8 @@ function Page({ params: { locale } }: localeProps) {
       <div className="  fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
         <PDFTemplate
           {...pdfLang}
-          body={docValue.quillValue}
-          docType={docValue.docType}
+          body={docValue.content}
+          docType={docValue.urgency}
         />
       </div>
     </div>
@@ -161,7 +177,7 @@ function Page({ params: { locale } }: localeProps) {
             className="h-[23rem] overflow-hidden  "
             theme="snow"
             modules={modules}
-            value={docValue.quillValue}
+            value={docValue.content}
           />
 
           <input

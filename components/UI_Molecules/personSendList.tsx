@@ -1,32 +1,15 @@
 import Image from "next/image";
 import React from "react";
-import photo from "../../public/images/photo.jpg";
 
-function Person({
-  info,
-}:  {
-  info: any;
-}) {
-
+function Person({ info }: { info: any }) {
   const handlePersonClick = () => {
-    ((info) => ({
-      ...info,
-      recieverList: [
-        ...info.recieverList,
-        {
-          id: 1,
-          name: "محمد مهدی واحد",
-          position: "استاد دستیار",
-          image: "../../public/images/photo.jpg",
-        },
-      ],
-    }));
+    console.log(info.fullname);
   };
 
   return (
     <div
       onClick={handlePersonClick}
-      className="flex items-center justify-between py-1 hover:bg-primary-300 hover:border-r hover:border-black"
+      className="flex items-center justify-between py-1 hover:cursor-pointer hover:bg-primary-300 hover:border-r hover:border-black border-b border-black"
     >
       <div className="font-nazanin pr-4">
         <p className="font-bold">{info.fullname}</p>

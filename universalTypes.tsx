@@ -42,14 +42,13 @@ export type langProps_WRITE = {
 
 // data that must be submitted to the server
 export type writtenDocumentValues_PROPS = {
-  date: string;
-  docNumber: number;
-  docType: "normal" | "emergency" | "announcment" | "confidential";
-  quillValue: string;
+  date: Date;
+  urgency: "N" | "U" | "A" | "C";
+  content: string;
 
   title: string;
   summary: string;
-  file?: File;
+  // file?: File;
 };
 
 export type langProps_DASHBOARD = {
@@ -132,5 +131,5 @@ export type sideBarOptionProps_SIDEBAR = {
 
 export type PDFProps_PDFTemplate = {
   body?: string;
-  docType: "normal" | "emergency" | "announcment" | "confidential";
+  docType: "N" | "U" | "C" | "A";
 };
