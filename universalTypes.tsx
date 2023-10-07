@@ -46,12 +46,7 @@ export type writtenDocumentValues_PROPS = {
   docNumber: number;
   docType: "normal" | "emergency" | "announcment" | "confidential";
   quillValue: string;
-  recieverList: Array<{
-    id: number;
-    name: string;
-    position: string;
-    image: string;
-  }>;
+
   title: string;
   summary: string;
   file?: File;

@@ -8,6 +8,7 @@ import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
+import axios from "axios";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
@@ -29,6 +30,31 @@ function Dashboard({ params: { locale } }: localeProps) {
       setDashLang(res);
     })();
   }, [locale]);
+
+  const [documents, setDocuments] = useState<object[]>([]);
+  console.log(documents);
+  
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+          accept: "application/json",
+        },
+      })
+      .then(
+        (res) => {
+          console.log(res.data);
+          setDocuments(res.data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }, []);
 
   return (
     lang && (
@@ -62,12 +88,7 @@ function Dashboard({ params: { locale } }: localeProps) {
             // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
           >
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {documents.length && <Card {...documents[0]} />}
           </div>
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
@@ -88,12 +109,7 @@ function Dashboard({ params: { locale } }: localeProps) {
             // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
           >
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            
           </div>
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"

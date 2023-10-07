@@ -5,8 +5,10 @@ const options: Intl.DateTimeFormatOptions = {
   calendar: "persian",
 };
 
-export function GetShamsiDate() {
-  return new Date().toLocaleDateString("fa-IR", options);
+export function GetShamsiDate(date: string | null) {
+  return date
+    ? new Date(date).toLocaleDateString("fa-IR", options)
+    : new Date().toLocaleDateString("fa-IR", options);
 }
 
 const optionsQamari: Intl.DateTimeFormatOptions = {

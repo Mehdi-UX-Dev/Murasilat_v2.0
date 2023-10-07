@@ -3,30 +3,34 @@ import photo from "../../../public/images/photo.jpg";
 import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
-function Card() {
+import { GetShamsiDate } from "@/date-converter";
+function Card(props: any) {
   return (
     <div className="border flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
       <div className="flex justify-between items-center">
         <div className="text-center">
-          <p className="font-bold text-lg">01</p>
-          <p className="">25/4/1402</p>
+          <p className="font-bold text-lg">{props.serial}</p>
+          <p className="">{GetShamsiDate(props.date)}</p>
         </div>
 
         <div className="flex space-x-[16px]">
           <div className="text-right">
-            <p className="font-semibold">باهر حکیمی</p>
-            <p>رییس پوهنخی</p>
+            <p className="font-semibold">{props.first_name}</p>
+            <p>{props.sender.authority.title}</p>
           </div>
           <Image
-            src={photo}
+            src={props.sender.profile_pic}
             alt="ID"
-            className="w-12 h-12 object-cover rounded-full"
+            className=" object-cover rounded-full"
+            width={48}
+            height={48}
           />
         </div>
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">عنوان: تصویب کمیسیون</h2>
+        <h2 className="font-bold text-[24px]">{props.title}</h2>
+        {/* //? should there be a summary */}
         <p className="text-medium">خلاصه: کمیسیون اعطا شد</p>
       </div>
 

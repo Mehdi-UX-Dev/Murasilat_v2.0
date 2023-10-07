@@ -20,6 +20,7 @@ function CustomizedSelectComponent({recieverList, setDocValue} : recieverListPro
   };
   // const [personInfo, setPersonInfo] = useState<personProps[]>([]);
 
+  const [selectedPerson, setSelectedPerson] = useState([])
   return (
     <div
       dir="rtl"
@@ -33,15 +34,18 @@ function CustomizedSelectComponent({recieverList, setDocValue} : recieverListPro
           <p> ارسال به</p>
           <BsChevronDown className="mr-3" />
         </div>
-        {recieverList.map((person) => (
-          <SelectedPerson key={person.id} info={person} length={recieverList.length} removeSelectedPerson={setDocValue} />
+        {selectedPerson.map((person) => (
+          <SelectedPerson key={1} info={person} length={recieverList.length} removeSelectedPerson={setDocValue} />
         ))}
       </div>
       <div
         hidden={listVisbile}
         className="bg-primary-100 shadow-lg w-72  py-4  space-y-4 "
       >
-        <Person setPersonInfo={setDocValue} />
+          {recieverList.map((person) => (
+          <Person key={person.id} info={person}   />
+        ))}
+        {/* <Person setPersonInfo={setDocValue} /> */}
         <div className="border border-primary-400" />
       </div>
     </div>

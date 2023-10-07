@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { baseAxios } from "@/utils/client";
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
@@ -20,31 +21,20 @@ const Card = ({ ...lang }) => {
     event.preventDefault();
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/login`,
+      const res = await baseAxios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/login/`,
         {
-          method: "POST",
+          email: credentials.username,
+          password: credentials.password,
+        },
+        {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true.toString(),
             "Content-Type": "application/json",
           },
-
-          body: JSON.stringify({
-            email: credentials.username,
-            password: credentials.password,
-          }),
         }
       );
 
-      const nextRes = await res.json();
-
-      if (nextRes.success) {
-        window.localStorage.setItem("token", nextRes.token);
-      } else {
-        throw new Error(nextRes.message);
-      }
+      window.localStorage.setItem("TOKENS", JSON.stringify(res.data));
     } catch (e: any) {
       setErrorState({ inputState: "ErrorState", status: true, msg: e });
       setTimeout(() => {
@@ -53,7 +43,7 @@ const Card = ({ ...lang }) => {
     }
   };
 
-  const handleChange = (value: string, name: string ) => {
+  const handleChange = (value: string, name: string) => {
     setCredentials((prev) => ({
       ...prev,
       [name]: value,
@@ -87,6 +77,7 @@ const Card = ({ ...lang }) => {
               label={lang.password}
               fullWidth
               state={errorState.status ? "ErrorState" : "Default"}
+              handleChange={(value, name) => handleChange(value, name)}
               name="password"
             />
             <AiFillEye

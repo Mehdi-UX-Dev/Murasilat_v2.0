@@ -20,18 +20,40 @@ import {
   localeProps,
   writtenDocumentValues_PROPS,
 } from "@/universalTypes";
+import axios from "axios";
 
 function Page({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+          accept: "application/json",
+        },
+      })
+      .then(
+        (res) => {
+          setRecieverList(res.data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }, []);
+
+  const [recieverList, setRecieverList] = useState<object[]>([]);
+
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: shamsiDate,
     docNumber: 1,
     docType: "normal",
     quillValue: "",
-    recieverList: [],
     title: "",
     summary: "",
   });
@@ -108,13 +130,13 @@ function Page({ params: { locale } }: localeProps) {
         <div className="border border-primary-400 mb-4">
           <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">
             <p>{shamsiDate}</p>
-            <p>01</p>
+            {/* <p>01</p> */}
           </div>
 
           <div className="flex items-center border border-b-0 border-primary-300  pl-2 ">
             <TypeGroup setDocValue={setDocValue} />
             <CustomizedSelectComponent
-              recieverList={docValue.recieverList}
+              recieverList={recieverList}
               setDocValue={setDocValue}
             />
           </div>
