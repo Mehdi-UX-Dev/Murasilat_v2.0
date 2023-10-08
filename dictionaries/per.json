@@ -28,7 +28,7 @@
       "write_maktoob": "ایجاد مکتوب",
       "write_istilam": "ایجاد استعلام",
       "write_pishniahd": "ایجاد پيشنهاد", 
-      "write_document" : "ارسال مکتوب", 
+      "send_document" : "ارسال مکتوب", 
       "preview_draft" : "نمایش پیش سند",
       "title" : "عنوان", 
       "send_to" : "ارسال به", 

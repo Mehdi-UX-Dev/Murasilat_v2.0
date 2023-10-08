@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   receivers: [],
+  selectedReceiver: null,
 };
 
 const fetchDocuments = createAsyncThunk(
@@ -73,7 +74,7 @@ const writeDocument = createAsyncThunk(
       }
 
       callback?.();
-      return response.data;
+      return [];
     } catch (error) {
       return rejectWithValue(error.response.data.detail);
     }
@@ -83,7 +84,11 @@ const writeDocument = createAsyncThunk(
 const documentsSlice = createSlice({
   name: "documents",
   initialState,
-  reducers: {},
+  reducers: {
+    selectReceiver: (state, action) => {
+      state.selectedReceiver = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDocuments.pending, (state) => {
@@ -126,5 +131,6 @@ const documentsSlice = createSlice({
 });
 
 export default documentsSlice.reducer;
+export const { selectReceiver } = documentsSlice.actions;
 
 export { fetchDocuments, writeDocument, fetchReceivers };

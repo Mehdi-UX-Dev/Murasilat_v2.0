@@ -24,6 +24,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchReceivers,
+  selectReceiver,
   writeDocument,
 } from "@/context/features/documentSlice";
 
@@ -32,6 +33,7 @@ function Page({ params: { locale } }: localeProps) {
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
   const dispatch = useDispatch();
+  const { selectedReceiver } = useSelector((store) => store.documents);
 
   useEffect(() => {
     axios
@@ -63,10 +65,11 @@ function Page({ params: { locale } }: localeProps) {
     summary: "",
   });
 
-  const handleDocSumbit = () => {
+  const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
     dispatch(
       writeDocument({
-        documentData: docValue,
+        documentData: { ...docValue, receiver: selectedReceiver.id },
         callback: () => {
           alert("Document created successfully");
         },
@@ -87,7 +90,7 @@ function Page({ params: { locale } }: localeProps) {
 
   useEffect(() => {
     dispatch(fetchReceivers());
-  },[]);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -171,7 +174,7 @@ function Page({ params: { locale } }: localeProps) {
             onChange={(value) => {
               setDocValue((item: writtenDocumentValues_PROPS) => ({
                 ...item,
-                quillValue: value,
+                content: value,
               }));
             }}
             className="h-[23rem] overflow-hidden  "
@@ -194,11 +197,7 @@ function Page({ params: { locale } }: localeProps) {
             label={lang?.preview_draft}
             handleClick={handleDocumentPreviewModal}
           />
-          <Button
-            label={lang?.send_document}
-            size="large"
-            handleClick={handleNot}
-          />
+          <Button label={lang?.send_document} size="large" type="submit" />
         </div>
         {/*  */}
       </form>

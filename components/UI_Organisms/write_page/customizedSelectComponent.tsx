@@ -3,20 +3,22 @@ import { BsChevronDown } from "react-icons/bs";
 import Person from "@/components/UI_Molecules/personSendList";
 import SelectedPerson from "@/components/UI_Molecules/personSelectedAvatar";
 
-import { useSelector } from "react-redux";
-import store from "@/context/store";
+import { useDispatch, useSelector } from "react-redux";
 
 //* type person is used several times, so export it as a default type to reduce redundancy
 
 function CustomizedSelectComponent() {
-  const { receivers } = useSelector((store) => store.documents);
+  const { receivers, selectedReceiver } = useSelector(
+    (store) => store.documents
+  );
+  const dispatch = useDispatch();
+
   const [listVisbile, setListVisible] = useState(true);
   const showList = () => {
     setListVisible(!listVisbile);
   };
   // const [personInfo, setPersonInfo] = useState<personProps[]>([]);
 
-  const [selectedPerson, setSelectedPerson] = useState([]);
   return (
     <div
       dir="rtl"
@@ -30,18 +32,11 @@ function CustomizedSelectComponent() {
           <p> ارسال به</p>
           <BsChevronDown className="mr-3" />
         </div>
-        {/* {selectedPerson.map((person) => (
-          <SelectedPerson
-            key={1}
-            info={person}
-            length={receivers.length}
-            removeSelectedPerson={setDocValue}
-          />
-        ))} */}
+        {selectedReceiver && <SelectedPerson {...selectedReceiver} />}
       </div>
       <div
-        hidden={listVisbile}
-        className="bg-primary-100 shadow-lg w-72  py-4  space-y-4 "
+        hidden={listVisbile ||  selectedReceiver}
+        className="bg-primary-100 relative z-10 shadow-lg w-72  py-4  space-y-4 "
       >
         {receivers.map((person) => (
           <Person key={person.id} info={person} />

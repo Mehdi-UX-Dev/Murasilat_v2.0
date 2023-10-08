@@ -1,9 +1,12 @@
+import { selectReceiver } from "@/context/features/documentSlice";
 import Image from "next/image";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 function Person({ info }: { info: any }) {
+  const dispatch = useDispatch();
   const handlePersonClick = () => {
-    console.log(info.fullname);
+    dispatch(selectReceiver(info));
   };
 
   return (
