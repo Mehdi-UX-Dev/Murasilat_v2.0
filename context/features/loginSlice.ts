@@ -5,12 +5,20 @@ import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/context/store';
-import { SESSION_TYPE, clearSession, getUser, setToken } from '@/utils/auth';
+import {
+  SESSION_TYPE,
+  TOKENS_TYPE,
+  clearSession,
+  getUser,
+  setToken,
+} from '@/utils/auth';
+
+type LoginParams = { email: string; password: string; callback?: () => void };
 
 interface LoginState {
   user: SESSION_TYPE | null;
   loading: boolean;
-  error: string | null;
+  error: string | any;
 }
 
 const initialState: LoginState = {
@@ -19,7 +27,7 @@ const initialState: LoginState = {
   error: null,
 };
 
-const login = createAsyncThunk(
+const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
   'Login',
   async ({ email, password, callback }, { rejectWithValue }) => {
     try {
@@ -29,7 +37,7 @@ const login = createAsyncThunk(
       );
       callback?.();
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.response.data.detail);
     }

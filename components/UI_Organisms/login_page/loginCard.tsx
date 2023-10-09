@@ -1,21 +1,24 @@
-"use client";
-import React, { useState } from "react";
-import { baseAxios } from "@/utils/client";
-import { Button } from "@/components/UI_Molecules/Button";
-import { InputField } from "@/components/UI_Molecules/Input";
-import { AiFillEye } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
-import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/context/features/loginSlice";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState } from 'react';
+import { baseAxios } from '@/utils/client';
+import { Button } from '@/components/UI_Molecules/Button';
+import { InputField } from '@/components/UI_Molecules/Input';
+import { AiFillEye } from 'react-icons/ai';
+import { FaUserAlt } from 'react-icons/fa';
+import { credentialsProps_LOGIN, errorProps_LOGIN } from '@/universalTypes';
+import { login } from '@/context/features/loginSlice';
+import { useRouter } from 'next/navigation';
+import { RootState } from '@/context/store';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
 
 const Card = ({ ...lang }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [credentials, setCredentials] = useState<credentialsProps_LOGIN>({});
-  const { user, error, loading } = useSelector((store) => store.user);
+  const { user, error, loading } = useAppSelector(
+    (store: RootState) => store.user
+  );
   // const [errorState, setErrorState] = useState<errorProps_LOGIN>({
   //   inputState: "Default",
   //   status: false,
@@ -54,7 +57,7 @@ const Card = ({ ...lang }) => {
         email: credentials.username,
         password: credentials.password,
         callback: () => {
-          router.push("/dashboard");
+          router.push('/dashboard');
         },
       })
     );
@@ -81,26 +84,26 @@ const Card = ({ ...lang }) => {
               inputType="text"
               label={lang.username}
               fullWidth
-              state={error ? "ErrorState" : "Default"}
+              state={error ? 'ErrorState' : 'Default'}
               name="username"
               handleChange={(value, name) => handleChange(value, name)}
             />
-            <FaUserAlt size={16} className={"absolute right-2 bottom-3"} />
+            <FaUserAlt size={16} className={'absolute right-2 bottom-3'} />
           </div>
 
           <div className="relative">
             <InputField
-              inputType={passwordState ? "text" : "password"}
+              inputType={passwordState ? 'text' : 'password'}
               label={lang.password}
               fullWidth
-              state={error ? "ErrorState" : "Default"}
+              state={error ? 'ErrorState' : 'Default'}
               handleChange={(value, name) => handleChange(value, name)}
               name="password"
             />
             <AiFillEye
               onClick={() => setShowPasswordState(!passwordState)}
               size={16}
-              className={"absolute right-2 bottom-3"}
+              className={'absolute right-2 bottom-3'}
             />
           </div>
 
@@ -111,8 +114,8 @@ const Card = ({ ...lang }) => {
           <Button
             type="submit"
             label={lang.submit}
-            intent={"primary"}
-            size={"medium"}
+            intent={'primary'}
+            size={'medium'}
             fullWidth
           />
         </div>
