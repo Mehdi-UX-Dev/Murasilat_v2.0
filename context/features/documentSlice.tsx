@@ -25,7 +25,7 @@ const fetchDocuments = createAsyncThunk(
         }
       );
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
@@ -47,7 +47,7 @@ const fetchReceivers = createAsyncThunk(
         }
       );
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
@@ -55,7 +55,15 @@ const fetchReceivers = createAsyncThunk(
 
 const writeDocument = createAsyncThunk(
   "documents/create",
-  async ({ documentData, callback }, { rejectWithValue }) => {
+  async (
+    { documentData, callback }: { documentData: any; callback: any },
+    { rejectWithValue }
+  ) => {
+    const tokensString = localStorage.getItem("TOKENS");
+    const tokens = tokensString !== null ? JSON.parse(tokensString) : null;
+
+    const authorizationHeader =
+      tokens !== null ? `Bearer ${tokens.access}` : "";
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
@@ -63,8 +71,7 @@ const writeDocument = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+            Authorization: authorizationHeader,
             accept: "application/json",
           },
         }
@@ -75,7 +82,7 @@ const writeDocument = createAsyncThunk(
 
       callback?.();
       return [];
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
@@ -101,7 +108,7 @@ const documentsSlice = createSlice({
       })
       .addCase(fetchDocuments.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as null;
       })
       .addCase(writeDocument.pending, (state) => {
         state.loading = true;
@@ -112,7 +119,7 @@ const documentsSlice = createSlice({
       })
       .addCase(writeDocument.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as null;
       })
       .addCase(fetchReceivers.pending, (state) => {
         state.loading = true;
@@ -125,7 +132,7 @@ const documentsSlice = createSlice({
       .addCase(fetchReceivers.rejected, (state, action) => {
         state.loading = false;
 
-        state.error = action.payload;
+        state.error = action.payload as null;
       });
   },
 });

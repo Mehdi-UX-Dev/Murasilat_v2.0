@@ -6,7 +6,7 @@ import decode from "jwt-decode";
 const getTokens: any = () => {
   if (window) {
     const tokens_unparsed = window.localStorage.getItem(Token_key);
-    const tokens = JSON.parse(tokens_unparsed || "");
+    const tokens = (tokens_unparsed || "");
 
     return tokens ? tokens : null;
   }
