@@ -11,7 +11,6 @@ import React from "react";
 //? admin cannot be accessed from outside the locale directory find the reason
 
 function Administrator() {
-  const path = usePathname();
 
   return (
     <>

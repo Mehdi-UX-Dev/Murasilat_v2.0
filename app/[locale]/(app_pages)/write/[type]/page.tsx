@@ -189,6 +189,7 @@ function Page({ params: { locale } }: localeProps) {
             placeholder={lang?.summary}
             dir="rtl"
             name="summary"
+            onChange={handleInputChange}
           />
         </div>
         <div className="flex justify-end space-x-4">

@@ -3,9 +3,13 @@ import axios from "axios";
 
 const initialState = {
   documents: [],
+  receivers: [],
+  pdf: {
+    visible: false,
+    body: "",
+  },
   loading: false,
   error: null,
-  receivers: [],
   selectedReceiver: null,
 };
 
@@ -19,7 +23,8 @@ const fetchDocuments = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
             accept: "application/json",
           },
         }
@@ -41,12 +46,56 @@ const fetchReceivers = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
             accept: "application/json",
           },
         }
       );
       return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+const saveToWarida = createAsyncThunk(
+  "documents/Update",
+  async (
+    {
+      id,
+      content_update,
+      summary,
+      remarks,
+    }: {
+      id: number;
+      content_update: string;
+      summary: string;
+      remarks: string;
+      callback: any;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      console.log(id, content_update, summary, remarks);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/save_to_warida/`,
+        { content_update, summary, remarks },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      console.log(response);
+
+      return [];
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
@@ -59,11 +108,6 @@ const writeDocument = createAsyncThunk(
     { documentData, callback }: { documentData: any; callback: any },
     { rejectWithValue }
   ) => {
-    const tokensString = localStorage.getItem("TOKENS");
-    const tokens = tokensString !== null ? JSON.parse(tokensString) : null;
-
-    const authorizationHeader =
-      tokens !== null ? `Bearer ${tokens.access}` : "";
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
@@ -71,11 +115,16 @@ const writeDocument = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authorizationHeader,
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
             accept: "application/json",
           },
         }
       );
+
+      console.log(response);
+
       if (documentData?.files) {
         // handle file upload
       }
@@ -94,6 +143,12 @@ const documentsSlice = createSlice({
   reducers: {
     selectReceiver: (state, action) => {
       state.selectedReceiver = action.payload;
+    },
+    showPreview: (state) => {
+      state.pdf.visible = true;
+    },
+    hidePreview: (state) => {
+      state.pdf.visible = false;
     },
   },
   extraReducers: (builder) => {
@@ -138,6 +193,7 @@ const documentsSlice = createSlice({
 });
 
 export default documentsSlice.reducer;
-export const { selectReceiver } = documentsSlice.actions;
+export const { selectReceiver, showPreview, hidePreview } =
+  documentsSlice.actions;
 
-export { fetchDocuments, writeDocument, fetchReceivers };
+export { fetchDocuments, writeDocument, fetchReceivers, saveToWarida };

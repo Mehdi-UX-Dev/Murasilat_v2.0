@@ -11,11 +11,16 @@ import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 import SideOption from "../../UI_Molecules/sidebarOption";
 import { langProps_SideBar } from "@/universalTypes";
+import { useDispatch } from "react-redux";
+import { logout } from "@/context/features/loginSlice";
+import { useRouter } from "next/navigation";
 
 function SideBar({ ...lang }: langProps_SideBar) {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const handleLogOut = () => {
-    window.localStorage.removeItem("token");
-    // router.push("/login");
+    dispatch(logout());
+    router.push("/");
   };
 
   return (

@@ -21,7 +21,7 @@ function PDFTemplate({
   const path = usePathname();
 
   return (
-    <div id="myElement" className=" mt-auto  grid grid-rows-5 bg-white w-1/2">
+    <div id="myElement" className=" mt-auto grid grid-rows-5 bg-white w-1/2">
       {/*  */}
       <section id="header" className="row-span-1">
         <div className="flex justify-between mx-8 mt-4 text-center">
@@ -97,9 +97,10 @@ function PDFTemplate({
       </section>
 
       {/* quill content  */}
-      {path === "/write/writeMaktoob" && <MaktoobFormat body={body} />}
+      {path === "/write/writeMaktoob" ||
+        (path === "/dashboard" && <MaktoobFormat body={body} />)}
 
-      {path === "/write/writeIstilam" && <IstilamFormat body={body}/>}
+      {path === "/write/writeIstilam" && <IstilamFormat body={body} />}
 
       {/*  */}
       <section id="footer" className="row-span-1">

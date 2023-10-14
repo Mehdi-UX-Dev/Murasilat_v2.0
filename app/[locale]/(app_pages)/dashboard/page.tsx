@@ -7,14 +7,27 @@ import { useMyContext } from "@/hooks/credentialsContext";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
-import axios from "axios";
+import {
+  langProps_DASHBOARD,
+  langProps_PDF,
+  localeProps,
+} from "@/universalTypes";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchDocuments } from "@/context/features/documentSlice";
+import {
+  fetchDocuments,
+  hidePreview,
+  saveToWarida,
+} from "@/context/features/documentSlice";
+import PDFTemplate from "@/components/pdf/pdfTemplate";
+import { InputField } from "@/components/UI_Molecules/Input";
+import { Button } from "@/components/UI_Molecules/Button";
+import { useAppSelector } from "@/context/hooks";
+import { MdOutlineCancel } from "react-icons/md";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   const containerRef = useRef<HTMLDivElement>(null!);
+  const [pdfLang, setPdfLang] = useState<langProps_PDF>();
 
   const scrollLeft = () => {
     containerRef.current.scrollLeft -= 100;
@@ -30,43 +43,100 @@ function Dashboard({ params: { locale } }: localeProps) {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;
       setDashLang(res);
+      const pdfRes = (await getDictionary(locale)).pdf;
+      setPdfLang(pdfRes);
     })();
   }, [locale]);
 
-  const { documents, loading, error } = useSelector((store) => store.documents);
-  console.log(documents);
+  const { documents, loading, error, pdf } = useAppSelector(
+    (store) => store.documents
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // axios
-    //   .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization:
-    //         "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-    //       accept: "application/json",
-    //     },
-    //   })
-    //   .then(
-    //     (res) => {
-    //       console.log(res.data);
-    //       setDocuments(res.data);
-    //     },
-    //     (err) => {
-    //       console.log(err);
-    //     }
-    //   );
-
     dispatch(fetchDocuments());
   }, []);
 
+  const [updateDocument, setUpdateDocument] = useState({
+    content_update: "",
+    summary: "",
+    remarks: "",
+  });
+
   return (
     lang && (
-      <div className=" space-y-8">
+      <div className=" space-y-8" >
         {/* //? can not the user info be used in the layout ?? */}
-        {myContext?.userModuleState && (
+        {/* {myContext?.userModuleState && (
           <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
             <UserInfo />
+          </div>
+        )} */}
+
+        {pdf.visible && (
+          <div className=" overflow-auto fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
+           
+           <MdOutlineCancel size={24} onClick={() => dispatch(hidePreview())}/>
+            <div className="bg-white h-screen w-72 mr-4">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault(), console.log(documents[0]);
+
+                  dispatch(
+                    saveToWarida({
+                      id: documents[0].serial,
+                      ...updateDocument,
+                    })
+                  );
+                }}
+              >
+                <InputField
+                  name="content_update"
+                  inputType="text"
+                  state="Default"
+                  label="make changes"
+                  fullWidth
+                  handleChange={(value, name) =>
+                    setUpdateDocument((prevState) => ({
+                      ...prevState,
+                      [name]: value,
+                    }))
+                  }
+                />
+                <InputField
+                  name="summary"
+                  inputType="text"
+                  state="Default"
+                  label="write summary"
+                  fullWidth
+                  handleChange={(value, name) =>
+                    setUpdateDocument((prevState) => ({
+                      ...prevState,
+                      [name]: value,
+                    }))
+                  }
+                />
+                <InputField
+                  name="remarks"
+                  inputType="text"
+                  state="Default"
+                  label="write considerations"
+                  fullWidth
+                  handleChange={(value, name) =>
+                    setUpdateDocument((prevState) => ({
+                      ...prevState,
+                      [name]: value,
+                    }))
+                  }
+                />
+                <Button type="submit" label="Save Changes" />
+              </form>
+            </div>
+            <PDFTemplate
+              {...pdfLang}
+              body={documents[0].content}
+              docType={documents[0].docType}
+            />
           </div>
         )}
 
