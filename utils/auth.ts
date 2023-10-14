@@ -1,29 +1,45 @@
-"use client";
+'use client';
+import decode from 'jwt-decode';
 
-const Token_key = "TOKENS";
-import decode from "jwt-decode";
+const TOKEN_KEY = 'TOKENS';
 
-const getTokens: any = () => {
-  if (window) {
-    const tokens_unparsed = window.localStorage.getItem(Token_key);
-    const tokens = (tokens_unparsed || "");
+export type TOKENS_TYPE = { access: string; refresh: string };
 
-    return tokens ? tokens : null;
+export type SESSION_TYPE = {
+  user_id: number;
+};
+
+type TOKEN_PAYLOAD = {
+  token_type: string;
+  exp: number;
+  iat: number;
+  jti: string;
+  user_id: number;
+};
+
+function getTokens(): TOKENS_TYPE | null {
+  if (typeof window !== 'undefined') {
+    const tokens_unparsed = window.localStorage.getItem(TOKEN_KEY);
+    return tokens_unparsed ? JSON.parse(tokens_unparsed) : null;
   }
-};
+  return null;
+}
 
-const getUser: any = () => {
+function getUser(): SESSION_TYPE | null {
   const tokens = getTokens();
+  if (tokens && tokens.access) {
+    const decoded = decode<TOKEN_PAYLOAD>(tokens?.access);
+    return { user_id: decoded.user_id };
+  }
+  return null;
+}
 
-  return tokens?.access ? decode(tokens?.access) : null;
-};
+function setToken(tokens: TOKENS_TYPE): void {
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens));
+}
 
-const setToken: any = (tokens: {}) => {
-  localStorage.setItem(Token_key, JSON.stringify(tokens));
-};
+function clearSession(): void {
+  localStorage.removeItem(TOKEN_KEY);
+}
 
-const clearSession: any = () => {
-  localStorage.removeItem(Token_key);
-};
-
-export { getTokens, getUser, setToken };
+export { getTokens, getUser, setToken, clearSession };

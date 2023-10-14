@@ -1,0 +1,47 @@
+/* quill-rtl.css */
+
+.ql-container.ql-snow {
+  direction: rtl;
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-editor {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-tooltip {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker-label {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker-item {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker-options {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker.ql-expanded .ql-picker-item {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  text-align: right;
+}
+
+.ql-container.ql-snow .ql-tooltip {
+  direction: rtl;
+}
+
+.ql-container.ql-snow .ql-tooltip .ql-tooltip-editor {
+  direction: rtl;
+  text-align: right;
+}

@@ -1,18 +1,34 @@
-"use client"
+'use client';
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
-import { getUser, setToken } from "../../utils/auth";
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@/context/store';
+import {
+  SESSION_TYPE,
+  TOKENS_TYPE,
+  clearSession,
+  getUser,
+  setToken,
+} from '@/utils/auth';
 
-const initialState = {
+type LoginParams = { email: string; password: string; callback?: () => void };
+
+interface LoginState {
+  user: SESSION_TYPE | null;
+  loading: boolean;
+  error: string | any;
+}
+
+const initialState: LoginState = {
   user: getUser(),
   loading: false,
   error: null,
 };
 
-const login = createAsyncThunk(
-  "Login",
+const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
+  'Login',
   async ({ email, password, callback }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -21,7 +37,7 @@ const login = createAsyncThunk(
       );
       callback?.();
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.response.data.detail);
     }
@@ -29,7 +45,7 @@ const login = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
