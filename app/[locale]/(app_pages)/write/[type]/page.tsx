@@ -1,48 +1,49 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/UI_Molecules/Button";
-import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
-import CustomizedSelectComponent from "@/components/UI_Organisms/write_page/customizedSelectComponent";
-import modules from "../../../../../Quill.module.";
-import React, { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { Button } from '@/components/UI_Molecules/Button';
+import TypeGroup from '@/components/UI_Molecules/documentTypeRadioButtons';
+import CustomizedSelectComponent from '@/components/UI_Organisms/write_page/customizedSelectComponent';
+import modules from '../../../../../Quill.module.';
+import React, { useEffect, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import "../../../../../app/quill.rtl.css";
-import { getDictionary } from "@/i18n-server";
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
-import { useMyContext } from "../../../../../hooks/credentialsContext";
-import { GetShamsiDate } from "@/date-converter";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
+import { getDictionary } from '@/i18n-server';
+import UserInfo from '@/components/UI_Organisms/user/userInfo';
+import { useMyContext } from '../../../../../hooks/credentialsContext';
+import { GetShamsiDate } from '@/date-converter';
+import PDFTemplate from '@/components/pdf/pdfTemplate';
 import {
   PDFProps_PDFTemplate,
   langProps_PDF,
   langProps_WRITE,
   localeProps,
   writtenDocumentValues_PROPS,
-} from "@/universalTypes";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+} from '@/universalTypes';
+import axios from 'axios';
 import {
   fetchReceivers,
   selectReceiver,
   writeDocument,
-} from "@/context/features/documentSlice";
+} from '@/context/features/documentSlice';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
 
 function Page({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
-  const dispatch = useDispatch();
-  const { selectedReceiver } = useSelector((store) => store.documents);
+  const dispatch = useAppDispatch();
+  const { selectedReceiver } = useAppSelector((store) => store.documents);
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-          accept: "application/json",
+            'Bearer ' +
+            JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+          accept: 'application/json',
         },
       })
       .then(
@@ -59,19 +60,19 @@ function Page({ params: { locale } }: localeProps) {
 
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: new Date(),
-    urgency: "N",
-    content: "",
-    title: "",
-    summary: "",
+    urgency: 'N',
+    content: '',
+    title: '',
+    summary: '',
   });
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     dispatch(
       writeDocument({
-        documentData: { ...docValue, receiver: selectedReceiver.id },
+        documentData: { ...docValue, receiver: selectedReceiver?.id },
         callback: () => {
-          alert("Document created successfully");
+          alert('Document created successfully');
         },
       })
     );

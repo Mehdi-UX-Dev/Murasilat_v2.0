@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
-import { Locale } from "./i18n-config";
+import { IconType } from 'react-icons';
+import { Locale } from './i18n-config';
 
 export type localeProps = {
   params: { locale: Locale };
@@ -43,9 +43,8 @@ export type langProps_WRITE = {
 // data that must be submitted to the server
 export type writtenDocumentValues_PROPS = {
   date: Date;
-  urgency: "N" | "U" | "A" | "C";
+  urgency: 'N' | 'U' | 'A' | 'C';
   content: string;
-
   title: string;
   summary: string;
   // file?: File;
@@ -78,7 +77,7 @@ export type writtenDocumentTypeProps_LAYOUT = {
 // login page input field error state props
 
 export type errorProps_LOGIN = {
-  inputState: "Default" | "ErrorState";
+  inputState: 'Default' | 'ErrorState';
   msg: string;
   status: boolean;
 };
@@ -131,5 +130,5 @@ export type sideBarOptionProps_SIDEBAR = {
 
 export type PDFProps_PDFTemplate = {
   body?: string;
-  docType: "N" | "U" | "C" | "A";
+  docType: 'N' | 'U' | 'C' | 'A';
 };

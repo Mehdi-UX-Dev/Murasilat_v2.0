@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import Card from "@/components/UI_Organisms/write_page/Card";
-import React, { useEffect, useRef, useState } from "react";
-import { getDictionary } from "@/i18n-server";
-import { useMyContext } from "@/hooks/credentialsContext";
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
-import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchDocuments } from "@/context/features/documentSlice";
+import Card from '@/components/UI_Organisms/write_page/Card';
+import React, { useEffect, useRef, useState } from 'react';
+import { getDictionary } from '@/i18n-server';
+import { useMyContext } from '@/hooks/credentialsContext';
+import UserInfo from '@/components/UI_Organisms/user/userInfo';
+import DashboardButton from '@/components/UI_Molecules/dashboradCreateButton';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { langProps_DASHBOARD, localeProps } from '@/universalTypes';
+import { fetchDocuments } from '@/context/features/documentSlice';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
 
 function Dashboard({ params: { locale } }: localeProps) {
   const myContext = useMyContext();
@@ -33,9 +32,11 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const { documents, loading, error } = useSelector((store) => store.documents);
-  console.log(documents);
-  const dispatch = useDispatch();
+  const { documents, loading, error } = useAppSelector(
+    (store) => store.documents
+  );
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     // axios
@@ -83,13 +84,13 @@ function Dashboard({ params: { locale } }: localeProps) {
           />
           <DashboardButton
             lang={lang}
-            type="iishnihad"
+            type="pishnihad"
             path="/write/writeIstilam"
-          />{" "}
+          />{' '}
         </div>
 
         <div className="relative flex  ">
-          {" "}
+          {' '}
           <AiOutlineLeft
             className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}
@@ -110,7 +111,7 @@ function Dashboard({ params: { locale } }: localeProps) {
         </div>
 
         <div className="relative flex  ">
-          {" "}
+          {' '}
           <AiOutlineLeft
             className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}

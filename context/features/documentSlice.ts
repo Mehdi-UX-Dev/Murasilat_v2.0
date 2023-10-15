@@ -1,7 +1,45 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
+interface UserType {
+  id: number;
+  first_name: string;
+  last_name: string;
+  fullname: string;
+  email: string;
+  contact_number: string | number;
+  profile_pic: string;
+  username: string;
+  authority: {
+    title: string;
+  };
+  title: string | null;
+  role: string;
+}
+
+export interface DocumentType {
+  serial: number;
+  title: string;
+  sender: UserType;
+  receiver: UserType;
+  date: string;
+  content: string;
+  read: boolean;
+  urgency: string;
+  document_type: 'maktoob' | 'istilam' | 'pishnihad';
+  qr_code: string;
+  responded: boolean;
+  attachments: any[];
+}
+interface DocumentStateType {
+  documents: DocumentType[];
+  loading: boolean;
+  error: string | any;
+  receivers: UserType[];
+  selectedReceiver: UserType | null;
+}
+
+const initialState: DocumentStateType = {
   documents: [],
   loading: false,
   error: null,
@@ -9,52 +47,71 @@ const initialState = {
   selectedReceiver: null,
 };
 
-const fetchDocuments = createAsyncThunk(
-  "documents/fetch",
+const fetchDocuments = createAsyncThunk<DocumentType[]>(
+  'documents/fetch',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
 );
 
 const fetchReceivers = createAsyncThunk(
-  "documents/receivers",
+  'documents/receivers',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
 );
 
-const writeDocument = createAsyncThunk(
-  "documents/create",
+export interface DocumentCreateArgsType {
+  receiver: number | any;
+  title: string;
+  date: Date;
+  content: string;
+  urgency: string;
+  summary: string;
+  document_type?: 'maktoob' | 'istilam' | 'pishnihad';
+  remarks?: string;
+  files?: any;
+}
+
+type WriteDocuemntParams = {
+  documentData: DocumentCreateArgsType;
+  callback?: () => void;
+};
+
+const writeDocument = createAsyncThunk<DocumentType, WriteDocuemntParams>(
+  'documents/create',
   async ({ documentData, callback }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -62,27 +119,28 @@ const writeDocument = createAsyncThunk(
         { ...documentData },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
       if (documentData?.files) {
         // handle file upload
       }
-
       callback?.();
-      return [];
-    } catch (error) {
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
       return rejectWithValue(error.response.data.detail);
     }
   }
 );
 
 const documentsSlice = createSlice({
-  name: "documents",
+  name: 'documents',
   initialState,
   reducers: {
     selectReceiver: (state, action) => {
