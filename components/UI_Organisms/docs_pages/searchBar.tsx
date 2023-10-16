@@ -1,89 +1,40 @@
 "use client";
 
 import { InputField } from "@/components/UI_Molecules/Input";
+import { searchArchiveDocuments } from "@/context/features/archiveSlice";
 import { langProps_ARCHIVE } from "@/universalTypes";
 import { cx } from "class-variance-authority";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BiFilter } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 
-function SearchBar({ ...lang }: langProps_ARCHIVE) {
+function SearchBar({ type, ...lang }: langProps_ARCHIVE) {
   const [filterGroupVisible, setFilterGroupVisible] = useState(false);
-  const data = [];
-  const Filter = (filterType: string, value: string) => {
-    console.log(value);
-    console.log(filterType);
+  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
 
-    switch (filterType) {
-      case "id":
-        data.filter((list) => list === value);
-        break;
-      case "sender":
-        data.filter((list) => list === value);
-        break;
-      case "date":
-        data.filter((list) => list === value);
-        break;
-      case "title":
-        data.filter((list) => list === value);
-    }
+  const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    dispatch(searchArchiveDocuments({ type, value: searchValue }));
   };
 
   return (
     <div className="flex items-end  justify-end space-x-4 ">
-      <BiFilter
-        size={36}
-        // * give the icon a transition of rotating 360 degree
-        onClick={() => setFilterGroupVisible(!filterGroupVisible)}
-      />
-      <div
-        className={cx("space-x-4", {
-          flex: filterGroupVisible,
-          hidden: !filterGroupVisible,
-        })}
-      >
-        <InputField
-          state="Default"
-          label={lang.date}
-          lang="LTR"
-          inputType="date"
-          fullWidth
-          name="date"
-          handleChange={(value) => Filter("date", value)}
-        />
-        <InputField
-          state="Default"
-          label={lang.sender}
-          lang="RTL"
-          inputType="text"
-          fullWidth
-          name="sender"
-          handleChange={(value) => Filter("sender", value)}
-        />
-        <InputField
-          state="Default"
-          label={lang.title}
-          lang="RTL"
-          inputType="text"
-          fullWidth
-          name="title"
-          handleChange={(value) => Filter("title", value)}
-        />
-      </div>
-
-      <div className="relative ">
-        <InputField
-          state="Default"
-          label={lang.number}
-          inputType="number"
-          name="search"
-          fullWidth={false}
-          lang="RTL"
-          disabled={filterGroupVisible}
-          handleChange={(value) => Filter("id", value)}
-        />
-        <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />
-      </div>
+      <form onSubmit={Search}>
+        <div className="relative ">
+          <InputField
+            state="Default"
+            label={lang.number}
+            inputType="number"
+            name="search"
+            fullWidth={false}
+            lang="RTL"
+            disabled={filterGroupVisible}
+            handleChange={(value) => setSearchValue(value)}
+          />
+          <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />
+        </div>
+      </form>
     </div>
   );
 }

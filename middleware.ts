@@ -51,7 +51,9 @@ export function middleware(request: NextRequest) {
   const existingPathnamePatterns = [
     /^\/$/,
     /^\/dashboard$/,
-    /^\/archive$/,
+    /^\/archive\/warida$/,
+    /^\/archive\/sadira$/,
+    /^\/archive\/recents$/,
     /^\/write\/writeMaktoob$/,
     /^\/write\/writePishnihad$/,
     /^\/write\/writeIstilam$/,

@@ -86,13 +86,13 @@ function SideBar({ ...lang }: langProps_SideBar) {
             customClassName="pl-6"
           />
           <SideSubOption
-            url={"/archive/all_sadira"}
+            url={"/archive/sadira"}
             text={lang?.all_sadira}
             Icon={MdOutgoingMail}
           />
 
           <SideSubOption
-            url={"/archive/all_warida"}
+            url={"/archive/warida"}
             text={lang?.all_warida}
             Icon={RiMailDownloadFill}
           />

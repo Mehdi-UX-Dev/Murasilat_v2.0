@@ -14,7 +14,6 @@ import { useMyContext } from "../../../../../hooks/credentialsContext";
 import { GetShamsiDate } from "@/date-converter";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
 import {
-  PDFProps_PDFTemplate,
   langProps_PDF,
   langProps_WRITE,
   localeProps,
@@ -24,7 +23,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchReceivers,
-  selectReceiver,
   writeDocument,
 } from "@/context/features/documentSlice";
 

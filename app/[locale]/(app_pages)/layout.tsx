@@ -14,7 +14,6 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 } & localeProps) {
-  const [userModuleState, setModuleState] = useState(false);
   const [lang, setLang] = useState<langProps_DASHBOARD | undefined>(undefined);
 
   useEffect(() => {
