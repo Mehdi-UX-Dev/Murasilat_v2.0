@@ -26,8 +26,17 @@
 
       
     "list_page" : {
-      "placeholder": ""
+      "search": "search",
+      "date": "Date",
+      "sender":"Sender",
+      "title": "Title", 
+      "number": "Number", 
+      "content" : "Subject"
     },
+
+    "searchBar" : {
+      "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید"
+     },
 
     "Write_Page" : {
       "write_maktoob": "Create Maktoob",
