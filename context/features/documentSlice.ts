@@ -1,42 +1,74 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
+export interface UserType {
+  id: number;
+  first_name: string;
+  last_name: string;
+  fullname: string;
+  email: string;
+  contact_number: string | number;
+  profile_pic: string;
+  username: string;
+  authority: {
+    title: string;
+  };
+  title: string | null;
+  role: string;
+}
+
+export interface DocumentType {
+  serial: number;
+  title: string;
+  sender: UserType;
+  receiver: UserType;
+  date: string;
+  content: string;
+  read: boolean;
+  urgency: string;
+  document_type: 'maktoob' | 'istilam' | 'pishnihad';
+  qr_code: string;
+  responded: boolean;
+  attachments: any[];
+}
+interface DocumentStateType {
+  documents: DocumentType[];
+  loading: boolean;
+  error: string | any;
+  pdf: { visible: boolean; body: string };
+  userProfileView: boolean;
+  userInfo: UserType | any;
+  receivers: UserType[];
+  selectedReceiver: UserType | null;
+}
+
+const initialState: DocumentStateType = {
   documents: [],
   receivers: [],
   pdf: {
     visible: false,
-    body: "",
+    body: '',
   },
   loading: false,
   error: null,
   selectedReceiver: null,
   userProfileView: false,
-  userInfo: {
-    fullname: "",
-    faculty: "",
-    authority: {
-      title: "",
-    },
-    profile_pic: "",
-    email: "",
-    contact_number: ""
-  },
+  userInfo: {},
 };
 
 const fetchDocuments = createAsyncThunk(
-  "documents/fetch",
+  'documents/fetch',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -49,18 +81,18 @@ const fetchDocuments = createAsyncThunk(
 );
 
 const fetchReceivers = createAsyncThunk(
-  "documents/receivers",
+  'documents/receivers',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -72,7 +104,7 @@ const fetchReceivers = createAsyncThunk(
 );
 
 const saveToWarida = createAsyncThunk(
-  "documents/Update",
+  'documents/Update',
   async (
     {
       id,
@@ -93,11 +125,11 @@ const saveToWarida = createAsyncThunk(
         { content_update, summary, remarks },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -110,7 +142,7 @@ const saveToWarida = createAsyncThunk(
 );
 
 const writeDocument = createAsyncThunk(
-  "documents/create",
+  'documents/create',
   async (
     { documentData, callback }: { documentData: any; callback: any },
     { rejectWithValue }
@@ -121,11 +153,11 @@ const writeDocument = createAsyncThunk(
         { ...documentData },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -143,24 +175,24 @@ const writeDocument = createAsyncThunk(
 );
 
 const getUserProfile = createAsyncThunk(
-  "documents/UserProfile",
+  'documents/UserProfile',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/user_info`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
 
-        console.log(response.data);
-        
+      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
@@ -169,7 +201,7 @@ const getUserProfile = createAsyncThunk(
 );
 
 const documentsSlice = createSlice({
-  name: "documents",
+  name: 'documents',
   initialState,
   reducers: {
     selectReceiver: (state, action) => {
