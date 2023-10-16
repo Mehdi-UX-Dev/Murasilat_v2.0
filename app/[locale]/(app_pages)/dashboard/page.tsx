@@ -3,7 +3,6 @@
 import Card from "@/components/UI_Organisms/write_page/Card";
 import React, { useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/i18n-server";
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {
@@ -11,18 +10,18 @@ import {
   langProps_PDF,
   localeProps,
 } from "@/universalTypes";
-import { useSelector, useDispatch } from "react-redux";
 import {
   fetchDocuments,
   hidePreview,
   saveToWarida,
+  showUserInfo,
 } from "@/context/features/documentSlice";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { Button } from "@/components/UI_Molecules/Button";
-import { useAppSelector } from "@/context/hooks";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { MdOutlineCancel } from "react-icons/md";
-import { AppDispatch } from "@/context/store";
+import UserInfo from "@/components/UI_Organisms/user/userInfo";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -47,15 +46,16 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const { documents, loading, error, pdf } = useAppSelector(
+  const { documents, pdf, userProfileView } = useAppSelector(
     (store) => store.documents
   );
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchDocuments());
-  }, []);
+  }, [dispatch]);
 
+  // ? why to have this in here
   const [updateDocument, setUpdateDocument] = useState({
     content_update: "",
     summary: "",
@@ -64,18 +64,20 @@ function Dashboard({ params: { locale } }: localeProps) {
 
   return (
     lang && (
-      <div className=" space-y-8" >
+      <div className=" space-y-8">
         {/* //? can not the user info be used in the layout ?? */}
-        {/* {myContext?.userModuleState && (
+        {userProfileView && (
           <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
             <UserInfo />
           </div>
-        )} */}
+        )}
 
         {pdf.visible && (
           <div className=" overflow-auto fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-           
-           <MdOutlineCancel size={24} onClick={() => dispatch(hidePreview())}/>
+            <MdOutlineCancel
+              size={24}
+              onClick={() => dispatch(hidePreview())}
+            />
             <div className="bg-white h-screen w-72 mr-4">
               <form
                 onSubmit={(e) => {
@@ -171,25 +173,6 @@ function Dashboard({ params: { locale } }: localeProps) {
           >
             {documents.length && <Card {...documents[0]} />}
           </div>
-          <AiOutlineRight
-            className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
-            size={36}
-            onClick={scrollRight}
-          />
-        </div>
-
-        <div className="relative flex  ">
-          {" "}
-          <AiOutlineLeft
-            className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
-            size={36}
-            onClick={scrollLeft}
-          />
-          <div
-            ref={containerRef}
-            // transition is not working properly
-            className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
-          ></div>
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
             size={36}

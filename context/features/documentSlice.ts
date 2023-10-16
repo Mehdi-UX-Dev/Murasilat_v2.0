@@ -11,6 +11,17 @@ const initialState = {
   loading: false,
   error: null,
   selectedReceiver: null,
+  userProfileView: false,
+  userInfo: {
+    fullname: "",
+    faculty: "",
+    authority: {
+      title: "",
+    },
+    profile_pic: "",
+    email: "",
+    contact_number: ""
+  },
 };
 
 const fetchDocuments = createAsyncThunk(
@@ -29,6 +40,7 @@ const fetchDocuments = createAsyncThunk(
           },
         }
       );
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
@@ -76,8 +88,6 @@ const saveToWarida = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      console.log(id, content_update, summary, remarks);
-
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/save_to_warida/`,
         { content_update, summary, remarks },
@@ -91,8 +101,6 @@ const saveToWarida = createAsyncThunk(
           },
         }
       );
-
-      console.log(response);
 
       return [];
     } catch (error: any) {
@@ -122,14 +130,38 @@ const writeDocument = createAsyncThunk(
         }
       );
 
-      console.log(response);
-
       if (documentData?.files) {
         // handle file upload
       }
 
       callback?.();
       return [];
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+const getUserProfile = createAsyncThunk(
+  "documents/UserProfile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/user_info`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+        console.log(response.data);
+        
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
@@ -148,6 +180,12 @@ const documentsSlice = createSlice({
     },
     hidePreview: (state) => {
       state.pdf.visible = false;
+    },
+    showUserInfo: (state) => {
+      state.userProfileView = true;
+    },
+    hideUserInfo: (state) => {
+      state.userProfileView = false;
     },
   },
   extraReducers: (builder) => {
@@ -187,12 +225,30 @@ const documentsSlice = createSlice({
         state.loading = false;
 
         state.error = action.payload as null;
+      })
+      .addCase(getUserProfile.pending, (state) => {})
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.error = action.payload as null;
       });
   },
 });
 
 export default documentsSlice.reducer;
-export const { selectReceiver, showPreview, hidePreview } =
-  documentsSlice.actions;
+export const {
+  selectReceiver,
+  showPreview,
+  hidePreview,
+  showUserInfo,
+  hideUserInfo,
+} = documentsSlice.actions;
 
-export { fetchDocuments, writeDocument, fetchReceivers, saveToWarida };
+export {
+  fetchDocuments,
+  writeDocument,
+  fetchReceivers,
+  saveToWarida,
+  getUserProfile,
+};

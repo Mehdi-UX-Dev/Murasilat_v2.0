@@ -2,16 +2,14 @@
 
 import { InputField } from "@/components/UI_Molecules/Input";
 import { searchArchiveDocuments } from "@/context/features/archiveSlice";
+import { useAppDispatch } from "@/context/hooks";
 import { langProps_ARCHIVE } from "@/universalTypes";
-import { cx } from "class-variance-authority";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch } from "react-redux";
 
-function SearchBar({ type, ...lang }: langProps_ARCHIVE) {
-  const [filterGroupVisible, setFilterGroupVisible] = useState(false);
+function SearchBar({ type }: { type: string }) {
   const [searchValue, setSearchValue] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -24,12 +22,10 @@ function SearchBar({ type, ...lang }: langProps_ARCHIVE) {
         <div className="relative ">
           <InputField
             state="Default"
-            label={lang.number}
             inputType="number"
             name="search"
             fullWidth={false}
             lang="RTL"
-            disabled={filterGroupVisible}
             handleChange={(value) => setSearchValue(value)}
           />
           <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />

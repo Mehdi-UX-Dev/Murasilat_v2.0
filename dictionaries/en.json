@@ -26,12 +26,7 @@
 
       
     "list_page" : {
-      "search": "search",
-      "date": "Date",
-      "sender":"Sender",
-      "title": "Title", 
-      "number": "Number", 
-      "content" : "Subject"
+      "placeholder": ""
     },
 
     "Write_Page" : {

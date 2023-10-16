@@ -22,16 +22,10 @@
       "document_des" : "جوړ کړئ او له نورو سره یې شریک کړئ", 
       "log_out": "وتل"
       },
-      
 
       
     "list_page" : {
-      "search": "جستجو",
-      "date": "تاریخ",
-      "sender":"مرسل",
-      "title": "عنوان", 
-      "number": "شماره", 
-      "content" : "موضوع"
+      "placeholder": "د سند شمیره یا د سند سرلیک له لارې لټون وکړئ"
     },
 
     "Write_Page" : {

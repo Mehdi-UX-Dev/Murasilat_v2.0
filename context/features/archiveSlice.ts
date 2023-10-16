@@ -11,7 +11,7 @@ const initialState = {
 
 const fetchArchiveDocuments = createAsyncThunk(
   "documents/warida",
-  async (type, { rejectWithValue }) => {
+  async (type: string, { rejectWithValue }) => {
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/`,

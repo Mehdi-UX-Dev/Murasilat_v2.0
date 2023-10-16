@@ -40,11 +40,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-@layer base {
-  .adminPageInputStyle {
-    @apply border-b w-full focus:ring-0 focus:outline-none focus:border-black;
-  }
-}
+
 
 @layer utilities {
   .quill-container ol {
