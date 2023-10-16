@@ -3,15 +3,11 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import AdminNavigationHeader from "@/components/UI_Organisms/user/navigation";
 
-
-
-import { usePathname } from "next/navigation";
 import React from "react";
 
 //? admin cannot be accessed from outside the locale directory find the reason
 
 function Administrator() {
-
   return (
     <>
       <AdminNavigationHeader />

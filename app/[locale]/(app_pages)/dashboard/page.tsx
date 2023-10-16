@@ -3,7 +3,6 @@
 import Card from "@/components/UI_Organisms/write_page/Card";
 import React, { useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/i18n-server";
-import { useMyContext } from "@/hooks/credentialsContext";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
@@ -23,9 +22,9 @@ import { InputField } from "@/components/UI_Molecules/Input";
 import { Button } from "@/components/UI_Molecules/Button";
 import { useAppSelector } from "@/context/hooks";
 import { MdOutlineCancel } from "react-icons/md";
+import { AppDispatch } from "@/context/store";
 
 function Dashboard({ params: { locale } }: localeProps) {
-  const myContext = useMyContext();
   const containerRef = useRef<HTMLDivElement>(null!);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
 
@@ -51,7 +50,7 @@ function Dashboard({ params: { locale } }: localeProps) {
   const { documents, loading, error, pdf } = useAppSelector(
     (store) => store.documents
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchDocuments());

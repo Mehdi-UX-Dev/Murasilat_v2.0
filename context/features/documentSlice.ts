@@ -72,7 +72,6 @@ const saveToWarida = createAsyncThunk(
       content_update: string;
       summary: string;
       remarks: string;
-      callback: any;
     },
     { rejectWithValue }
   ) => {

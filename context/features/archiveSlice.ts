@@ -34,7 +34,10 @@ const fetchArchiveDocuments = createAsyncThunk(
 
 const searchArchiveDocuments = createAsyncThunk(
   "searchArchive",
-  async ({ type, value }, { rejectWithValue }) => {
+  async (
+    { type, value }: { type: string; value: string },
+    { rejectWithValue }
+  ) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/search/`,
@@ -49,7 +52,6 @@ const searchArchiveDocuments = createAsyncThunk(
           },
         }
       );
-      console.log(res);
 
       return res.data;
     } catch (error: any) {

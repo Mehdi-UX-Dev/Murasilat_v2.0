@@ -5,11 +5,10 @@ import { clearSearch } from "@/context/features/archiveSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { GetShamsiDate } from "@/date-converter";
 import { langProps_ARCHIVE } from "@/universalTypes";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useSelector } from "react-redux";
 
-function ListTable({ type, ...lang }: langProps_ARCHIVE) {
+function ListTable({ type, ...lang }: langProps_ARCHIVE & { type: string }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -20,8 +19,6 @@ function ListTable({ type, ...lang }: langProps_ARCHIVE) {
 
   const paginate = ({ selected }: { selected: number }) =>
     setCurrentPage(selected + 1);
-  // console.log(data[0].document.sender.fullname);
-  // console.log(type);
 
   let data = [];
   if (isInSearch) {
@@ -45,7 +42,7 @@ function ListTable({ type, ...lang }: langProps_ARCHIVE) {
             </tr>
           </thead>
           <tbody className="font-nazanin ">
-            {data.map((item) => (
+            {data.map((item ) => (
               <tr
                 key={item.document.serial}
                 className="border-b border-primary-500"

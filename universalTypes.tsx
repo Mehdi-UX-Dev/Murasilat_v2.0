@@ -133,3 +133,13 @@ export type PDFProps_PDFTemplate = {
   body?: string;
   docType: "N" | "U" | "C" | "A";
 };
+
+
+export type langProps_LIST = {
+  search: string;
+  date: string;
+  sender: string;
+  title: string;
+  number: string;
+  content: string;
+}

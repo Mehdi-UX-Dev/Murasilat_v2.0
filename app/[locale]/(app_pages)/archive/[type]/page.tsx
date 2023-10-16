@@ -4,15 +4,14 @@ import ListTable from "@/components/UI_Organisms/docs_pages/list";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 import { fetchArchiveDocuments } from "@/context/features/archiveSlice";
 import { getDictionary } from "@/i18n-server";
-import { localeProps } from "@/universalTypes";
-import axios from "axios";
+import { langProps_LIST, localeProps } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 function Page({
   params: { locale, type },
 }: localeProps & { params: { type: string } }) {
-  const [lang, setLang] = useState();
+  const [lang, setLang] = useState<langProps_LIST>();
   const [data, setData] = useState();
 
   const dispatch = useDispatch()
@@ -29,7 +28,7 @@ function Page({
 
       // console.log(res.data);
     })();
-  }, [locale]);
+  }, []);
 
   return (
     <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
