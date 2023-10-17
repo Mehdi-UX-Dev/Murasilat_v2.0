@@ -3,12 +3,11 @@ import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
-import { useDispatch, useSelector } from "react-redux";
 import { showPreview } from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 function Card(props: any) {
-
-  const {pdf} = useSelector(store => store.documents)
-  const dispatch = useDispatch()
+  const { pdf } = useAppSelector((store) => store.documents);
+  const dispatch = useAppDispatch();
   return (
     <div className="border flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
       <div className="flex justify-between items-center">
@@ -40,8 +39,13 @@ function Card(props: any) {
 
       <div className="flex items-center ml-auto space-x-4">
         <MdBookmarkBorder size={48} />
-        <Button intent="secondary" label="خواندن" size="medium" fullWidth  handleClick={() => dispatch(showPreview())
-        } />
+        <Button
+          intent="secondary"
+          label="خواندن"
+          size="medium"
+          fullWidth
+          handleClick={() => dispatch(showPreview())}
+        />
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ import "react-quill/dist/quill.snow.css";
 // import "../../../../../app/quill.rtl.css";
 import { getDictionary } from "@/i18n-server";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
-import { useMyContext } from "../../../../../hooks/credentialsContext";
 import { GetShamsiDate } from "@/date-converter";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
 import {
@@ -20,18 +19,37 @@ import {
   writtenDocumentValues_PROPS,
 } from "@/universalTypes";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 import {
   fetchReceivers,
   writeDocument,
 } from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+
+function FileSelector({ files, setFiles }) {
+  const handleFileChange = (event) => {
+    const allFiles = [...files, ...event.target.files];
+    setFiles(allFiles);
+  };
+
+  return (
+    <div>
+      <label htmlFor="selector">File selector</label>
+      <input id="selector" type="file" onChange={handleFileChange} />
+
+      <ul>
+        {files.map((file, index) => (
+          <li key={index}>{file.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function Page({ params: { locale } }: localeProps) {
-  const myContext = useMyContext();
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
-  const dispatch = useDispatch();
-  const { selectedReceiver } = useSelector((store) => store.documents);
+  const dispatch = useAppDispatch();
+  const { selectedReceiver } = useAppSelector((store) => store.documents);
 
   useEffect(() => {
     axios
@@ -61,6 +79,7 @@ function Page({ params: { locale } }: localeProps) {
     content: "",
     title: "",
     summary: "",
+    attachments: [],
   });
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -107,6 +126,13 @@ function Page({ params: { locale } }: localeProps) {
     }));
   };
 
+  const handleFileChange = (files: File[]) => {
+    setDocValue((prev) => ({
+      ...prev,
+      attachments: [...prev.attachments, ...files],
+    }));
+  };
+
   const handleDocumentPreviewModal: React.MouseEventHandler<
     HTMLButtonElement
   > = (event) => {
@@ -134,12 +160,6 @@ function Page({ params: { locale } }: localeProps) {
     </div>
   ) : (
     <div>
-      {myContext?.userModuleState && (
-        <div className=" fixed inset-0  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-          <UserInfo />
-        </div>
-      )}
-      {/*  */}
       <form
         onSubmit={handleDocSumbit}
         className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12 ml-4   "
@@ -190,6 +210,10 @@ function Page({ params: { locale } }: localeProps) {
             onChange={handleInputChange}
           />
         </div>
+        <FileSelector
+          files={docValue.attachments}
+          setFiles={handleFileChange}
+        />
         <div className="flex justify-end space-x-4">
           <Button
             intent="secondary"

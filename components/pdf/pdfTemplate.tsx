@@ -16,7 +16,7 @@ function PDFTemplate({
   docType,
   ...lang
 }: langProps_PDF & PDFProps_PDFTemplate) {
-  const shamsiDate = GetShamsiDate();
+  const shamsiDate = GetShamsiDate(null);
   const qamariDate = GetQamariDate();
   const path = usePathname();
 

@@ -18,6 +18,7 @@ function UserInfo() {
     console.log(router, pathname);
   };
   const { userInfo } = useAppSelector((store) => store.documents);
+  console.log(userInfo);
 
   return (
     <div className=" z-20   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
@@ -67,7 +68,7 @@ function UserInfo() {
           </div>
         </div>
 
-        <div className=" py-2 space-y-2  ">
+        <div className=" py-2 space-y-2">
           <Image
             src={userInfo.profile_pic}
             width={160}

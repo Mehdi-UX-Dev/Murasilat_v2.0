@@ -48,6 +48,7 @@ export type writtenDocumentValues_PROPS = {
 
   title: string;
   summary: string;
+  attachments: File[];
   // file?: File;
 };
 
@@ -134,7 +135,6 @@ export type PDFProps_PDFTemplate = {
   docType: "N" | "U" | "C" | "A";
 };
 
-
 export type langProps_LIST = {
   search: string;
   date: string;
@@ -142,4 +142,4 @@ export type langProps_LIST = {
   title: string;
   number: string;
   content: string;
-}
+};

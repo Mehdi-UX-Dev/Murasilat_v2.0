@@ -1,10 +1,10 @@
 import { selectReceiver } from "@/context/features/documentSlice";
+import { useAppDispatch } from "@/context/hooks";
 import Image from "next/image";
 import React from "react";
-import { useDispatch } from "react-redux";
 
 function Person({ info }: { info: any }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handlePersonClick = () => {
     dispatch(selectReceiver(info));
   };

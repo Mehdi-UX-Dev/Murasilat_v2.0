@@ -3,15 +3,15 @@ import { BsChevronDown } from "react-icons/bs";
 import Person from "@/components/UI_Molecules/personSendList";
 import SelectedPerson from "@/components/UI_Molecules/personSelectedAvatar";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 
 //* type person is used several times, so export it as a default type to reduce redundancy
 
 function CustomizedSelectComponent() {
-  const { receivers, selectedReceiver } = useSelector(
+  const { receivers, selectedReceiver } = useAppSelector(
     (store) => store.documents
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [listVisbile, setListVisible] = useState(true);
   const showList = () => {
@@ -35,7 +35,7 @@ function CustomizedSelectComponent() {
         {selectedReceiver && <SelectedPerson {...selectedReceiver} />}
       </div>
       <div
-        hidden={listVisbile ||  selectedReceiver}
+        hidden={listVisbile || selectedReceiver}
         className="bg-primary-100 relative z-10 shadow-lg w-72  py-4  space-y-4 "
       >
         {receivers.map((person) => (

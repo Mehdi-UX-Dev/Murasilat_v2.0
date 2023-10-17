@@ -2,11 +2,11 @@ import Image from "next/image";
 import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import photo from "../../public/images/photo.jpg";
-import { useDispatch } from "react-redux";
 import { selectReceiver } from "@/context/features/documentSlice";
+import { useAppDispatch } from "@/context/hooks";
 
 function SelectedPerson({ ...info }: any) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handlePersonRemoval = () => {
     dispatch(selectReceiver(null));

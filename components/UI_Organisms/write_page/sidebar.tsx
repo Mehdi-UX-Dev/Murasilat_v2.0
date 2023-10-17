@@ -11,13 +11,13 @@ import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
 import SideOption from "../../UI_Molecules/sidebarOption";
 import { langProps_SideBar } from "@/universalTypes";
-import { useDispatch } from "react-redux";
 import { logout } from "@/context/features/loginSlice";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/context/hooks";
 
 function SideBar({ ...lang }: langProps_SideBar) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleLogOut = () => {
     dispatch(logout());
     router.push("/");

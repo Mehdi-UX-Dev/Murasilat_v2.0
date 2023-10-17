@@ -3,29 +3,17 @@
 import Card from "@/components/UI_Organisms/write_page/Card";
 import React, { useEffect, useRef, useState } from "react";
 import { getDictionary } from "@/i18n-server";
-import DashboardButton from "@/components/UI_Molecules/dashboradCreateButton";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import {
-  langProps_DASHBOARD,
-  langProps_PDF,
-  localeProps,
-} from "@/universalTypes";
-import {
-  fetchDocuments,
-  hidePreview,
-  saveToWarida,
-  showUserInfo,
-} from "@/context/features/documentSlice";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
-import { InputField } from "@/components/UI_Molecules/Input";
-import { Button } from "@/components/UI_Molecules/Button";
+import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
+import { fetchDocuments } from "@/context/features/documentSlice";
+
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import { MdOutlineCancel } from "react-icons/md";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
+import PDF_DASHBOARD from "@/components/UI_Organisms/modal/showPDFModal";
+import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const containerRef = useRef<HTMLDivElement>(null!);
-  const [pdfLang, setPdfLang] = useState<langProps_PDF>();
 
   const scrollLeft = () => {
     containerRef.current.scrollLeft -= 100;
@@ -41,8 +29,6 @@ function Dashboard({ params: { locale } }: localeProps) {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;
       setDashLang(res);
-      const pdfRes = (await getDictionary(locale)).pdf;
-      setPdfLang(pdfRes);
     })();
   }, [locale]);
 
@@ -55,13 +41,6 @@ function Dashboard({ params: { locale } }: localeProps) {
     dispatch(fetchDocuments());
   }, [dispatch]);
 
-  // ? why to have this in here
-  const [updateDocument, setUpdateDocument] = useState({
-    content_update: "",
-    summary: "",
-    remarks: "",
-  });
-
   return (
     lang && (
       <div className=" space-y-8">
@@ -72,92 +51,9 @@ function Dashboard({ params: { locale } }: localeProps) {
           </div>
         )}
 
-        {pdf.visible && (
-          <div className=" overflow-auto fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-            <MdOutlineCancel
-              size={24}
-              onClick={() => dispatch(hidePreview())}
-            />
-            <div className="bg-white h-screen w-72 mr-4">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault(), console.log(documents[0]);
+        {pdf.visible && <PDF_DASHBOARD locale={locale} />}
 
-                  dispatch(
-                    saveToWarida({
-                      id: documents[0].serial,
-                      ...updateDocument,
-                    })
-                  );
-                }}
-              >
-                <InputField
-                  name="content_update"
-                  inputType="text"
-                  state="Default"
-                  label="make changes"
-                  fullWidth
-                  handleChange={(value, name) =>
-                    setUpdateDocument((prevState) => ({
-                      ...prevState,
-                      [name]: value,
-                    }))
-                  }
-                />
-                <InputField
-                  name="summary"
-                  inputType="text"
-                  state="Default"
-                  label="write summary"
-                  fullWidth
-                  handleChange={(value, name) =>
-                    setUpdateDocument((prevState) => ({
-                      ...prevState,
-                      [name]: value,
-                    }))
-                  }
-                />
-                <InputField
-                  name="remarks"
-                  inputType="text"
-                  state="Default"
-                  label="write considerations"
-                  fullWidth
-                  handleChange={(value, name) =>
-                    setUpdateDocument((prevState) => ({
-                      ...prevState,
-                      [name]: value,
-                    }))
-                  }
-                />
-                <Button type="submit" label="Save Changes" />
-              </form>
-            </div>
-            <PDFTemplate
-              {...pdfLang}
-              body={documents[0].content}
-              docType={documents[0].docType}
-            />
-          </div>
-        )}
-
-        <div className="flex justify-end space-x-4 text-right mt-8">
-          <DashboardButton
-            lang={lang}
-            type="maktoob"
-            path="/write/writeMaktoob"
-          />
-          <DashboardButton
-            lang={lang}
-            type="istilam"
-            path="/write/writeIstilam"
-          />
-          <DashboardButton
-            lang={lang}
-            type="iishnihad"
-            path="/write/writeIstilam"
-          />{" "}
-        </div>
+        <SearchBar/>
 
         <div className="relative flex  ">
           {" "}
