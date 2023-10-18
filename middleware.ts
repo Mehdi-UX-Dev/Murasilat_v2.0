@@ -62,6 +62,7 @@ export function middleware(request: NextRequest) {
     /^\/admin\/users$/,
     /^\/admin\/users\/(\d+)$/,
     /^\/pdf$/,
+    /^\/preview$/,
   ];
   if (
     !existingPathnamePatterns.some((pathnamePattern) =>
