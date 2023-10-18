@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
 import { showPreview } from "@/context/features/documentSlice";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { useAppDispatch } from "@/context/hooks";
 function Card(data: any) {
   const dispatch = useAppDispatch();
 
@@ -41,11 +41,11 @@ function Card(data: any) {
         <MdBookmarkBorder size={48} />
         <Button
           intent="secondary"
-          label="خواندن"
+          label="بخوان"
           size="medium"
-          // fullWidth
           handleClick={() => dispatch(showPreview())}
-        />
+          width={'full'}
+/>
       </div>
     </div>
   );

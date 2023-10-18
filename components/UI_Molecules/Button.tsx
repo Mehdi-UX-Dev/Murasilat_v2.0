@@ -5,7 +5,7 @@ const buttonCVA = cva(["rounded", "font-bold", "capitalize"], {
   variants: {
     intent: {
       primary: ["bg-primary-900", "text-white", "hover:bg-primary-800"],
-      secondary: ["border", "border-primary-700", "hover:bg-primary-700"],
+      secondary: ["border", "border-primary-700", "hover:bg-primary-900", "hover:text-white"],
       tertiary: ["hover:underline"],
     },
     size: {

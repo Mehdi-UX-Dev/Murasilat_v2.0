@@ -7,6 +7,7 @@ const initialState = {
   isInSearch: false,
   loading: true,
   error: null,
+  
 };
 
 const fetchArchiveDocuments = createAsyncThunk(
@@ -60,6 +61,8 @@ const searchArchiveDocuments = createAsyncThunk(
   }
 );
 
+
+
 const archiveSlice = createSlice({
   name: "archive",
   initialState,
@@ -91,7 +94,9 @@ const archiveSlice = createSlice({
       .addCase(searchArchiveDocuments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as null;
-      });
+      })
+
+    
   },
 });
 

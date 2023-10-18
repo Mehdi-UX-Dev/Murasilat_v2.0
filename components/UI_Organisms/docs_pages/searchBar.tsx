@@ -1,6 +1,7 @@
 "use client";
 
 import { searchArchiveDocuments } from "@/context/features/archiveSlice";
+import { searchDocumentsDashboardPage } from "@/context/features/documentSlice";
 import { useAppDispatch } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
 import React, { useEffect, useRef, useState } from "react";
@@ -19,18 +20,16 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
     })();
   }, [locale]);
 
-  
-
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
 
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(searchArchiveDocuments({ type, value: searchValue }));
+    dispatch(searchDocumentsDashboardPage({ value: searchValue }));
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       <form className="flex space-x-2" onSubmit={Search}>
         <button
           disabled={searchValue.length == 0}

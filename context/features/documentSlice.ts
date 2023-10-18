@@ -40,6 +40,7 @@ interface DocumentStateType {
   userInfo: UserType | any;
   receivers: UserType[];
   selectedReceiver: UserType | null;
+  searchedDocuments: object;
 }
 
 const initialState: DocumentStateType = {
@@ -54,6 +55,7 @@ const initialState: DocumentStateType = {
   selectedReceiver: null,
   userProfileView: false,
   userInfo: {},
+  searchedDocuments: {},
 };
 
 const fetchDocuments = createAsyncThunk(
@@ -203,8 +205,33 @@ const getUserProfile = createAsyncThunk(
         }
       );
 
-
       return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+const searchDocumentsDashboardPage = createAsyncThunk(
+  "searchDocumentsDashboardPage",
+  async ({ value }: { value: string }, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/search/`,
+        { query: value },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+      console.log(res.data);
+
+      return res.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
@@ -275,6 +302,15 @@ const documentsSlice = createSlice({
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.error = action.payload as null;
+      })
+      .addCase(searchDocumentsDashboardPage.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchDocumentsDashboardPage.fulfilled, (state, action) => {
+       
+      })
+      .addCase(searchDocumentsDashboardPage.rejected, (state, action) => {
+        state.error = action.payload as null;
       });
   },
 });
@@ -294,4 +330,5 @@ export {
   fetchReceivers,
   saveToWarida,
   getUserProfile,
+  searchDocumentsDashboardPage
 };

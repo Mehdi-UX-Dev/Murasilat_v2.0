@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import PDF_DASHBOARD from "@/components/UI_Organisms/modal/showPDFModal";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
+import { BsDot } from "react-icons/bs";
+import StackCards from "@/components/UI_Organisms/Card/stackCards";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -55,30 +57,14 @@ function Dashboard({ params: { locale } }: localeProps) {
         {pdf.visible && <PDF_DASHBOARD locale={locale} />}
 
         {/* type is not specified properly in here // may be type is not needed in the first place */}
-        <SearchBar type="" locale={locale} />
+        <div className="mt-8 mb-16">
+          <SearchBar type="" locale={locale} />
+        </div>
 
-        <div className="relative flex  ">
-          {" "}
-          <AiOutlineLeft
-            className="absolute top-1/2 lg:left-2  text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
-            size={36}
-            onClick={scrollLeft}
-          />
-          <div
-            ref={containerRef}
-            // transition is not working properly
-            className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
-          >
-            {documents.map((doc) => (
-              <Card key={doc.serial} {...doc} />
-            ))}
-            {}
-          </div>
-          <AiOutlineRight
-            className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
-            size={36}
-            onClick={scrollRight}
-          />
+        <div className="pb-10 space-y-8">
+          <StackCards type={"unread"} {...lang} />
+          <StackCards type={"sent"} {...lang} />
+          <StackCards type={"received"} {...lang} />
         </div>
       </div>
     )

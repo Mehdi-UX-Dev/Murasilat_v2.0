@@ -20,7 +20,10 @@
       "create_document" : "سند جوړ کړئ", 
       "preview_document" : "د مخکتنې سند ", 
       "document_des" : "جوړ کړئ او له نورو سره یې شریک کړئ", 
-      "log_out": "وتل"
+      "log_out": "وتل", 
+      "unread": "نه لوستل شوی", 
+      "recently_sent": "په دې وروستیو کې لیږل شوی", 
+      "recently_received": "په دې وروستیو کې ترلاسه شوی"
       },
       
 

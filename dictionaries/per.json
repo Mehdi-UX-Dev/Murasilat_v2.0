@@ -21,7 +21,10 @@
     "preview_document" : "نمایش سند", 
     "document_des" : "ایجاد کنید و با دیگران به اشتراک بگذارید", 
     "create" : "ایجاد", 
-    "log_out": "خروج"
+    "log_out": "خروج", 
+      "unread": "خوانده نشده", 
+      "recently_sent": "اخیرا ارسال شده", 
+      "recently_received": "اخیرا دریافت شده"
     },
 
     "Write_Page" : {
