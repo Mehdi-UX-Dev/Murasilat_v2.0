@@ -1,18 +1,18 @@
-import React from "react";
-import { cva, cx, VariantProps } from "class-variance-authority";
+import React from 'react';
+import { cva, cx, VariantProps } from 'class-variance-authority';
 
-const inputCVA = cva("h-10 pr-8", {
+const inputCVA = cva('h-10 pr-8', {
   variants: {
     state: {
       /** In Design System there are 4 States, due the nature of Figma but in implemenation we have 2 */
       /** The Default state is empty cuz we want to override the error state when it is cleared */
       Default:
-        "border border-primary-700 rounded-md   focus:border-2 focus:border-primary-900",
-      ErrorState: "!border-myAccent-error-300 border-2 ",
+        'border border-primary-700 rounded-md   focus:border-2 focus:border-primary-900',
+      ErrorState: '!border-myAccent-error-300 border-2 ',
     },
 
     fullWidth: {
-      true: "w-full",
+      true: 'w-full',
     },
   },
 });
@@ -37,7 +37,7 @@ interface InputProps extends VariantProps<typeof inputCVA> {
   /**
    * Language Support
    */
-  lang?: "RTL" | "LTR";
+  lang?: 'RTL' | 'LTR';
 
   /**
    * name of the input
@@ -72,8 +72,8 @@ export const InputField = ({
   return (
     <div dir="auto" className=" space-y-1">
       <label
-        className={cx("capitalize block", {
-          "text-myAccent-error-500": state === "ErrorState",
+        className={cx('capitalize block', {
+          'text-myAccent-error-500': state === 'ErrorState',
         })}
       >
         {label}

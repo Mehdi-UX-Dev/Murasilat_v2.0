@@ -30,28 +30,6 @@ const Card = ({ ...lang }) => {
   ) => {
     event.preventDefault();
 
-    // try {
-    //   const res = await baseAxios.post(
-    //     `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/login/`,
-    //     {
-    //       email: credentials.username,
-    //       password: credentials.password,
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-
-    //   window.localStorage.setItem("TOKENS", JSON.stringify(res.data));
-    // } catch (e: any) {
-    //   setErrorState({ inputState: "ErrorState", status: true, msg: e });
-    //   setTimeout(() => {
-    //     setErrorState({ inputState: "Default", status: false, msg: "" });
-    //   }, 5000);
-    // }
-
     dispatch(
       login({
         email: credentials.username,
