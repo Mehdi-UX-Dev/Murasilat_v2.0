@@ -1,5 +1,5 @@
-import React from "react";
-import { cva, cx, VariantProps } from "class-variance-authority";
+import React from 'react';
+import { cva, cx, VariantProps } from 'class-variance-authority';
 
 const inputCVA = cva("h-10", {
   variants: {
@@ -15,7 +15,7 @@ const inputCVA = cva("h-10", {
     },
 
     fullWidth: {
-      true: "w-full",
+      true: 'w-full',
     },
   },
 });
