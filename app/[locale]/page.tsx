@@ -1,8 +1,8 @@
 'use client';
 import Header from '@/components/UI_Organisms/login_page/loginHeader';
-import Card from '@/components/UI_Organisms/login_page/loginCard';
+import Login from '@/components/UI_Organisms/login_page/login';
 import { getDictionary } from '@/i18n-server';
-import CardV3 from '@/components/UI_Organisms/login_page/loginCardV3';
+import AltLogin from '@/components/UI_Organisms/login_page/altLogin';
 import { getUser } from '@/utils/auth';
 import { langProps_LOGIN, localeProps } from '@/universalTypes';
 import { useEffect, useState } from 'react';
@@ -24,9 +24,9 @@ function Home({ params: { locale } }: localeProps) {
       <Header />
       {lang ? (
         user ? (
-          <CardV3 {...lang} />
+          <AltLogin {...lang} />
         ) : (
-          <Card {...lang} />
+          <Login {...lang} />
         )
       ) : (
         <div>Loading</div>

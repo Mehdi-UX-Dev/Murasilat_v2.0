@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export interface UserType {
   id: number;
@@ -26,7 +26,7 @@ export interface DocumentType {
   content: string;
   read: boolean;
   urgency: string;
-  document_type: "maktoob" | "istilam" | "pishnihad";
+  document_type: 'maktoob' | 'istilam' | 'pishnihad';
   qr_code: string;
   responded: boolean;
   attachments: any[];
@@ -48,7 +48,7 @@ const initialState: DocumentStateType = {
   receivers: [],
   pdf: {
     visible: false,
-    body: "",
+    body: '',
   },
   loading: false,
   error: null,
@@ -59,18 +59,18 @@ const initialState: DocumentStateType = {
 };
 
 const fetchDocuments = createAsyncThunk(
-  "documents/fetch",
+  'documents/fetch',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -83,18 +83,18 @@ const fetchDocuments = createAsyncThunk(
 );
 
 const fetchReceivers = createAsyncThunk(
-  "documents/receivers",
+  'documents/receivers',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -106,7 +106,7 @@ const fetchReceivers = createAsyncThunk(
 );
 
 const saveToWarida = createAsyncThunk(
-  "documents/Update",
+  'documents/Update',
   async (
     {
       id,
@@ -127,11 +127,11 @@ const saveToWarida = createAsyncThunk(
         { content_update, summary, remarks },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -144,21 +144,21 @@ const saveToWarida = createAsyncThunk(
 );
 
 const writeDocument = createAsyncThunk(
-  "documents/create",
+  'documents/create',
   async (
     { documentData, callback }: { documentData: any; callback: any },
     { rejectWithValue }
   ) => {
     const formData = new FormData();
     Object.entries(documentData).map(([key, value]) => {
-      if (key === "attachments") {
+      if (key === 'attachments') {
         value.forEach((file) => {
           formData.append(key, file);
         });
       } else
         formData.append(
           key,
-          key === "date" ? new Date(value).toISOString() : value
+          key === 'date' ? new Date(value).toISOString() : value
         );
     });
     try {
@@ -167,11 +167,11 @@ const writeDocument = createAsyncThunk(
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -189,18 +189,18 @@ const writeDocument = createAsyncThunk(
 );
 
 const getUserProfile = createAsyncThunk(
-  "documents/UserProfile",
+  'documents/UserProfile',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/user_info`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -213,7 +213,7 @@ const getUserProfile = createAsyncThunk(
 );
 
 const searchDocumentsDashboardPage = createAsyncThunk(
-  "searchDocumentsDashboardPage",
+  'searchDocumentsDashboardPage',
   async ({ value }: { value: string }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
@@ -221,11 +221,11 @@ const searchDocumentsDashboardPage = createAsyncThunk(
         { query: value },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -239,7 +239,7 @@ const searchDocumentsDashboardPage = createAsyncThunk(
 );
 
 const documentsSlice = createSlice({
-  name: "documents",
+  name: 'documents',
   initialState,
   reducers: {
     selectReceiver: (state, action) => {
@@ -306,9 +306,7 @@ const documentsSlice = createSlice({
       .addCase(searchDocumentsDashboardPage.pending, (state) => {
         state.loading = true;
       })
-      .addCase(searchDocumentsDashboardPage.fulfilled, (state, action) => {
-       
-      })
+      .addCase(searchDocumentsDashboardPage.fulfilled, (state, action) => {})
       .addCase(searchDocumentsDashboardPage.rejected, (state, action) => {
         state.error = action.payload as null;
       });
@@ -330,5 +328,5 @@ export {
   fetchReceivers,
   saveToWarida,
   getUserProfile,
-  searchDocumentsDashboardPage
+  searchDocumentsDashboardPage,
 };

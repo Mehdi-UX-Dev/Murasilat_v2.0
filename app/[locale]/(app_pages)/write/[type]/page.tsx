@@ -1,29 +1,31 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/UI_Molecules/Button";
-import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
-import CustomizedSelectComponent from "@/components/UI_Organisms/write_page/customizedSelectComponent";
-import modules from "../../../../../Quill.module.";
-import React, { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { Button } from '@/components/UI_Molecules/Button';
+import TypeGroup from '@/components/UI_Molecules/documentTypeRadioButtons';
+import CustomizedSelectComponent from '@/components/UI_Organisms/write_page/customizedSelectComponent';
+import modules from '../../../../../Quill.module.';
+import React, { useEffect, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import "../../../../../app/quill.rtl.css";
-import { getDictionary } from "@/i18n-server";
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
-import { GetShamsiDate } from "@/date-converter";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
+import { getDictionary } from '@/i18n-server';
+import UserInfo from '@/components/UI_Organisms/user/userInfo';
+import { GetShamsiDate } from '@/date-converter';
+import PDFTemplate from '@/components/pdf/pdfTemplate';
 import {
   langProps_PDF,
   langProps_WRITE,
   localeProps,
   writtenDocumentValues_PROPS,
-} from "@/universalTypes";
-import axios from "axios";
+} from '@/universalTypes';
+import axios from 'axios';
 import {
   fetchReceivers,
   writeDocument,
-} from "@/context/features/documentSlice";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
+} from '@/context/features/documentSlice';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
+import { useRouter } from 'next/navigation';
+import { FaSpinner } from 'react-icons/fa';
 
 function FileSelector({ files, setFiles }) {
   const handleFileChange = (event) => {
@@ -49,16 +51,19 @@ function Page({ params: { locale } }: localeProps) {
   // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
   const dispatch = useAppDispatch();
-  const { selectedReceiver } = useAppSelector((store) => store.documents);
+  const router = useRouter();
+  const { selectedReceiver, loading } = useAppSelector(
+    (store) => store.documents
+  );
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
-          accept: "application/json",
+            'Bearer ' + JSON.parse(localStorage.getItem('TOKENS'))?.access,
+          accept: 'application/json',
         },
       })
       .then(
@@ -75,10 +80,10 @@ function Page({ params: { locale } }: localeProps) {
 
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: new Date(),
-    urgency: "N",
-    content: "",
-    title: "",
-    summary: "",
+    urgency: 'N',
+    content: '',
+    title: '',
+    summary: '',
     attachments: [],
   });
 
@@ -88,7 +93,7 @@ function Page({ params: { locale } }: localeProps) {
       writeDocument({
         documentData: { ...docValue, receiver: selectedReceiver.id },
         callback: () => {
-          alert("Document created successfully");
+          router.replace('/archive/sadira');
         },
       })
     );
@@ -100,21 +105,16 @@ function Page({ params: { locale } }: localeProps) {
 
   useEffect(() => {
     (async () => {
-      const writePageDocTypeResponse = (await getDictionary(locale)).Write_Page;
-      setLang(writePageDocTypeResponse);
+      const dictionary = await getDictionary(locale);
+      setLang(dictionary.Write_Page);
+      setPdfLang(dictionary.pdf);
     })();
   }, [locale]);
 
   useEffect(() => {
+    if (recieverList.length) return;
     dispatch(fetchReceivers());
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const res = (await getDictionary(locale)).pdf;
-      setPdfLang(res);
-    })();
-  }, [locale]);
+  }, [dispatch, recieverList.length]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -216,11 +216,19 @@ function Page({ params: { locale } }: localeProps) {
         />
         <div className="flex justify-end space-x-4">
           <Button
+            loading={loading}
             intent="secondary"
             label={lang?.preview_draft}
             handleClick={handleDocumentPreviewModal}
           />
-          <Button label={lang?.send_document} size="large" type="submit" />
+
+          {loading ? (
+            <div className="bg-primary-700 text-white rounded text-[18px] px-4 py-[12px]">
+              <FaSpinner size={22} className="animate-spin m-auto text-white" />
+            </div>
+          ) : (
+            <Button label={lang?.send_document} size="large" type="submit" />
+          )}
         </div>
         {/*  */}
       </form>

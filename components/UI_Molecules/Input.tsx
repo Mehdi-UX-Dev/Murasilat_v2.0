@@ -1,17 +1,17 @@
 import React from 'react';
 import { cva, cx, VariantProps } from 'class-variance-authority';
 
-const inputCVA = cva("h-10", {
+const inputCVA = cva('h-10', {
   variants: {
     state: {
       Default:
-        "border border-primary-700 rounded-md   focus:border-2 focus:border-primary-900",
-      ErrorState: "!border-myAccent-error-300 border-2 rounded",
+        'border border-primary-700 rounded-md   focus:border-2 focus:border-primary-900',
+      ErrorState: '!border-myAccent-error-300 border-2 rounded outline-none',
     },
 
     direction: {
-      ltr: "text-left pl-8",
-      rtl: "text-right pr-8",
+      ltr: 'text-left pl-8',
+      rtl: 'text-right pr-8',
     },
 
     fullWidth: {
@@ -37,8 +37,6 @@ interface InputProps extends VariantProps<typeof inputCVA> {
    */
   fullWidth: boolean;
 
-  
-
   /**
    * name of the input
    */
@@ -56,11 +54,10 @@ interface InputProps extends VariantProps<typeof inputCVA> {
    */
   disabled?: boolean;
 
-/**
- * placeholder prop
- */
-placeholder?: string
-
+  /**
+   * placeholder prop
+   */
+  placeholder?: string;
 }
 
 /**
@@ -80,8 +77,8 @@ export const InputField = ({
   return (
     <div className=" space-y-1">
       <label
-        className={cx("capitalize block text-right", {
-          "text-myAccent-error-500": state === "ErrorState",
+        className={cx('capitalize block text-right', {
+          'text-myAccent-error-500': state === 'ErrorState',
         })}
       >
         {label}

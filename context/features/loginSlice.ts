@@ -1,13 +1,13 @@
-import axios from "axios";
-import jwtDecode from "jwt-decode";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   SESSION_TYPE,
   TOKENS_TYPE,
   clearSession,
   getUser,
   setToken,
-} from "@/utils/auth";
+} from '@/utils/auth';
 
 type LoginParams = { email: string; password: string; callback?: () => void };
 
@@ -24,7 +24,7 @@ const initialState: LoginState = {
 };
 
 const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
-  "Login",
+  'Login',
   async ({ email, password, callback }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -34,13 +34,17 @@ const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
       callback?.();
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error);
+      if (!error.response) {
+        return rejectWithValue(error.code);
+      } else {
+        return rejectWithValue(error.response.data.detail || error.message);
+      }
     }
   }
 );
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
@@ -63,7 +67,6 @@ const userSlice = createSlice({
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
-
       state.error = action.payload;
     });
   },
