@@ -1,12 +1,14 @@
 {
-  "login" : {  
-  "header": "ورود",
+  "login": {
+    "header": "ورود",
     "username": "ایمیل را وارد نمایید",
     "password": "رمز عبور را وارد نمایید",
     "submit": "ورود به سیستم",
-    "invalid_credentials": "ایمیل یا رمز عبور اشتباه" },
-  
-    "dashboard" : {
+    "invalid_credentials": "ایمیل یا رمز عبور اشتباه",
+    "ERR_NETWORK": "خطای اتصال, لطفأ اتصال خود را بررسی کنید"
+  },
+
+  "dashboard": {
     "dashboard": "داشبورد",
     "write" : "بنویس",
     "maktoob" : "مکتوب",
@@ -32,44 +34,40 @@
       
     },
 
-    "Write_Page" : {
-      "write_maktoob": "ایجاد مکتوب",
-      "write_istilam": "ایجاد استعلام",
-      "write_pishniahd": "ایجاد پيشنهاد", 
-      "send_document" : "ارسال مکتوب", 
-      "preview_draft" : "نمایش پیش سند",
-      "title" : "عنوان", 
-      "send_to" : "ارسال به", 
-      "summary": "خلاصه",
-      "quill_placeholder": "مطالب خود را بنویسید"
+  "Write_Page": {
+    "write_maktoob": "ایجاد مکتوب",
+    "write_istilam": "ایجاد استعلام",
+    "write_pishniahd": "ایجاد پيشنهاد",
+    "send_document": "ارسال مکتوب",
+    "preview_draft": "نمایش پیش سند",
+    "title": "عنوان",
+    "send_to": "ارسال به",
+    "summary": "خلاصه",
+    "quill_placeholder": "مطالب خود را بنویسید"
+  },
 
-    },
+  "pdf": {
+    "moh": "وزارت تحصیلات عالی",
+    "kudirectorate": "ریاست پوهنتون کابل",
+    "faculty_directorate": "comes from the server and set auto",
+    "office": "comes from the server and set auto",
+    "faculty_info": "د کابل پوهنتون د کمپیوټر ساینس پوهنځی",
+    "address": "پته: کارته چهار کابل پوهنتون سړک",
+    "phone": "شماره",
+    "webiste": "ویب سایت",
+    "doc_number": " شماره مکتوب",
+    "doc_date": " تاریخ مکتوب",
+    "warida_num": "نمبر رسیدات"
+  },
 
-
-    "pdf": {
-        "moh": "وزارت تحصیلات عالی", 
-        "kudirectorate": "ریاست پوهنتون کابل", 
-        "faculty_directorate" : "comes from the server and set auto", 
-        "office": "comes from the server and set auto", 
-        "faculty_info": "د کابل پوهنتون د کمپیوټر ساینس پوهنځی", 
-        "address": "پته: کارته چهار کابل پوهنتون سړک", 
-        "phone": "شماره", 
-        "webiste":"ویب سایت", 
-        "doc_number": " شماره مکتوب", 
-        "doc_date": " تاریخ مکتوب", 
-        "warida_num": "نمبر رسیدات"
-    }, 
-  
-  
-    "list_page" : {
-      "search": "جستجو",
-      "date": "تاریخ",
-      "sender":"فرستنده",
-      "title": "عنوان", 
-      "number": "شماره", 
-      "content" : "موضوع"
-
-    },
+  "list_page": {
+    "search": "جستجو",
+    "date": "تاریخ",
+    "sender": "فرستنده",
+    "title": "عنوان",
+    "number": "شماره",
+    "content": "موضوع"
+  },
 
     "searchBar" : {
       "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید",
@@ -99,139 +97,136 @@
   
    
 
-    "PAGE4": "USERS",
-    "search_bar": "جستجو",
-    "name": "نام",
-    "dean_name": "مسئول دفتر",
-    "email_address": "ایمیل",
-    "role": "رول",
-    "contact": "شماره تماس",
-    "name_search": "نام",
-    "dean_name_search": "مسئول دفتر",
-    "email_address_search": "ایمیل",
-    "role_search": "رول",
-    "contact_search": "شماره تماس",
-    "admin": "ادمین",
-    "department": "دیپارتمنت",
-    "assistant": "معاون",
-    "faculty": "پوهنځی",
-    "professor": "پروفیسور",
-    "add_user": "کاربر جدید",
-  
-   
-  
-    "au_Name": "نام",
-    "au_name": "نام",
-    "name_required": "نام لازم است",
-    "name_exceed_msg": "نام نباید بیش از 40 حرف باشد",
-  
-    "au_Dean_name": "مسئول دفتر",
-    "au_dean_name": "مسئول دفتر",
-    "dean_name_required": "نام مافوق لازم است",
-    "dean_name_exceed_msg": "نام مافوق نباید بیش از 25 حرف باشد",
-  
-    "Head_organ": "مافوق",
-    "head_organ": "مافوق",
-    "head_required": "نام مسئول دفتر لازم است",
-  
-    "au_Email": "ایمیل",
-    "au_email": "ایمیل",
-  
-    "au_Contact": "شماره تماس",
-    "au_contact": "شماره تماس",
-    "contact_required": "شماره تماس لازم است",
-    "contact_format_msg": "+93xxxxxxxxxx - 02xxxxxxxx - 07xxxxxxxx",
-  
-    "au_Password": "پسورد",
-    "au_password": "پسورد",
-  
-    "user_type": "نوع کاربر",
-  
-    "au_submit": "اضافه کاربر",
-  
-    "PAGE5": "ALL(NEW) DOCUMENTS",
-    "id": "ID",
-    "type": "نوعیت",
-    "title": "عنوان",
-    "sender": "مرسل",
-    "date": "تاریخ",
-    "action": "عمل",
-    "from_date": "تاریخ",
-  
-    "secret": "محرم",
-    "urgent": "عاجل",
-    "assurance": "اطمینانیه",
-    "normal": "عادی",
-  
-    "maktoob": "مکتوب",
-    "pishnihad": "پيشنهاد",
-    "istilam": "استعلام",
-  
-    "previous": "قبلی",
-    "next": "بعدی",
-  
-    "PAGE6": "SADIRA",
-    "sadira_id": "ID",
-    "sadira_title": "عنوان",
-    "sadira_date": "تاریخ",
-    "sadira_save_date": "تاریخ ثبت در صادره",
-    "sadira_receiver": "دریافت کننده",
-    "sadira_hor": "مرسل الیه (سطح بالا)",
-    "sadira_lor": "مرسل الیه (سطح پایین)",
-    "sadira_received": "دریافت شد",
-    "sadira_summary": "خلاصه",
-    "sadira_remarks": "ملاحظات",
-    "sadira_action": "عمل",
-    "sadira_details": "جزئیات",
-    "sadira_sender": "فرستنده",
-  
-    "PAGE7": "WARIDA",
-    "warida_id": "ID",
-    "warida_title": "عنوان",
-    "warida_date": "تاریخ",
-    "warida_save_date": "تاریخ ثبت در وارده",
-    "warida_sender": "مرسل",
-    "warida_receiver": "دریافت کننده",
-    "warida_saved_in_warida": "تاریخ ذخیره",
-    "warida_summary": "خلاصه",
-    "warida_remarks": "ملاحظات",
-    "warida_action": "عمل",
-    "warida_details": "جزئیات",
-  
-    "PAGE8,9,10": "SEND DOCUMENT",
-    "doc_number": "شماره",
-    "doc_sender": "مرسل",
-    "doc_receiver": "مرسل الیه",
-    "doc_title": "عنوان",
-    "doc_date": "تاریخ",
-    "doc_label": "برچسپ",
-  
-    "plain_text": "متن ساده",
-    "rich_text": "متن غنی",
-    "compose_document": "...متن خود را بنویسید",
-    "write_summary": "...خلاصه را بنویسید",
-    "write_remarks": "...ملاحظات را بنویسید",
-    "attach_file": "ضمیمه فایل",
-    "send_and_save": "ذخیره و ارسال",
-    "cancel": "لغو",
-  
-    "title_required": "عنوان لازم است",
-    "content_required": "محتوا لازم است",
-    "summary_required": "خلاصه لازم است",
-  
-    "PAGE11": "FORGOT PASSWORD",
-    "enter_username": "ایمیل را وارد نمایید",
-    "submit_forgotpass": "ارسال",
-    "button": "بازگشت",
-    "reset_link_sent": "!لینک تغییر پسورد به ایمیل شما ارسال گردید",
-    "username_doesnt_exist": "ایمیل موجود نیست",
-    "username_required": "ایمیل لازم است",
-  
-    "PAGE12": "VIEW DOCUMENT",
-    "add_changes": "اعمال تغییرات",
-    "save_to_warida": "اعمال تغییرات و ثبت وارده",
-    "qr_message": "این کد را با برنامه موبایل مراسلات اسکن کنید تا فایل را روی گوشی خود مشاهده کنید",
-  
-    "sending...": "در حال ارسال..."
-  }
-  
+  "PAGE4": "USERS",
+  "search_bar": "جستجو",
+  "name": "نام",
+  "dean_name": "مسئول دفتر",
+  "email_address": "ایمیل",
+  "role": "رول",
+  "contact": "شماره تماس",
+  "name_search": "نام",
+  "dean_name_search": "مسئول دفتر",
+  "email_address_search": "ایمیل",
+  "role_search": "رول",
+  "contact_search": "شماره تماس",
+  "admin": "ادمین",
+  "department": "دیپارتمنت",
+  "assistant": "معاون",
+  "faculty": "پوهنځی",
+  "professor": "پروفیسور",
+  "add_user": "کاربر جدید",
+
+  "au_Name": "نام",
+  "au_name": "نام",
+  "name_required": "نام لازم است",
+  "name_exceed_msg": "نام نباید بیش از 40 حرف باشد",
+
+  "au_Dean_name": "مسئول دفتر",
+  "au_dean_name": "مسئول دفتر",
+  "dean_name_required": "نام مافوق لازم است",
+  "dean_name_exceed_msg": "نام مافوق نباید بیش از 25 حرف باشد",
+
+  "Head_organ": "مافوق",
+  "head_organ": "مافوق",
+  "head_required": "نام مسئول دفتر لازم است",
+
+  "au_Email": "ایمیل",
+  "au_email": "ایمیل",
+
+  "au_Contact": "شماره تماس",
+  "au_contact": "شماره تماس",
+  "contact_required": "شماره تماس لازم است",
+  "contact_format_msg": "+93xxxxxxxxxx - 02xxxxxxxx - 07xxxxxxxx",
+
+  "au_Password": "پسورد",
+  "au_password": "پسورد",
+
+  "user_type": "نوع کاربر",
+
+  "au_submit": "اضافه کاربر",
+
+  "PAGE5": "ALL(NEW) DOCUMENTS",
+  "id": "ID",
+  "type": "نوعیت",
+  "title": "عنوان",
+  "sender": "مرسل",
+  "date": "تاریخ",
+  "action": "عمل",
+  "from_date": "تاریخ",
+
+  "secret": "محرم",
+  "urgent": "عاجل",
+  "assurance": "اطمینانیه",
+  "normal": "عادی",
+
+  "maktoob": "مکتوب",
+  "pishnihad": "پيشنهاد",
+  "istilam": "استعلام",
+
+  "previous": "قبلی",
+  "next": "بعدی",
+
+  "PAGE6": "SADIRA",
+  "sadira_id": "ID",
+  "sadira_title": "عنوان",
+  "sadira_date": "تاریخ",
+  "sadira_save_date": "تاریخ ثبت در صادره",
+  "sadira_receiver": "دریافت کننده",
+  "sadira_hor": "مرسل الیه (سطح بالا)",
+  "sadira_lor": "مرسل الیه (سطح پایین)",
+  "sadira_received": "دریافت شد",
+  "sadira_summary": "خلاصه",
+  "sadira_remarks": "ملاحظات",
+  "sadira_action": "عمل",
+  "sadira_details": "جزئیات",
+  "sadira_sender": "فرستنده",
+
+  "PAGE7": "WARIDA",
+  "warida_id": "ID",
+  "warida_title": "عنوان",
+  "warida_date": "تاریخ",
+  "warida_save_date": "تاریخ ثبت در وارده",
+  "warida_sender": "مرسل",
+  "warida_receiver": "دریافت کننده",
+  "warida_saved_in_warida": "تاریخ ذخیره",
+  "warida_summary": "خلاصه",
+  "warida_remarks": "ملاحظات",
+  "warida_action": "عمل",
+  "warida_details": "جزئیات",
+
+  "PAGE8,9,10": "SEND DOCUMENT",
+  "doc_number": "شماره",
+  "doc_sender": "مرسل",
+  "doc_receiver": "مرسل الیه",
+  "doc_title": "عنوان",
+  "doc_date": "تاریخ",
+  "doc_label": "برچسپ",
+
+  "plain_text": "متن ساده",
+  "rich_text": "متن غنی",
+  "compose_document": "...متن خود را بنویسید",
+  "write_summary": "...خلاصه را بنویسید",
+  "write_remarks": "...ملاحظات را بنویسید",
+  "attach_file": "ضمیمه فایل",
+  "send_and_save": "ذخیره و ارسال",
+  "cancel": "لغو",
+
+  "title_required": "عنوان لازم است",
+  "content_required": "محتوا لازم است",
+  "summary_required": "خلاصه لازم است",
+
+  "PAGE11": "FORGOT PASSWORD",
+  "enter_username": "ایمیل را وارد نمایید",
+  "submit_forgotpass": "ارسال",
+  "button": "بازگشت",
+  "reset_link_sent": "!لینک تغییر پسورد به ایمیل شما ارسال گردید",
+  "username_doesnt_exist": "ایمیل موجود نیست",
+  "username_required": "ایمیل لازم است",
+
+  "PAGE12": "VIEW DOCUMENT",
+  "add_changes": "اعمال تغییرات",
+  "save_to_warida": "اعمال تغییرات و ثبت وارده",
+  "qr_message": "این کد را با برنامه موبایل مراسلات اسکن کنید تا فایل را روی گوشی خود مشاهده کنید",
+
+  "sending...": "در حال ارسال..."
+}

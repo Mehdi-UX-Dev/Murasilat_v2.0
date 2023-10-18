@@ -1,23 +1,21 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/UI_Molecules/Button";
-import { InputField } from "@/components/UI_Molecules/Input";
-import { AiFillEye } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
-import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
-import { clearError, login } from "@/context/features/loginSlice";
-import { useRouter } from "next/navigation";
-import { RootState } from "@/context/store";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/UI_Molecules/Button';
+import { InputField } from '@/components/UI_Molecules/Input';
+import { AiFillEye } from 'react-icons/ai';
+import { FaSpinner, FaUserAlt } from 'react-icons/fa';
+import { credentialsProps_LOGIN, errorProps_LOGIN } from '@/universalTypes';
+import { clearError, login } from '@/context/features/loginSlice';
+import { useRouter } from 'next/navigation';
+import { RootState } from '@/context/store';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
 
-const Card = ({ ...lang }) => {
+const Login = ({ ...lang }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [credentials, setCredentials] = useState<credentialsProps_LOGIN>({});
-  const { error, loading } = useAppSelector(
-    (store: RootState) => store.user
-  );
+  const { error, loading } = useAppSelector((store: RootState) => store.user);
 
   useEffect(() => {
     error &&
@@ -37,7 +35,7 @@ const Card = ({ ...lang }) => {
         email: credentials.username,
         password: credentials.password,
         callback: () => {
-          router.push("/dashboard");
+          router.push('/dashboard');
         },
       })
     );
@@ -60,13 +58,13 @@ const Card = ({ ...lang }) => {
       <form onSubmit={handleSubmit}>
         <div className="space-y-4 max-w-[320px] mx-auto mt-12">
           <div className="relative">
-            <FaUserAlt size={16} className={"absolute left-2 bottom-3"} />
+            <FaUserAlt size={16} className={'absolute left-2 bottom-3'} />
             <InputField
               inputType="text"
               label={lang.username}
               fullWidth
               direction="ltr"
-              state={error ? "ErrorState" : "Default"}
+              state={error ? 'ErrorState' : 'Default'}
               name="username"
               handleChange={(value, name) => handleChange(value, name)}
             />
@@ -76,35 +74,45 @@ const Card = ({ ...lang }) => {
             <AiFillEye
               onClick={() => setShowPasswordState(!passwordState)}
               size={16}
-              className={"absolute left-2 bottom-3"}
+              className={'absolute left-2 bottom-3'}
             />
             <InputField
-              inputType={passwordState ? "text" : "password"}
+              inputType={passwordState ? 'text' : 'password'}
               label={lang.password}
               fullWidth
-              state={error ? "ErrorState" : "Default"}
+              state={error ? 'ErrorState' : 'Default'}
               handleChange={(value, name) => handleChange(value, name)}
               name="password"
               direction="ltr"
             />
           </div>
 
-          <div className="text-myAccent-error-300 " id="ErrorContainer">
-            {error?.message}
+          <div
+            role="alert"
+            className="text-myAccent-error-300"
+            dir="rtl"
+            id="ErrorContainer"
+          >
+            {lang[error]}
           </div>
-
-          <Button
-            type="submit"
-            label={lang.submit}
-            intent={"primary"}
-            size={"medium"}
-            loading={loading}
-            width={'full'}
-/>
+          {loading ? (
+            <div className="bg-primary-700 text-white rounded text-base px-[10px] py-2 w-full">
+              <FaSpinner size={22} className="animate-spin m-auto text-white" />
+            </div>
+          ) : (
+            <Button
+              type="submit"
+              label={lang.submit}
+              intent={'primary'}
+              size={'medium'}
+              loading={loading}
+              width={'full'}
+            />
+          )}
         </div>
       </form>
     </div>
   );
 };
 
-export default Card;
+export default Login;

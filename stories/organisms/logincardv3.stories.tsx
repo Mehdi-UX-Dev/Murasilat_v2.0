@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import CardV3 from '../../components/UI_Organisms/login_page/loginCardV3'
+import AltLogin from '../../components/UI_Organisms/login_page/altLogin';
 
-const meta: Meta<typeof CardV3> = {
-  title: "Organisms/Card Version 3",
-  component: CardV3,
+const meta: Meta<typeof AltLogin> = {
+  title: 'Organisms/Card Version 3',
+  component: AltLogin,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof CardV3>;
+type Story = StoryObj<typeof AltLogin>;
 
 export const DefaultState: Story = {};
