@@ -20,7 +20,7 @@ function Header() {
       title = "لیست تمام صادره";
   }
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-end items-cente">
       <ID />
       <p className="mr-8 font-IranSans text-3xl font-bold">{title}</p>
     </div>

@@ -5,11 +5,17 @@ import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
 import { showPreview } from "@/context/features/documentSlice";
 import { useAppDispatch } from "@/context/hooks";
+import { BsArrowDownCircle } from "react-icons/bs";
 function Card(data: any) {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="border flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
+    <div className="border relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
+      <BsArrowDownCircle
+        size={20}
+        className="absolute left-1 top-1 rounded-full text-white  bg-green-600  "
+      />
+
       <div className="flex justify-between items-center">
         <div className="text-center">
           <p className="font-bold text-lg">{data.serial}</p>
@@ -44,8 +50,8 @@ function Card(data: any) {
           label="بخوان"
           size="medium"
           handleClick={() => dispatch(showPreview())}
-          width={'full'}
-/>
+          width={"full"}
+        />
       </div>
     </div>
   );

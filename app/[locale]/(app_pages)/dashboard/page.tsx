@@ -11,6 +11,7 @@ import PDF_DASHBOARD from "@/components/UI_Organisms/modal/showPDFModal";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 import StackCards from "@/components/UI_Organisms/Card/stackCards";
 import SearchedResults from "@/components/UI_Organisms/Card/searchedResultsModal";
+import ID from "@/components/UI_Organisms/write_page/ID";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const [lang, setDashLang] = useState<langProps_DASHBOARD | undefined>(
@@ -35,6 +36,8 @@ function Dashboard({ params: { locale } }: localeProps) {
   return (
     lang && (
       <div className=" space-y-8">
+        <ID/>
+
         {/* //? can not the user info be used in the layout ?? */}
         {userProfileView && (
           <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">

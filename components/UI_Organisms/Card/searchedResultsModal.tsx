@@ -17,21 +17,24 @@ function SearchedResults({ ...lang }) {
             key={item?.document?.serial}
             className="flex justify-end items-center "
           >
-            <div className="bg-primary-100 grow p-1.5 rounded-md space-y-1 ">
-              <p className="">
-                {item?.document?.serial}: {lang.doc_number}
-              </p>
-              <div className="flex justify-end space-x-10 ">
-                <p>
-                  {item?.document?.title} : {lang.title}
+            <div className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 ">
+              <div>
+                <p className="">
+                  {item?.document?.serial}: {lang.doc_number}
                 </p>
-                <p>
-                  {" "}
-                  {lang.receiver}: {item?.document?.receiver?.fullname}{" "}
-                </p>
+                <div className="flex justify-end space-x-10 ">
+                  <p>
+                    {item?.document?.title} : {lang.title}
+                  </p>
+                  <p>
+                    {" "}
+                    {lang.receiver}: {item?.document?.receiver?.fullname}{" "}
+                  </p>
+                </div>
               </div>
+
+              <p>:{idx + 1}</p>
             </div>
-            <p>:{idx + 1}</p>
           </div>
         ))}
       </div>{" "}
@@ -47,21 +50,24 @@ function SearchedResults({ ...lang }) {
             key={item?.document?.serial}
             className="flex justify-end items-center "
           >
-            <div className="bg-primary-100 grow p-1.5 rounded-md space-y-1 ">
-              <p className="">
-                {item?.document?.serial}: {lang.doc_number}
-              </p>
-              <div className="flex justify-end space-x-10 ">
-                <p>
-                  {item?.document?.title} : {lang.title}
+           <div className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 ">
+              <div>
+                <p className="">
+                  {item?.document?.serial}: {lang.doc_number}
                 </p>
-                <p>
-                  {" "}
-                  {lang.sender}: {item?.document?.sender?.fullname}{" "}
-                </p>
+                <div className="flex justify-end space-x-10 ">
+                  <p>
+                    {item?.document?.title} : {lang.title}
+                  </p>
+                  <p>
+                    {" "}
+                    {lang.receiver}: {item?.document?.sender?.fullname}{" "}
+                  </p>
+                </div>
               </div>
+
+              <p>:{idx + 1}</p>
             </div>
-            <p>:{idx + 1}</p>
           </div>
         ))}
       </div>

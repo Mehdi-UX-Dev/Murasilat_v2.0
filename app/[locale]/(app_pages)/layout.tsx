@@ -33,7 +33,7 @@ export default function DashboardLayout({
 
       {/* //? why does adding the class overflow work in here */}
       <div className="mt-8 overflow-y-auto mr-4 max-h-screen grow  ">
-        <Header />
+        {/* <Header /> */}
         {children}
       </div>
     </div>
