@@ -41,6 +41,8 @@ interface DocumentStateType {
   receivers: UserType[];
   selectedReceiver: UserType | null;
   searchedDocuments: object;
+  searchedDoumentsModalActive: boolean;
+  searchedDocumentLoading: boolean;
 }
 
 const initialState: DocumentStateType = {
@@ -56,6 +58,8 @@ const initialState: DocumentStateType = {
   userProfileView: false,
   userInfo: {},
   searchedDocuments: {},
+  searchedDoumentsModalActive: false,
+  searchedDocumentLoading: false,
 };
 
 const fetchDocuments = createAsyncThunk(
@@ -257,6 +261,12 @@ const documentsSlice = createSlice({
     hideUserInfo: (state) => {
       state.userProfileView = false;
     },
+    showSearchedDocumentModal: (state) => {
+      state.searchedDoumentsModalActive = true;
+    },
+    hideSearchedDocumentModal: (state) => {
+      state.searchedDoumentsModalActive = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -304,12 +314,15 @@ const documentsSlice = createSlice({
         state.error = action.payload as null;
       })
       .addCase(searchDocumentsDashboardPage.pending, (state) => {
-        state.loading = true;
+        state.searchedDocumentLoading = true;
       })
       .addCase(searchDocumentsDashboardPage.fulfilled, (state, action) => {
-       
+        state.searchedDocumentLoading = false;
+        state.searchedDocuments = action.payload;
       })
       .addCase(searchDocumentsDashboardPage.rejected, (state, action) => {
+        state.searchedDocumentLoading = false;
+
         state.error = action.payload as null;
       });
   },
@@ -322,6 +335,8 @@ export const {
   hidePreview,
   showUserInfo,
   hideUserInfo,
+  showSearchedDocumentModal,
+  hideSearchedDocumentModal,
 } = documentsSlice.actions;
 
 export {
@@ -330,5 +345,5 @@ export {
   fetchReceivers,
   saveToWarida,
   getUserProfile,
-  searchDocumentsDashboardPage
+  searchDocumentsDashboardPage,
 };

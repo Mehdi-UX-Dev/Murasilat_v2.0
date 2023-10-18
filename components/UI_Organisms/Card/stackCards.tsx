@@ -8,7 +8,6 @@ function StackCards({ type, ...lang }) {
   const { documents } = useAppSelector((store) => store.documents);
   const containerRef = useRef<HTMLDivElement>(null!);
 
-  console.log(documents.length);
 
   const scrollLeft = () => {
     containerRef.current.scrollLeft -= 100;
@@ -59,7 +58,7 @@ function StackCards({ type, ...lang }) {
       <div className="relative flex ">
         {documents.length >= 3 && (
           <AiOutlineLeft
-            className="absolute top-1/2 lg:left-2  border-2 border-primary-900 rounded-full p-1 bg-white z-10"
+            className="absolute top-1/2 lg:left-2  border-2  border-primary-900 rounded-full p-1 bg-white hover:bg-primary-900  hover:text-white z-10"
             size={36}
             onClick={scrollLeft}
           />
@@ -77,7 +76,7 @@ function StackCards({ type, ...lang }) {
         </div>
         {documents.length >= 3 && (
           <AiOutlineRight
-            className="absolute lg:right-3 top-1/2 border-2 border-primary-900 hover:bg-primary-900 bg-white  rounded-full p-1  z-10"
+            className="absolute lg:right-3 top-1/2 border-2 border-primary-900 hover:bg-primary-900 bg-white hover:text-white  rounded-full p-1  z-10"
             size={36}
             onClick={scrollRight}
           />

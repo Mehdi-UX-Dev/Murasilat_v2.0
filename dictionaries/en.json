@@ -24,7 +24,12 @@
       "log_out": "Log Out",
       "unread": "unread", 
       "recently_sent": "recently sent",
-      "recently_received":"recently received"
+      "recently_received":"recently received",
+      "doc_number":" Document Number",
+      "title": "Title", 
+      "sender" : "Sender",
+      "receiver": "Receiver"
+    
       },
 
       
@@ -39,7 +44,9 @@
 
     "searchBar" : {
       "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید",
-      "search": "search"
+      "search": "search",
+      "clear_search": "Clear Search"
+
     },
 
     "Write_Page" : {

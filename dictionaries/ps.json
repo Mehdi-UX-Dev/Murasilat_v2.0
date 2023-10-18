@@ -23,8 +23,13 @@
       "log_out": "وتل", 
       "unread": "نه لوستل شوی", 
       "recently_sent": "په دې وروستیو کې لیږل شوی", 
-      "recently_received": "په دې وروستیو کې ترلاسه شوی"
-      },
+      "recently_received": "په دې وروستیو کې ترلاسه شوی",
+      "doc_number":" د سند شمیره",
+      "title": "عنوان",
+      "sender": "لیږونکی",
+    "receiver" : "اخیستونکی"
+
+    },
       
 
       
@@ -39,7 +44,9 @@
 
     "searchBar" : {
       "placeholder": "د سند شمیره یا د سند سرلیک له لارې لټون وکړئ",
-        "search": "لټون"
+        "search": "لټون",
+    "clear_search": "لټون حذف کړئ"
+
      },
 
     "Write_Page" : {

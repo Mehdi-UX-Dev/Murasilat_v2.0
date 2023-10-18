@@ -22,9 +22,14 @@
     "document_des" : "ایجاد کنید و با دیگران به اشتراک بگذارید", 
     "create" : "ایجاد", 
     "log_out": "خروج", 
-      "unread": "خوانده نشده", 
-      "recently_sent": "اخیرا ارسال شده", 
-      "recently_received": "اخیرا دریافت شده"
+    "unread": "خوانده نشده", 
+    "recently_sent": "اخیرا ارسال شده", 
+    "recently_received": "اخیرا دریافت شده",
+    "doc_number":" شماره مکتوب",
+    "title": "عنوان", 
+    "sender":"فرستنده", 
+    "receiver" : "گیرنده"
+      
     },
 
     "Write_Page" : {
@@ -68,7 +73,9 @@
 
     "searchBar" : {
       "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید",
-      "search": "جستجو"
+      "search": "جستجو",
+    "clear_search": "جستجو را پاک کنید"
+
  
      },
 
