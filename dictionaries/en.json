@@ -35,8 +35,9 @@
     },
 
     "searchBar" : {
-      "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید"
-     },
+      "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید",
+      "search": "search"
+    },
 
     "Write_Page" : {
       "write_maktoob": "Create Maktoob",

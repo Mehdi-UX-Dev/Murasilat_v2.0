@@ -12,7 +12,6 @@ function ID() {
     dispatch(getUserProfile());
   }, [dispatch]);
 
-
   return (
     <section className="flex space-x-6 ml-4" onClick={() => dispatch(showUserInfo())}>
       <div className="space-y-1 text-right">

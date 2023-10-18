@@ -1,7 +1,7 @@
 import React from "react";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva, cx, VariantProps } from "class-variance-authority";
 
-const button = cva(["rounded", "font-bold", "capitalize"], {
+const buttonCVA = cva(["rounded", "font-bold", "capitalize"], {
   variants: {
     intent: {
       primary: ["bg-primary-900", "text-white", "hover:bg-primary-800"],
@@ -13,8 +13,11 @@ const button = cva(["rounded", "font-bold", "capitalize"], {
       medium: "text-base px-[10px] py-2",
       large: "text-[18px] px-4 py-[12px] ",
     },
-    fullWidth: {
-      true: "w-full",
+   
+    width: {
+      full: "w-full",
+      half: "w-20",
+      sm: "w-16",
     },
   },
   defaultVariants: {
@@ -22,15 +25,15 @@ const button = cva(["rounded", "font-bold", "capitalize"], {
     size: "medium",
   },
   compoundVariants: [
-    {
-      intent: "primary",
-      size: "large",
-      className: "hover:bg-pink-500",
-    },
+    // {
+    //   intent: "primary",
+    //   size: "large",
+    //   className: "hover:bg-pink-500",
+    // },
   ],
 });
 
-interface ButtonProps extends VariantProps<typeof button> {
+interface ButtonProps extends VariantProps<typeof buttonCVA> {
   /**
    * Button contents
    */
@@ -46,27 +49,37 @@ interface ButtonProps extends VariantProps<typeof button> {
    * to manage button
    * */
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
+
+  /** Loading state  */
+  loading?: boolean;
+
+
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const Button = ({
+  loading,
   type,
   intent,
   size,
   label,
-  fullWidth,
+  width,
   handleClick,
   ...props
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={button({ intent, size, fullWidth })}
+      className={cx(buttonCVA({ intent, size, width }), {
+        "bg-gray-400": loading,
+      })}
       {...props}
       onClick={handleClick}
+      disabled={loading}
     >
+      {/* add loading io animation in here */}
       {label}
     </button>
   );

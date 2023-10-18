@@ -1,7 +1,9 @@
-'use client';
-import decode from 'jwt-decode';
+"use client";
+import { errorTimeOut } from "@/context/features/loginSlice";
+import { useAppDispatch } from "@/context/hooks";
+import decode from "jwt-decode";
 
-const TOKEN_KEY = 'TOKENS';
+const TOKEN_KEY = "TOKENS";
 
 export type TOKENS_TYPE = { access: string; refresh: string };
 
@@ -18,7 +20,7 @@ type TOKEN_PAYLOAD = {
 };
 
 function getTokens(): TOKENS_TYPE | null {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const tokens_unparsed = window.localStorage.getItem(TOKEN_KEY);
     return tokens_unparsed ? JSON.parse(tokens_unparsed) : null;
   }

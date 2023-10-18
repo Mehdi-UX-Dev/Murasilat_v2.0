@@ -1,17 +1,13 @@
-'use client';
-
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '@/context/store';
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   SESSION_TYPE,
   TOKENS_TYPE,
   clearSession,
   getUser,
   setToken,
-} from '@/utils/auth';
+} from "@/utils/auth";
 
 type LoginParams = { email: string; password: string; callback?: () => void };
 
@@ -28,7 +24,7 @@ const initialState: LoginState = {
 };
 
 const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
-  'Login',
+  "Login",
   async ({ email, password, callback }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -38,19 +34,21 @@ const login = createAsyncThunk<TOKENS_TYPE, LoginParams>(
       callback?.();
       return response.data;
     } catch (error: any) {
-      console.log(error);
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error);
     }
   }
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     logout: (state) => {
       clearSession();
       state.user = null;
+    },
+    clearError: (state) => {
+      state.error = undefined;
     },
   },
   extraReducers: (builder) => {
@@ -65,6 +63,7 @@ const userSlice = createSlice({
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
+
       state.error = action.payload;
     });
   },
@@ -72,5 +71,5 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { logout } = userSlice.actions;
+export const { logout, clearError } = userSlice.actions;
 export { login };

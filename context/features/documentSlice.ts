@@ -159,7 +159,6 @@ const writeDocument = createAsyncThunk(
           key === "date" ? new Date(value).toISOString() : value
         );
     });
-    console.log(formData);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
@@ -204,7 +203,6 @@ const getUserProfile = createAsyncThunk(
         }
       );
 
-      console.log(response.data);
 
       return response.data;
     } catch (error: any) {

@@ -1,13 +1,26 @@
 "use client";
 
-import { InputField } from "@/components/UI_Molecules/Input";
 import { searchArchiveDocuments } from "@/context/features/archiveSlice";
 import { useAppDispatch } from "@/context/hooks";
-import { langProps_ARCHIVE } from "@/universalTypes";
-import React, { useState } from "react";
+import { getDictionary } from "@/i18n-server";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
-function SearchBar({ type }: { type: string }) {
+function SearchBar({ locale, type }: { type: string; locale: string }) {
+  let lang = useRef({
+    placeholder: "",
+    search: "",
+  });
+  useEffect(() => {
+    (async () => {
+      const langRes = (await getDictionary(locale)).searchBar;
+
+      lang.current = langRes;
+    })();
+  }, [locale]);
+
+  
+
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
 
@@ -17,18 +30,25 @@ function SearchBar({ type }: { type: string }) {
   };
 
   return (
-    <div className="flex items-end  justify-end space-x-4 ">
-      <form onSubmit={Search}>
-        <div className="relative ">
-          <InputField
-            state="Default"
-            inputType="number"
+    <div className="max-w-2xl mx-auto">
+      <form className="flex space-x-2" onSubmit={Search}>
+        <button
+          disabled={searchValue.length == 0}
+          className="bg-primary-900 text-white w-24 font-rounded font-bold rounded text-lg disabled:bg-gray-400 "
+        >
+          {lang.current.search}
+        </button>
+        <div className="relative grow">
+          <input
+            type="text"
+            className="border text-right w-full border-primary-700 rounded-md h-12  focus:border-2 focus:border-primary-900 pr-12"
             name="search"
-            fullWidth={false}
-            lang="RTL"
-            handleChange={(value) => setSearchValue(value)}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+            placeholder={lang.current.placeholder}
           />
-          <AiOutlineSearch size={16} className="absolute right-3 top-10 z-10" />
+          <AiOutlineSearch size={24} className="absolute right-3 top-3 z-10" />
         </div>
       </form>
     </div>

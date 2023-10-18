@@ -35,6 +35,7 @@ function Dashboard({ params: { locale } }: localeProps) {
   const { documents, pdf, userProfileView } = useAppSelector(
     (store) => store.documents
   );
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -53,7 +54,8 @@ function Dashboard({ params: { locale } }: localeProps) {
 
         {pdf.visible && <PDF_DASHBOARD locale={locale} />}
 
-        <SearchBar/>
+        {/* type is not specified properly in here // may be type is not needed in the first place */}
+        <SearchBar type="" locale={locale} />
 
         <div className="relative flex  ">
           {" "}
@@ -67,7 +69,10 @@ function Dashboard({ params: { locale } }: localeProps) {
             // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2 shadow-lg scrollbar-hide "
           >
-            {documents.length && <Card {...documents[0]} />}
+            {documents.map((doc) => (
+              <Card key={doc.serial} {...doc} />
+            ))}
+            {}
           </div>
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 text-primary-500 bg-primary-400 rounded-full p-1 bg-opacity-20 hover:bg-opacity-70 z-10"
