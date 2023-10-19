@@ -30,7 +30,8 @@
     "doc_number":" شماره مکتوب",
     "title": "عنوان", 
     "sender":"فرستنده", 
-    "receiver" : "گیرنده"
+    "receiver" : "گیرنده",
+    "show_profile": "اطلاعات کاربر"
       
     },
 

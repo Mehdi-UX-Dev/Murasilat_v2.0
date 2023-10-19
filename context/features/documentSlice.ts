@@ -233,7 +233,6 @@ const searchDocumentsDashboardPage = createAsyncThunk(
           },
         }
       );
-      console.log(res.data);
 
       return res.data;
     } catch (error: any) {

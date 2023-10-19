@@ -28,7 +28,8 @@
       "doc_number":" Document Number",
       "title": "Title", 
       "sender" : "Sender",
-      "receiver": "Receiver"
+      "receiver": "Receiver",
+      "show_profile": "Show Profile Info"
     
       },
 

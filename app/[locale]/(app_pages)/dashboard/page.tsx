@@ -39,11 +39,7 @@ function Dashboard({ params: { locale } }: localeProps) {
         <ID/>
 
         {/* //? can not the user info be used in the layout ?? */}
-        {userProfileView && (
-          <div className=" fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-            <UserInfo />
-          </div>
-        )}
+      
 
         {pdf.visible && <PDF_DASHBOARD locale={locale} />}
 

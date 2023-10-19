@@ -3,7 +3,6 @@ import React from "react";
 
 function SearchedResults({ ...lang }) {
   const { searchedDocuments } = useAppSelector((store) => store.documents);
-  console.log(searchedDocuments);
 
   return (
     <div className="absolute bg-white mt-2 rounded shadow-lg h-64 z-10 w-full space-y-2  overflow-auto">
@@ -50,7 +49,7 @@ function SearchedResults({ ...lang }) {
             key={item?.document?.serial}
             className="flex justify-end items-center "
           >
-           <div className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 ">
+            <div className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 ">
               <div>
                 <p className="">
                   {item?.document?.serial}: {lang.doc_number}

@@ -8,13 +8,16 @@ import {
 } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
-import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function SearchBar({ locale, type }: { type: string; locale: string }) {
   let [lang, setLang] = useState<
     { placeholder: string; search: string; clear_search: string } | undefined
   >(undefined);
+
+  const path = usePathname();
 
   const { searchedDoumentsModalActive } = useAppSelector(
     (store) => store.documents
@@ -30,24 +33,31 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
 
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (path === "/dashboard") {
+      searchValue.length == 0 && dispatch(hideSearchedDocumentModal());
+    }
+  }, [searchValue.length, dispatch, path]);
 
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(showSearchedDocumentModal());
-    dispatch(searchDocumentsDashboardPage({ value: searchValue }));
+
+    path === "/dashboard"
+      ? (dispatch(showSearchedDocumentModal()),
+        dispatch(searchDocumentsDashboardPage({ value: searchValue })))
+      : dispatch(searchArchiveDocuments({ type, value: searchValue }));
   };
 
   const clearSearch = () => {
     setSearchValue("");
-    dispatch(hideSearchedDocumentModal());
+    path === "/dashboard" && dispatch(hideSearchedDocumentModal());
   };
 
   return (
-    
     lang && (
       <div className="max-w-3xl mx-auto">
         <form className="flex space-x-2" onSubmit={Search}>
-          {searchedDoumentsModalActive ? (
+          {searchedDoumentsModalActive && searchValue.length ? (
             <button
               type="button"
               onClick={clearSearch}
@@ -74,6 +84,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
                 setSearchValue(e.target.value);
               }}
               placeholder={lang.placeholder}
+              required
             />
             <AiOutlineSearch
               size={24}

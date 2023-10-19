@@ -114,6 +114,7 @@ export type langProps_SideBar = {
   all_warida: string;
   broadcast: string;
   log_out: string;
+  show_profile : string
 };
 
 export type sideBarSubOptionProps_SIDEBAR = {
@@ -121,6 +122,8 @@ export type sideBarSubOptionProps_SIDEBAR = {
   text?: string;
   Icon: IconType;
   customClassName?: string;
+  hasType? : string
+
 };
 
 export type sideBarOptionProps_SIDEBAR = {

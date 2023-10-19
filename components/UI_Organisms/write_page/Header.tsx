@@ -16,12 +16,16 @@ function Header() {
     case "/write/writePishnihad":
       title = "ایجاد پيشنهاد";
       break;
-    case "/archive":
+    case "/archive/sadira":
       title = "لیست تمام صادره";
+      break;
+    case "/archive/warida":
+      title = "لیست تمام وارده";
+      break;
   }
   return (
-    <div className="flex justify-end items-cente">
-      <ID />
+    <div className="flex justify-end items-center mb-8">
+      {/* <ID /> */}
       <p className="mr-8 font-IranSans text-3xl font-bold">{title}</p>
     </div>
   );
