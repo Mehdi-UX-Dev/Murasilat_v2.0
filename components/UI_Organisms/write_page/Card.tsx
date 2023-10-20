@@ -10,7 +10,7 @@ function Card(data: any) {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="border relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
+    <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
       <BsArrowDownCircle
         size={20}
         className="absolute left-1 top-1 rounded-full text-white  bg-green-600  "
@@ -18,17 +18,17 @@ function Card(data: any) {
 
       <div className="flex justify-between items-center">
         <div className="text-center">
-          <p className="font-bold text-lg">{data.serial}</p>
-          <p className="">{GetShamsiDate(data.date)}</p>
+          <p className="font-bold text-lg">{data?.serial}</p>
+          <p className="">{GetShamsiDate(data?.date)}</p>
         </div>
 
         <div className="flex space-x-[16px]">
           <div className="text-right">
-            <p className="font-semibold text-xl">{data.sender.fullname}</p>
-            <p>{data.sender.authority.title}</p>
+            <p className="font-semibold text-xl">{data?.sender?.fullname}</p>
+            <p>{data?.sender?.authority?.title}</p>
           </div>
           <Image
-            src={data.sender.profile_pic}
+            src={data?.sender?.profile_pic}
             alt="ID"
             className=" object-cover rounded-full"
             width={48}
@@ -38,7 +38,7 @@ function Card(data: any) {
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">{data.title}</h2>
+        <h2 className="font-bold text-[24px]">{data?.title}</h2>
         {/* //? should there be a summary */}
         <p className="text-medium">خلاصه: کمیسیون اعطا شد</p>
       </div>

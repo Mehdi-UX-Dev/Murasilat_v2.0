@@ -16,6 +16,17 @@
   }
 }
 
+@layer utilities {
+  #table th {
+    @apply p-2.5
+  }
+
+  #table  td {
+    @apply p-2 first:rounded-l-lg last:rounded-r-lg
+  }
+  
+}
+
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;

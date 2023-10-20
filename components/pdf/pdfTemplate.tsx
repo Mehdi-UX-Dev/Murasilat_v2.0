@@ -16,7 +16,7 @@ function PDFTemplate({
   docType,
   ...lang
 }: langProps_PDF & PDFProps_PDFTemplate) {
-  const shamsiDate = GetShamsiDate(null);
+  const shamsiDate = GetShamsiDate();
   const qamariDate = GetQamariDate();
   const path = usePathname();
 
@@ -95,13 +95,17 @@ function PDFTemplate({
 
         <div className="w-full border-b-2 border-black  mt-4"></div>
       </section>
-
       {/* quill content  */}
-      {path === "/write/writeMaktoob" ||
-        (path === "/dashboard" && <MaktoobFormat body={body} />)}
 
+      <section
+      dangerouslySetInnerHTML={{
+        __html: body || "",
+      }}
+      id="body"
+      className="row-span-3 pr-4 pt-2 quill-container text-right z-50"
+    ></section>
+      {/* ( <MaktoobFormat body={body} />) */}
       {path === "/write/writeIstilam" && <IstilamFormat body={body} />}
-
       {/*  */}
       <section id="footer" className="row-span-1">
         <div className="w-full border-b border-black  mt-4"></div>

@@ -88,7 +88,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
             />
             <AiOutlineSearch
               size={24}
-              className="absolute right-3 top-3 z-10"
+              className="absolute right-3 top-3 "
             />
           </div>
         </form>

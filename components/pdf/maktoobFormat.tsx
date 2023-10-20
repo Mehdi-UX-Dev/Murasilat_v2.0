@@ -1,6 +1,8 @@
 import React from "react";
 
 function MaktoobFormat({ body }: { body: string | undefined }) {
+  console.log(body);
+  
   return (
     <section
       dangerouslySetInnerHTML={{

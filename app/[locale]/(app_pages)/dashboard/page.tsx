@@ -6,7 +6,6 @@ import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
 import { fetchDocuments } from "@/context/features/documentSlice";
 
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import PDF_DASHBOARD from "@/components/UI_Organisms/modal/showPDFModal";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 import StackCards from "@/components/UI_Organisms/Card/stackCards";
@@ -24,8 +23,9 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const { pdf, userProfileView, searchedDoumentsModalActive } =
-    useAppSelector((store) => store.documents);
+  const { pdf, userProfileView, searchedDoumentsModalActive } = useAppSelector(
+    (store) => store.documents
+  );
 
   const dispatch = useAppDispatch();
 
@@ -36,10 +36,7 @@ function Dashboard({ params: { locale } }: localeProps) {
   return (
     lang && (
       <div className=" space-y-8">
-        <ID/>
-
-        {/* //? can not the user info be used in the layout ?? */}
-      
+        <ID />
 
         {pdf.visible && <PDF_DASHBOARD locale={locale} />}
 
