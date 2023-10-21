@@ -5,8 +5,11 @@ import ReactQuill from 'react-quill';
 import { useEffect, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { Button } from '@/components/UI_Molecules/Button';
-import { useAppSelector } from '@/context/hooks';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
 import { GetQamariDate, GetShamsiDate } from '@/date-converter';
+import { useRouter } from 'next/navigation';
+import { createBroadcast } from '@/context/features/broadcastSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 function Preview() {
   const modules = {
@@ -31,15 +34,45 @@ function Preview() {
     ],
   };
   const quillRef = useRef<ReactQuill>(null);
-  const [value, setValue] = useState('');
-  const { user } = useAppSelector((store) => store.user);
-  const now = new Date().getTime();
+  const [value, setValue] = useState<{
+    title: string;
+    content: string;
+    summary: string;
+    remarks: string;
+  }>({
+    title: '',
+    content: '',
+    summary: '',
+    remarks: '',
+  });
+  const {
+    user: { user },
+    broadcast: { loading },
+  } = useAppSelector((store) => store);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   useEffect(() => {
     if (!quillRef.current) return;
     quillRef.current.editor?.format('align', 'right');
     quillRef.current.editor?.format('direction', 'rtl');
     quillRef.current.editor?.format('size', 'large');
   }, []);
+
+  const handleCancel = () => {
+    router.push('/dashboard');
+  };
+
+  const handleSubmit = () => {
+    dispatch(
+      createBroadcast({
+        ...value,
+        date: new Date().toISOString(),
+        sender: user?.user_id,
+        callback: () => router.replace('/dashboard'),
+      })
+    );
+  };
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8">
@@ -89,8 +122,12 @@ function Preview() {
         {/* Body */}
         <div className="flex flex-col w-full py-8 h-screen">
           {/* Meta */}
-          <div className="flex flex-col items-end w-full">
+          <div className="flex flex-col items-end w-full pb-4">
             <input
+              value={value.title}
+              onChange={({ target }) =>
+                setValue((prev) => ({ ...prev, title: target.value }))
+              }
               type="text"
               className="py-2 px-4 outline-1 w-full outline-slate-50 rounded text-xl"
               dir="rtl"
@@ -101,13 +138,36 @@ function Preview() {
           <ReactQuill
             ref={quillRef}
             onChange={(newValue) => {
-              setValue(newValue);
+              setValue((prev) => ({ ...prev, content: newValue }));
             }}
-            className="h-[85%]"
+            className="h-[80vh] mb-8"
             modules={modules}
             theme="snow"
-            value={value}
+            value={value.content}
           />
+          {/**Sadira Section */}
+          <div className="flex items-center justify-between w-full pt-8">
+            <input
+              value={value.remarks}
+              onChange={({ target }) =>
+                setValue((prev) => ({ ...prev, remarks: target.value }))
+              }
+              type="text"
+              className="py-2 px-4 outline-1 w-1/2 outline-slate-50 rounded text-xl"
+              dir="rtl"
+              placeholder="ملاحظات را بنویسید"
+            />
+            <input
+              value={value.summary}
+              onChange={({ target }) =>
+                setValue((prev) => ({ ...prev, summary: target.value }))
+              }
+              type="text"
+              className="py-2 px-4 outline-1 w-1/2 outline-slate-50 rounded text-xl"
+              dir="rtl"
+              placeholder="خلاصه را بنویسید"
+            />
+          </div>
         </div>
         <div className="w-full h-[2px] bg-slate-900" />
         {/* Footer */}
@@ -127,19 +187,29 @@ function Preview() {
           </div>
         </div>
       </div>
+
       <div className="p-8 w-full space-x-4 flex justify-end">
         <Button
           intent={'secondary'}
           size={'medium'}
           width={'half'}
-          label="لغو"
+          label="بازگشت"
+          handleClick={handleCancel}
+          loading={loading}
         />
-        <Button
-          intent={'primary'}
-          size={'medium'}
-          width={'half'}
-          label="ارسال"
-        />
+        {loading ? (
+          <div className="bg-primary-700 text-white rounded text-[18px] px-4 py-[12px]">
+            <FaSpinner size={22} className="animate-spin m-auto text-white" />
+          </div>
+        ) : (
+          <Button
+            intent={'primary'}
+            size={'medium'}
+            width={'half'}
+            label="ارسال"
+            handleClick={handleSubmit}
+          />
+        )}
       </div>
     </div>
   );
