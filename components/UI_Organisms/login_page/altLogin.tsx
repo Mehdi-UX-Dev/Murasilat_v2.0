@@ -30,6 +30,7 @@ function AltLogin({ ...lang }) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const { password } = event.target;
+    dispatch(logout());
     dispatch(
       login({
         email: user?.email,

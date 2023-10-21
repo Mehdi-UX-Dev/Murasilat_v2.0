@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-import { logos } from './imageData';
 import ReactQuill from 'react-quill';
 import { useEffect, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
@@ -81,7 +80,7 @@ function Preview() {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-start">
             <Image
-              src={logos.university}
+              src={'/images/KabulUni.png'}
               width={100}
               height={100}
               alt="university logo"
@@ -94,7 +93,7 @@ function Preview() {
               <span>{user?.title}</span>
             </div>
             <Image
-              src={logos.ministry}
+              src={'/images/moh.jpg'}
               width={100}
               height={100}
               alt="ministry logo"

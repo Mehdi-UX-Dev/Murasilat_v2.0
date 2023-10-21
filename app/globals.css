@@ -4,30 +4,29 @@
 
 @layer base {
   @font-face {
-    font-family: "IRANSans";
-    src: url("../public/fonts/IRANSans.ttf") format("ttf");
+    font-family: 'IRANSans';
+    src: url('../public/fonts/IRANSans.ttf') format('ttf');
   }
 }
 
 @layer base {
   @font-face {
-    font-family: "B Nazanin";
-    src: url("../public/fonts/B_Nazanin.ttf") format("ttf");
+    font-family: 'B Nazanin';
+    src: url('../public/fonts/B_Nazanin.ttf') format('ttf');
   }
 }
 
 @layer utilities {
   #table th {
-    @apply p-2.5
+    @apply p-2.5;
   }
 
-  #table  td {
-    @apply p-2 first:rounded-l-lg last:rounded-r-lg
+  #table td {
+    @apply p-2 first:rounded-l-lg last:rounded-r-lg;
   }
-  
 }
 
-input[type="radio"] {
+input[type='radio'] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -37,11 +36,11 @@ input[type="radio"] {
   border-radius: 25%;
 }
 
-input[type="radio"]:checked {
+input[type='radio']:checked {
   background-size: 50% 50%;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url("../public/check.svg");
+  background-image: url('../public/check.svg');
 }
 
 /* //*for the arrows in the number input type */
@@ -50,8 +49,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-
 
 @layer utilities {
   .quill-container ol {
@@ -98,4 +95,18 @@ input::-webkit-inner-spin-button {
   .quill-container .ql-align-right {
     @apply text-right;
   }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 0.8s infinite;
 }
