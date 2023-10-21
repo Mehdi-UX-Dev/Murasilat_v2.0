@@ -3,10 +3,10 @@ import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
-import { showPreview } from "@/context/features/documentSlice";
+import { showPDF, showPreview } from "@/context/features/documentSlice";
 import { useAppDispatch } from "@/context/hooks";
 import { BsArrowDownCircle } from "react-icons/bs";
-function Card(data: any) {
+function Card(props: any) {
   const dispatch = useAppDispatch();
 
   return (
@@ -18,17 +18,17 @@ function Card(data: any) {
 
       <div className="flex justify-between items-center">
         <div className="text-center">
-          <p className="font-bold text-lg">{data?.serial}</p>
-          <p className="">{GetShamsiDate(data?.date)}</p>
+          <p className="font-bold text-lg">{props?.serial}</p>
+          <p className="">{GetShamsiDate(props?.date)}</p>
         </div>
 
         <div className="flex space-x-[16px]">
           <div className="text-right">
-            <p className="font-semibold text-xl">{data?.sender?.fullname}</p>
-            <p>{data?.sender?.authority?.title}</p>
+            <p className="font-semibold text-xl">{props?.sender?.fullname}</p>
+            <p>{props?.sender?.authority?.title}</p>
           </div>
           <Image
-            src={data?.sender?.profile_pic}
+            src={props?.sender?.profile_pic}
             alt="ID"
             className=" object-cover rounded-full"
             width={48}
@@ -38,7 +38,7 @@ function Card(data: any) {
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">{data?.title}</h2>
+        <h2 className="font-bold text-[24px]">{props?.title}</h2>
         {/* //? should there be a summary */}
         <p className="text-medium">خلاصه: کمیسیون اعطا شد</p>
       </div>
@@ -49,7 +49,7 @@ function Card(data: any) {
           intent="secondary"
           label="بخوان"
           size="medium"
-          handleClick={() => dispatch(showPreview())}
+          handleClick={() => dispatch(showPDF({...props}))}
           width={"full"}
         />
       </div>

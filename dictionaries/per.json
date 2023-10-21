@@ -31,7 +31,8 @@
     "title": "عنوان", 
     "sender":"فرستنده", 
     "receiver" : "گیرنده",
-    "show_profile": "اطلاعات کاربر"
+    "show_profile": "اطلاعات کاربر",
+    "no_document": "هیچ سندی وجود ندارد"
       
     },
 

@@ -20,15 +20,15 @@ function StackCards({ type, ...lang }) {
   let title = "";
 
   switch (type) {
-    case "unread":
+    case "unreadDocuments":
       title = lang?.unread;
       break;
 
-    case "sent":
+    case "sentRecently":
       title = lang.recently_sent;
       break;
 
-    case "received":
+    case "receivedRecently":
       title = lang.recently_received;
       break;
   }
@@ -40,14 +40,14 @@ function StackCards({ type, ...lang }) {
           className={cx(
             "rounded-full relative  text-center font-semibold text-sm text-white ",
             {
-              "bg-myAccent-error-300 w-5 h-5": type === "unread",
-              "bg-green-300 w-3 h-3": type === "received",
-              "bg-cyan-400 w-3 h-3": type === "sent",
+              "bg-myAccent-error-300 w-5 h-5": type === "unreadDocuments",
+              "bg-green-300 w-3 h-3": type === "receivedRecently",
+              "bg-cyan-400 w-3 h-3": type === "sentRecently",
             }
           )}
         >
-          {type === "unread" && 2}
-          {type === "unread" && (
+          {type === "unreadDocuments" && documents.unreadDocuments.length}
+          {type === "unreadDocuments" && (
             <p className="h-4 w-4 absolute top-0.5 -z-10 left-0.5  animate-ping bg-myAccent-error-500 rounded-full"></p>
           )}
         </div>
@@ -56,7 +56,7 @@ function StackCards({ type, ...lang }) {
       </div>
 
       <div className="relative flex ">
-        {documents.length >= 3 && (
+        {documents[type].length >= 3 && (
           <AiOutlineLeft
             className="absolute top-1/2 lg:left-2  border-2  border-primary-900 rounded-full p-1 bg-white hover:bg-primary-900  hover:text-white z-10"
             size={36}
@@ -64,17 +64,24 @@ function StackCards({ type, ...lang }) {
           />
         )}
 
-        <div
-          ref={containerRef}
-          // transition is not working properly
-          className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
-        >
-          {documents.map((doc) => (
-            <Card key={doc.serial} {...doc} />
-          ))}
-          {}
-        </div>
-        {documents.length >= 3 && (
+        {documents[type].length ? (
+          <div
+            ref={containerRef}
+            // transition is not working properly
+            className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
+          >
+            {documents[type].map((doc) => (
+              <Card key={doc.serial} {...doc} />
+            ))}
+            {}
+          </div>
+        ) : (
+          <div className="w-full text-right text-lg font-IranSans ">
+            {lang.no_document}
+          </div>
+        )}
+
+        {documents[type].length >= 3 && (
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 border-2 border-primary-900 hover:bg-primary-900 bg-white hover:text-white  rounded-full p-1  z-10"
             size={36}

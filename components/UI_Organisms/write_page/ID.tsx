@@ -13,7 +13,7 @@ function ID() {
   }, [dispatch]);
 
   return (
-    <section className="flex space-x-6 ml-4" onClick={() => dispatch(showUserInfo())}>
+    <section className="flex max-w-fit space-x-6 ml-4" onClick={() => dispatch(showUserInfo())}>
       <div className="space-y-1 text-right">
         <p className="font-bold font-rounded text-2xl  ">
           {userInfo?.fullname}

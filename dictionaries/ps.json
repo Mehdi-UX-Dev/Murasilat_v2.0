@@ -26,7 +26,9 @@
     "unread": "نه لوستل شوی",
     "recently_sent": "په دې وروستیو کې لیږل شوی",
     "recently_received": "په دې وروستیو کې ترلاسه شوی",
-    "show_profile": "د کارونکي معلومات"
+    "show_profile": "د کارونکي معلومات",
+    "no_document": "هیڅ سند شتون نلري"
+
   },
 
   "list_page": {

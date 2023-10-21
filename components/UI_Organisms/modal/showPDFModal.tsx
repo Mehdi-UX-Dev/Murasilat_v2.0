@@ -1,17 +1,22 @@
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import PDFTemplate from "@/components/pdf/pdfTemplate";
-import { hidePreview, saveToWarida } from "@/context/features/documentSlice";
+import {
+  hidePDF,
+  hidePreview,
+  saveToWarida,
+} from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
-import { langProps_PDF, localeProps } from "@/universalTypes";
+import { langProps_PDF } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 
 function PDF_DASHBOARD(locale) {
   const dispatch = useAppDispatch();
-  const { documents } = useAppSelector((store) => store.documents);
+  const { pdf } = useAppSelector((store) => store.documents);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
+  console.log(pdf.pdfContent);
 
   useEffect(() => {
     (async () => {
@@ -27,18 +32,17 @@ function PDF_DASHBOARD(locale) {
   });
   return (
     <div className=" overflow-auto fixed inset-0 z-20  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center  ">
-      <MdOutlineCancel size={24} onClick={() => dispatch(hidePreview())} />
+      <MdOutlineCancel size={24} onClick={() => dispatch(hidePDF())} />
       <div className="bg-white h-screen w-72 mr-4">
         <form
           onSubmit={(e) => {
-            e.preventDefault(), console.log(documents[0]);
-
-            dispatch(
-              saveToWarida({
-                id: documents[0].serial,
-                ...updateDocument,
-              })
-            );
+            e.preventDefault(),
+              dispatch(
+                saveToWarida({
+                  id: pdf.pdfContent.serial,
+                  ...updateDocument,
+                })
+              );
           }}
         >
           <InputField
@@ -85,8 +89,8 @@ function PDF_DASHBOARD(locale) {
       </div>
       <PDFTemplate
         {...pdfLang}
-        body={documents[0].content}
-        docType={documents[0].docType}
+        body={pdf.pdfContent.content}
+        docType={pdf.pdfContent.urgency}
       />
     </div>
   );

@@ -69,7 +69,8 @@ export type langProps_DASHBOARD = {
   log_out: string;
   unread: string, 
   recently_sent: string,
-  recently_received: string
+  recently_received: string, 
+  no_document: string
 };
 
 // 3 types of document that is rendered on layout page

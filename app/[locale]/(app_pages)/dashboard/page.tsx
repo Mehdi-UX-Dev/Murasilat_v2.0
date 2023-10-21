@@ -23,7 +23,7 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const { pdf, userProfileView, searchedDoumentsModalActive } = useAppSelector(
+  const { pdf, searchedDoumentsModalActive, documents } = useAppSelector(
     (store) => store.documents
   );
 
@@ -47,9 +47,9 @@ function Dashboard({ params: { locale } }: localeProps) {
         </div>
 
         <div className="pb-10 space-y-8">
-          <StackCards type={"unread"} {...lang} />
-          <StackCards type={"sent"} {...lang} />
-          <StackCards type={"received"} {...lang} />
+          <StackCards type={"unreadDocuments"} {...lang} />
+          <StackCards type={"receivedRecently"} {...lang} />
+          <StackCards type={"sentRecently"} {...lang} />
         </div>
       </div>
     )

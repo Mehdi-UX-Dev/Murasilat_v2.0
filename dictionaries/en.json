@@ -29,7 +29,8 @@
       "title": "Title", 
       "sender" : "Sender",
       "receiver": "Receiver",
-      "show_profile": "Show Profile Info"
+      "show_profile": "Show Profile Info", 
+      "no_document": "No Document Found"
     
       },
 

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export interface UserType {
   id: number;
@@ -26,16 +26,28 @@ export interface DocumentType {
   content: string;
   read: boolean;
   urgency: string;
-  document_type: 'maktoob' | 'istilam' | 'pishnihad';
+  document_type: "maktoob" | "istilam" | "pishnihad";
   qr_code: string;
   responded: boolean;
   attachments: any[];
 }
 interface DocumentStateType {
-  documents: DocumentType[];
+  documents: {
+    unreadDocuments: DocumentType[];
+    sentRecently: DocumentType[];
+    receivedRecently: DocumentType[];
+  };
   loading: boolean;
   error: string | any;
-  pdf: { visible: boolean; body: string };
+  pdf: {
+    visible: boolean;
+    pdfContent: {
+      serial: number;
+      content: string;
+      document_type: string;
+      urgency: "N" | "U" | "C" | "A";
+    };
+  };
   userProfileView: boolean;
   userInfo: UserType | any;
   receivers: UserType[];
@@ -46,11 +58,15 @@ interface DocumentStateType {
 }
 
 const initialState: DocumentStateType = {
-  documents: [],
+  documents: {
+    unreadDocuments: [],
+    sentRecently: [],
+    receivedRecently: [],
+  },
   receivers: [],
   pdf: {
     visible: false,
-    body: '',
+    pdfContent: {},
   },
   loading: false,
   error: null,
@@ -63,18 +79,18 @@ const initialState: DocumentStateType = {
 };
 
 const fetchDocuments = createAsyncThunk(
-  'documents/fetch',
+  "documents/fetch",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -87,18 +103,18 @@ const fetchDocuments = createAsyncThunk(
 );
 
 const fetchReceivers = createAsyncThunk(
-  'documents/receivers',
+  "documents/receivers",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -110,7 +126,7 @@ const fetchReceivers = createAsyncThunk(
 );
 
 const saveToWarida = createAsyncThunk(
-  'documents/Update',
+  "documents/Update",
   async (
     {
       id,
@@ -131,11 +147,11 @@ const saveToWarida = createAsyncThunk(
         { content_update, summary, remarks },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -148,21 +164,21 @@ const saveToWarida = createAsyncThunk(
 );
 
 const writeDocument = createAsyncThunk(
-  'documents/create',
+  "documents/create",
   async (
     { documentData, callback }: { documentData: any; callback: any },
     { rejectWithValue }
   ) => {
     const formData = new FormData();
     Object.entries(documentData).map(([key, value]) => {
-      if (key === 'attachments') {
+      if (key === "attachments") {
         value.forEach((file) => {
           formData.append(key, file);
         });
       } else
         formData.append(
           key,
-          key === 'date' ? new Date(value).toISOString() : value
+          key === "date" ? new Date(value).toISOString() : value
         );
     });
     try {
@@ -171,11 +187,11 @@ const writeDocument = createAsyncThunk(
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -193,18 +209,18 @@ const writeDocument = createAsyncThunk(
 );
 
 const getUserProfile = createAsyncThunk(
-  'documents/UserProfile',
+  "documents/UserProfile",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/user_info`,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -217,7 +233,7 @@ const getUserProfile = createAsyncThunk(
 );
 
 const searchDocumentsDashboardPage = createAsyncThunk(
-  'searchDocumentsDashboardPage',
+  "searchDocumentsDashboardPage",
   async ({ value }: { value: string }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
@@ -225,11 +241,11 @@ const searchDocumentsDashboardPage = createAsyncThunk(
         { query: value },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
-            accept: 'application/json',
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
           },
         }
       );
@@ -242,16 +258,17 @@ const searchDocumentsDashboardPage = createAsyncThunk(
 );
 
 const documentsSlice = createSlice({
-  name: 'documents',
+  name: "documents",
   initialState,
   reducers: {
     selectReceiver: (state, action) => {
       state.selectedReceiver = action.payload;
     },
-    showPreview: (state) => {
+    showPDF: (state, body) => {
       state.pdf.visible = true;
+      state.pdf.pdfContent = { ...body.payload };
     },
-    hidePreview: (state) => {
+    hidePDF: (state) => {
       state.pdf.visible = false;
     },
     showUserInfo: (state) => {
@@ -330,8 +347,8 @@ const documentsSlice = createSlice({
 export default documentsSlice.reducer;
 export const {
   selectReceiver,
-  showPreview,
-  hidePreview,
+  showPDF,
+  hidePDF,
   showUserInfo,
   hideUserInfo,
   showSearchedDocumentModal,
