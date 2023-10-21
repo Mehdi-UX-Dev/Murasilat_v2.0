@@ -35,7 +35,7 @@ function Dashboard({ params: { locale } }: localeProps) {
 
   return (
     lang && (
-      <div className=" space-y-8">
+      <div className="">
         <ID />
 
         {pdf.visible && <PDF_DASHBOARD locale={locale} />}

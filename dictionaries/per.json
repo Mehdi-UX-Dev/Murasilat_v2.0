@@ -59,7 +59,11 @@
     "webiste": "ویب سایت",
     "doc_number": " شماره مکتوب",
     "doc_date": " تاریخ مکتوب",
-    "warida_num": "نمبر رسیدات"
+    "warida_num": "نمبر رسیدات",
+    "make_changes": "تغییرات اضافه کنید",
+      "write_summary": "خلاصه بنویس",
+      "write_consideration": "ملاحظه بنویس",
+      "save_changes": "ذخیره"
   },
 
   "list_page": {

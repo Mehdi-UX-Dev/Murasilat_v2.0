@@ -18,6 +18,10 @@ export type langProps_PDF = {
   doc_number?: string;
   doc_date?: string;
   warida_num?: string;
+  make_changes?: string;
+  write_summary?: string;
+  write_consideration?: string, 
+  save_changes?: string
 };
 
 // archive main props
@@ -67,10 +71,10 @@ export type langProps_DASHBOARD = {
   preview_document: string;
   document_des: string;
   log_out: string;
-  unread: string, 
-  recently_sent: string,
-  recently_received: string, 
-  no_document: string
+  unread: string;
+  recently_sent: string;
+  recently_received: string;
+  no_document: string;
 };
 
 // 3 types of document that is rendered on layout page
@@ -115,7 +119,7 @@ export type langProps_SideBar = {
   all_warida: string;
   broadcast: string;
   log_out: string;
-  show_profile : string
+  show_profile: string;
 };
 
 export type sideBarSubOptionProps_SIDEBAR = {
@@ -123,8 +127,7 @@ export type sideBarSubOptionProps_SIDEBAR = {
   text?: string;
   Icon: IconType;
   customClassName?: string;
-  hasType? : string
-
+  hasType?: string;
 };
 
 export type sideBarOptionProps_SIDEBAR = {

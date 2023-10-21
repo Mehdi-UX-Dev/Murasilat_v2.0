@@ -56,39 +56,29 @@ function PDFTemplate({
               </div>
             </div>
             <div className="flex justify-end">
-              {path === "/write/writeMaktoob" && (
-                <>
-                  {" "}
-                  <div className="flex gap-8  mr-10">
-                    <div className="flex items-center space-x-3">
-                      {Array.of(
-                        "confidential",
-                        "announcment",
-                        "emergency",
-                        "normal"
-                      ).map((type) => (
-                        <>
-                          <div
-                            key={type}
-                            className="border rouned border-black w-8 h-5  relative"
-                          >
-                            {type == docType && (
-                              <p className="absolute bottom-0 left-2 text-2xl font-bold ">
-                                ✓
-                              </p>
-                            )}
-                          </div>
-                          <Label type={type} />
-                        </>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex space-x-1">
-                    <p>(1)</p>
-                    <p>:{lang?.warida_num}</p>
-                  </div>
-                </>
-              )}
+              <div className="flex gap-8  mr-10">
+                <div className="flex items-center space-x-3">
+                  {Array.of("N", "A", "U", "C").map((type) => (
+                    <>
+                      <div
+                        key={type}
+                        className="border rounded border-black w-8 h-5  relative"
+                      >
+                        {type == docType && (
+                          <p className="absolute bottom-0 left-2 text-2xl font-bold ">
+                            ✓
+                          </p>
+                        )}
+                      </div>
+                      <Label type={type} />
+                    </>
+                  ))}
+                </div>
+              </div>
+              <div className="flex space-x-1">
+                <p>(1)</p>
+                <p>:{lang?.warida_num}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -98,12 +88,12 @@ function PDFTemplate({
       {/* quill content  */}
 
       <section
-      dangerouslySetInnerHTML={{
-        __html: body || "",
-      }}
-      id="body"
-      className="row-span-3 pr-4 pt-2 quill-container text-right z-50"
-    ></section>
+        dangerouslySetInnerHTML={{
+          __html: body || "",
+        }}
+        id="body"
+        className="row-span-3 pr-4 pt-2 quill-container text-right z-50"
+      ></section>
       {/* ( <MaktoobFormat body={body} />) */}
       {path === "/write/writeIstilam" && <IstilamFormat body={body} />}
       {/*  */}

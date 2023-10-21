@@ -28,6 +28,7 @@
     "recently_received": "په دې وروستیو کې ترلاسه شوی",
     "show_profile": "د کارونکي معلومات",
     "no_document": "هیڅ سند شتون نلري"
+    
 
   },
 
@@ -70,7 +71,13 @@
     "webiste": "Webiste",
     "doc_number": " د سند شمیره",
     "doc_date": " د مکتوب نیټه",
-    "warida_num": "رسیدات شمیره"
+    "warida_num": "رسیدات شمیره",
+    "save_changes":"خوندي کړئ",
+    "make_changes": "بدلونونه ولیکئ",
+    "write_summary": "لنډیز ولیکئ",
+    "write_consideration": "غور لیکل"
+
+
   },
 
   "PAGE3": "PROFILE",

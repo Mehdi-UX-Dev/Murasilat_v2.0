@@ -73,9 +73,14 @@
       "address": "Address", 
       "phone": "Phone", 
       "webiste":"Webiste",
-      "doc_number": " شماره مکتوب", 
-      "doc_date": " تاریخ مکتوب", 
-      "warida_num": "نمبر رسیدات"
+      "doc_number": " Document Number", 
+      "doc_date": "Document Date", 
+      "warida_num": "Warida Number",
+      "make_changes": "Make Changes",
+      "write_summary": "write the summary",
+      "write_consideration": "Write Consideration",
+      "save_changes":"Save Changes"
+     
   }, 
   
  

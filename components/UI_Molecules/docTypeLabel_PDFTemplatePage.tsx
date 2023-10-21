@@ -1,24 +1,19 @@
 import React from "react";
 
-function Label({
-  type,
-}: {
-  type: string
-}) {
+function Label({ type }: { type: string }) {
   let label = "";
   switch (type) {
-    case "normal":
+    case "N":
       label = "عادی";
       break;
-    case "emergency":
+    case "U":
       label = "اضطراری";
       break;
-    case "announcment":
+    case "A":
       label = "اعلامیه";
       break;
-    case "confidential":
+    case "C":
       label = "محرمانه";
-  
   }
   return <label htmlFor={type}>{label}</label>;
 }
