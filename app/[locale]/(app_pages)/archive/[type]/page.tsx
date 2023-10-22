@@ -19,6 +19,8 @@ function Page({
 }: localeProps & { params: { type: string } }) {
   const [lang, setLang] = useState<langProps_LIST>();
 
+  
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

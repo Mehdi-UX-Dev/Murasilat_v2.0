@@ -1,11 +1,11 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-import { i18n } from './i18n-config';
-import { baseUrlByLocale } from './i18n-server';
+import { i18n } from "./i18n-config";
+import { baseUrlByLocale } from "./i18n-server";
 
 function geRequestHost(request: NextRequest) {
-  return request.headers.get('x-forwarded-host') || request.headers.get('host');
+  return request.headers.get("x-forwarded-host") || request.headers.get("host");
 }
 
 const localeByHost = Object.fromEntries(
@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   const newUrl = new URL(request.url);
   console.log(request.url);
   if (
-    ['/browserconfig.xml', '/manifest.json', '/robots.txt'].includes(
+    ["/browserconfig.xml", "/manifest.json", "/robots.txt"].includes(
       request.nextUrl.pathname
     )
   ) {
@@ -45,7 +45,7 @@ export function middleware(request: NextRequest) {
   }
 
   const locale =
-    localeByHost[geRequestHost(request) ?? ''] ?? i18n.defaultLocale;
+    localeByHost[geRequestHost(request) ?? ""] ?? i18n.defaultLocale;
 
   // @todo Remove when catch-all ‘not found’ pages are implemented
   const existingPathnamePatterns = [
@@ -53,6 +53,10 @@ export function middleware(request: NextRequest) {
     /^\/dashboard$/,
     /^\/archive\/warida$/,
     /^\/archive\/sadira$/,
+
+    /^\/archive\/warida\/\d+$/,
+    /^\/archive\/documents\/\d+$/,
+    /^\/archive\/sadira\/\d+$/,
     /^\/archive\/recents$/,
     /^\/write\/writeMaktoob$/,
     /^\/write\/writePishnihad$/,
@@ -82,5 +86,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|favicon/|images/).*)'],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|favicon/|images/).*)"],
 };

@@ -40,13 +40,10 @@ interface DocumentStateType {
   loading: boolean;
   error: string | any;
   pdf: {
-    visible: boolean;
-    pdfContent: {
-      serial: number;
-      content: string;
-      document_type: string;
-      urgency: "N" | "U" | "C" | "A";
-    };
+    serial: number;
+    content: string;
+    document_type: string;
+    urgency: "N" | "U" | "C" | "A";
   };
   userProfileView: boolean;
   userInfo: UserType | any;
@@ -64,10 +61,7 @@ const initialState: DocumentStateType = {
     receivedRecently: [],
   },
   receivers: [],
-  pdf: {
-    visible: false,
-    pdfContent: {},
-  },
+  pdf: {},
   loading: false,
   error: null,
   selectedReceiver: null,
@@ -257,6 +251,57 @@ const searchDocumentsDashboardPage = createAsyncThunk(
   }
 );
 
+const fetchDocumentsBySerial = createAsyncThunk(
+  "fetchDocumentsBySerial",
+  async ({ type, serial }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/${serial}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+const saveToBookMark = createAsyncThunk(
+  "saveToBookmark",
+  async ({ documentType, documentId }, { rejectWithValue }) => {
+    console.log(documentId);
+    
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/bookmarks/`,
+        { documentId: documentId, documentType: documentType },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
 const documentsSlice = createSlice({
   name: "documents",
   initialState,
@@ -264,13 +309,7 @@ const documentsSlice = createSlice({
     selectReceiver: (state, action) => {
       state.selectedReceiver = action.payload;
     },
-    showPDF: (state, body) => {
-      state.pdf.visible = true;
-      state.pdf.pdfContent = { ...body.payload };
-    },
-    hidePDF: (state) => {
-      state.pdf.visible = false;
-    },
+
     showUserInfo: (state) => {
       state.userProfileView = true;
     },
@@ -340,15 +379,18 @@ const documentsSlice = createSlice({
         state.searchedDocumentLoading = false;
 
         state.error = action.payload as null;
-      });
+      })
+      .addCase(fetchDocumentsBySerial.pending, (state) => {})
+      .addCase(fetchDocumentsBySerial.fulfilled, (state, action) => {
+        state.pdf = action.payload;
+      })
+      .addCase(fetchDocumentsBySerial.rejected, (state, action) => {});
   },
 });
 
 export default documentsSlice.reducer;
 export const {
   selectReceiver,
-  showPDF,
-  hidePDF,
   showUserInfo,
   hideUserInfo,
   showSearchedDocumentModal,
@@ -356,10 +398,12 @@ export const {
 } = documentsSlice.actions;
 
 export {
+  fetchDocumentsBySerial,
   fetchDocuments,
   writeDocument,
   fetchReceivers,
   saveToWarida,
   getUserProfile,
   searchDocumentsDashboardPage,
+  saveToBookMark,
 };

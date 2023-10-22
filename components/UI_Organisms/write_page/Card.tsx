@@ -3,10 +3,12 @@ import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
-import { showPDF, showPreview } from "@/context/features/documentSlice";
-import { useAppDispatch } from "@/context/hooks";
 import { BsArrowDownCircle } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/context/hooks";
+import { saveToBookMark } from "@/context/features/documentSlice";
 function Card(props: any) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   return (
@@ -44,12 +46,25 @@ function Card(props: any) {
       </div>
 
       <div className="flex items-center ml-auto space-x-4">
-        <MdBookmarkBorder size={48} />
+        <MdBookmarkBorder
+          className=""
+          size={48}
+          onClick={() =>
+            dispatch(
+              saveToBookMark({
+                documentType: props.document_type,
+                documentId: props.serial,
+              })
+            )
+          }
+        />
         <Button
           intent="secondary"
           label="بخوان"
           size="medium"
-          handleClick={() => dispatch(showPDF({...props}))}
+          handleClick={() => {
+            router.push(`archive/documents/${props.serial}`);
+          }}
           width={"full"}
         />
       </div>

@@ -1,25 +1,37 @@
 "use client";
+
+import { fetchDocumentsBySerial } from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import React, { useEffect } from "react";
+import { GetQamariDate, GetShamsiDate } from "../../../../../../date-converter";
 import Image from "next/image";
-import { logos } from "./imageData";
-
-import "react-quill/dist/quill.snow.css";
+import { logos } from "../../../pdf/imageData";
 import { Button } from "@/components/UI_Molecules/Button";
-import { useAppSelector } from "@/context/hooks";
-import { GetQamariDate, GetShamsiDate } from "@/date-converter";
+import html2pdf from "html2pdf.js";
 
-function PDF() {
-  const { user } = useAppSelector((store) => store.user);
-  const {
-    pdf: {
-      pdfContent: { ...data },
-    },
-  } = useAppSelector((store) => store.documents);
+function DocumentByID({ params: { type, serial } }) {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchDocumentsBySerial({ type, serial }));
+  }, []);
 
-  
+  const { pdf } = useAppSelector((store) => store.documents);
+
+  const download = () => {
+    const PDF_Container = document.getElementById("toBePDFContainer");
+    html2pdf(PDF_Container);
+  };
+
+  let prop = {};
+  if (type === "documents") prop = pdf;
+  else prop = pdf?.document;
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8">
-      <div className="bg-slate-50 rounded shadow flex flex-col p-8">
+      <div
+        id="toBePDFContainer"
+        className="bg-slate-50 rounded shadow flex flex-col p-8"
+      >
         {/* Header */}
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-start">
@@ -33,8 +45,8 @@ function PDF() {
             <div className="flex flex-col text-lg items-center ">
               <span>د کابل پوهنتون ریاست</span>
               <span>Kabul University</span>
-              <span>{user?.authority}</span>
-              <span>{user?.title}</span>
+              <span>{prop?.authority?.title}</span>
+              <span>{prop?.sender?.title}</span>
             </div>
             <Image
               src={logos.ministry}
@@ -47,7 +59,7 @@ function PDF() {
           <div className="flex text-lg flex-col items-end">
             <p>
               شماره:
-              <span className="opacity-50 text-base "> {data.serial}</span>
+              <span className="opacity-50 text-base "> {prop?.serial}</span>
             </p>
             <div className="flex justify-between w-full">
               <p>متحدالمال</p>
@@ -61,7 +73,15 @@ function PDF() {
         <div className="w-full h-[2px] bg-slate-900" />
         {/* Body */}
         <div className="flex flex-col w-full py-8 h-screen">
-          <h1>The h1 tag</h1>
+          <h1 className="font-bold font-IranSans text-lgl text-right mb-4">
+            {prop?.title}
+          </h1>
+          <div
+            className="text-right"
+            dangerouslySetInnerHTML={{
+              __html: prop?.content || "",
+            }}
+          ></div>
         </div>
         <div className="w-full h-[2px] bg-slate-900" />
         {/* Footer */}
@@ -77,26 +97,18 @@ function PDF() {
           <div className="flex flex-col" dir="rtl">
             <p>آدرس: کارته چهار, کابل - افغانستان</p>
             <p>شماره تماس: 0202222222</p>
-            <p>ایمیل: {user?.email}</p>
+            <p>ایمیل: {prop?.sender?.email}</p>
           </div>
         </div>
       </div>
-      <div className="p-8 w-full space-x-4 flex justify-end">
-        <Button
-          intent={"secondary"}
-          size={"medium"}
-          width={"half"}
-          label="لغو"
-        />
-        <Button
-          intent={"primary"}
-          size={"medium"}
-          width={"half"}
-          label="ارسال"
-        />
+      <div className="p-8 w-full space-x-4 flex justify-end"></div>
+
+      <div>
+        <Button label="print" />
+        <Button label="Download" handleClick={() => download()} />
       </div>
     </div>
   );
 }
 
-export default PDF;
+export default DocumentByID;

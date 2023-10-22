@@ -1,16 +1,18 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/UI_Molecules/Button';
-import { clearSearch } from '@/context/features/archiveSlice';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
-import { GetShamsiDate } from '@/date-converter';
-import { langProps_ARCHIVE, langProps_PDF } from '@/universalTypes';
-import React, { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
-import Card from '../write_page/Card';
-import { TfiArrowCircleLeft, TfiArrowCircleRight } from 'react-icons/tfi';
-import { getDictionary } from '@/i18n-server';
-import PDFTemplate from '@/components/pdf/pdfTemplate';
+import { Button } from "@/components/UI_Molecules/Button";
+import { clearSearch } from "@/context/features/archiveSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { GetShamsiDate } from "@/date-converter";
+import { langProps_ARCHIVE, langProps_PDF } from "@/universalTypes";
+import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import Card from "../write_page/Card";
+import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
+import { getDictionary } from "@/i18n-server";
+import PDFTemplate from "@/components/pdf/pdfTemplate";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function ListTable({
   showMethod,
@@ -26,8 +28,8 @@ function ListTable({
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
   const [pdfData, setPdfData] = useState({
     visiblility: false,
-    body: '',
-    urgency: '',
+    body: "",
+    urgency: "",
   });
 
   const { documents, searchedResults, isInSearch } = useAppSelector(
@@ -53,6 +55,8 @@ function ListTable({
     })();
   }, [locale]);
 
+  const router = useRouter();
+
   return data?.length ? (
     <div>
       <div>
@@ -76,7 +80,7 @@ function ListTable({
               <tr className=" bg-light font-IranSans ">
                 <th>{lang.date}</th>
                 <th>{lang.title}</th>
-                <th>{type === 'sadira' ? lang.sender : lang.search}</th>
+                <th>{type === "sadira" ? lang.sender : lang.search}</th>
                 <th>{lang.content}</th>
                 <th>{lang.number}</th>
               </tr>
@@ -86,18 +90,12 @@ function ListTable({
                 <tr
                   key={item.document.serial}
                   className="border-b border-primary-500 hover:bg-primary-400"
-                  onClick={() => {
-                    setPdfData({
-                      visiblility: true,
-                      body: item.document.content,
-                      urgency: item.document.urgency,
-                    });
-                  }}
+                  onClick={() => router.push(`${type}/${item.document.serial}`)}
                 >
                   <td>{GetShamsiDate(item?.document?.date)}</td>
                   <td>{item?.document?.title}</td>
                   <td>
-                    {type === 'sadira'
+                    {type === "sadira"
                       ? item?.document?.receiver?.fullname
                       : item?.document?.sender?.fullname}
                   </td>
@@ -133,13 +131,13 @@ function ListTable({
               className="hover:bg-black bg-white rounded-full hover:border hover:border-black hover:text-white"
             />
           }
-          containerClassName={' flex justify-center gap-8 mt-8'}
+          containerClassName={" flex justify-center gap-8 mt-8"}
           pageLinkClassName={
-            ' px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  '
+            " px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  "
           }
-          previousLinkClassName={'font-bold'}
-          nextLinkClassName={'font-bold'}
-          activeLinkClassName={'border-b-4 border-primary-900 '}
+          previousLinkClassName={"font-bold"}
+          nextLinkClassName={"font-bold"}
+          activeLinkClassName={"border-b-4 border-primary-900 "}
         />
       </div>
     </div>
@@ -148,7 +146,7 @@ function ListTable({
       <div>No Documents</div>
       {isInSearch && (
         <Button
-          intent={'primary'}
+          intent={"primary"}
           handleClick={() => dispatch(clearSearch())}
           label="Clear Search"
         />

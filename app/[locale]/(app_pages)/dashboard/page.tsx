@@ -35,12 +35,9 @@ function Dashboard({ params: { locale } }: localeProps) {
 
   return (
     lang && (
-      <div className="">
+      <div>
         <ID />
 
-        {pdf.visible && <PDF_DASHBOARD locale={locale} />}
-
-        {/* type is not specified properly in here // may be type is not needed in the first place */}
         <div className=" relative mt-8 mb-16 max-w-3xl mx-auto">
           <SearchBar type="" locale={locale} />
           {searchedDoumentsModalActive && <SearchedResults {...lang} />}
