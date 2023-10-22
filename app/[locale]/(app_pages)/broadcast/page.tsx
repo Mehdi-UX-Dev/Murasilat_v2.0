@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { logos } from './imageData';
+import { logos } from '../pdf/imageData';
 import ReactQuill from 'react-quill';
 import { useEffect, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';

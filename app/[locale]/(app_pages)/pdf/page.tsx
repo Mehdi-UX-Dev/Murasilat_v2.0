@@ -1,18 +1,45 @@
 "use client";
-
-import { Button } from "@/components/UI_Molecules/Button";
-import React from "react";
-import KabulUni from "../../../../public/images/KabulUni.png";
 import Image from "next/image";
-import MOH from "../../../../public/images/moh.jpg";
-
-import { GetQamariDate, GetShamsiDate } from "../../../../date-converter";
+import { logos } from "./imageData";
+import ReactQuill from "react-quill";
+import { useEffect, useRef, useState } from "react";
+import "react-quill/dist/quill.snow.css";
+import { Button } from "@/components/UI_Molecules/Button";
 import { useAppSelector } from "@/context/hooks";
+import { GetQamariDate, GetShamsiDate } from "@/date-converter";
 
 function PDF() {
-  const { loading, user } = useAppSelector((store) => store.user);
-  // const {pdf} = useAppSelector(store => store.documents)
-  // console.log(pdf.pdfContent);
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4] }],
+      [{ size: ["small", false, "large", "huge"] }],
+      ["bold", "italic", "underline", "strike"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+
+      [
+        { align: "" },
+        { align: "center" },
+        { align: "right" },
+        { align: "justify" },
+      ],
+      [{ direction: "rtl" }, { direction: "ltr" }],
+    ],
+  };
+  const quillRef = useRef<ReactQuill>(null);
+  const [value, setValue] = useState("");
+  const { user } = useAppSelector((store) => store.user);
+  const now = new Date().getTime();
+  useEffect(() => {
+    if (!quillRef.current) return;
+    quillRef.current.editor?.format("align", "right");
+    quillRef.current.editor?.format("direction", "rtl");
+    quillRef.current.editor?.format("size", "large");
+  }, []);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8">
@@ -21,7 +48,7 @@ function PDF() {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-start">
             <Image
-              src={KabulUni}
+              src={logos.university}
               width={100}
               height={100}
               alt="university logo"
@@ -34,7 +61,7 @@ function PDF() {
               <span>{user?.title}</span>
             </div>
             <Image
-              src={MOH}
+              src={logos.ministry}
               width={100}
               height={100}
               alt="ministry logo"
@@ -62,8 +89,25 @@ function PDF() {
         {/* Body */}
         <div className="flex flex-col w-full py-8 h-screen">
           {/* Meta */}
-
+          <div className="flex flex-col items-end w-full">
+            <input
+              type="text"
+              className="py-2 px-4 outline-1 w-full outline-slate-50 rounded text-xl"
+              dir="rtl"
+              placeholder="عنوان را بنویسید"
+            />
+          </div>
           {/*Editor */}
+          <ReactQuill
+            ref={quillRef}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+            className="h-[85%]"
+            modules={modules}
+            theme="snow"
+            value={value}
+          />
         </div>
         <div className="w-full h-[2px] bg-slate-900" />
         {/* Footer */}
