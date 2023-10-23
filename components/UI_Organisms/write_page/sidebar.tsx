@@ -1,7 +1,7 @@
 import React from "react";
 import Morasilat from "../../../public/images/Morasilat.png";
 import Image from "next/image";
-import { MdDashboard, MdFolder, MdOutgoingMail } from "react-icons/md";
+import { MdBookmarks, MdDashboard, MdFolder, MdOutgoingMail } from "react-icons/md";
 import SideSubOption from "../../UI_Molecules/sideBarSubOption";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsBroadcast, BsEnvelopePlusFill } from "react-icons/bs";
@@ -24,8 +24,6 @@ function SideBar({ ...lang }: langProps_SideBar) {
     dispatch(logout());
     router.push("/");
   };
-
-
 
   const dashboardPath = path === "/dashboard";
   const archivePath = /^\/archive\//.test(path);
@@ -87,12 +85,6 @@ function SideBar({ ...lang }: langProps_SideBar) {
           />
 
           <SideSubOption
-            url={"/archive/recents"}
-            text={lang?.recents}
-            Icon={FaHistory}
-            customClassName="pl-6"
-          />
-          <SideSubOption
             url={"/archive/sadira"}
             text={lang?.all_sadira}
             Icon={MdOutgoingMail}
@@ -104,6 +96,14 @@ function SideBar({ ...lang }: langProps_SideBar) {
             text={lang?.all_warida}
             Icon={RiMailDownloadFill}
             hasType="warida"
+          />
+
+          <SideSubOption
+            url={"/archive/bookmarks"}
+            text={lang?.bookmarks}
+            Icon={MdBookmarks}
+            customClassName="pl-6"
+            hasType="bookmark"
           />
         </div>
 
@@ -131,7 +131,12 @@ function SideBar({ ...lang }: langProps_SideBar) {
         </div>
       )}
 
-      {archivePath && <SideBarProfile buttonLabel={lang?.log_out} showProfile={lang.show_profile} />}
+      {archivePath && (
+        <SideBarProfile
+          buttonLabel={lang?.log_out}
+          showProfile={lang.show_profile}
+        />
+      )}
     </aside>
   );
 }

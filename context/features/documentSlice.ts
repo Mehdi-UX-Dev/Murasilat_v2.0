@@ -52,6 +52,11 @@ interface DocumentStateType {
   searchedDocuments: object;
   searchedDoumentsModalActive: boolean;
   searchedDocumentLoading: boolean;
+  bookmark: {
+    activeModal: boolean;
+    data: object | null;
+    error: string;
+  };
 }
 
 const initialState: DocumentStateType = {
@@ -70,6 +75,11 @@ const initialState: DocumentStateType = {
   searchedDocuments: {},
   searchedDoumentsModalActive: false,
   searchedDocumentLoading: false,
+  bookmark: {
+    activeModal: false,
+    data: null,
+    error: "",
+  },
 };
 
 const fetchDocuments = createAsyncThunk(
@@ -253,7 +263,10 @@ const searchDocumentsDashboardPage = createAsyncThunk(
 
 const fetchDocumentsBySerial = createAsyncThunk(
   "fetchDocumentsBySerial",
-  async ({ type, serial }, { rejectWithValue }) => {
+  async (
+    { type, serial }: { type: string; serial: number },
+    { rejectWithValue }
+  ) => {
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/${serial}`,
@@ -277,9 +290,10 @@ const fetchDocumentsBySerial = createAsyncThunk(
 
 const saveToBookMark = createAsyncThunk(
   "saveToBookmark",
-  async ({ documentType, documentId }, { rejectWithValue }) => {
-    console.log(documentId);
-    
+  async (
+    { documentType, documentId }: { documentType: string; documentId: number },
+    { rejectWithValue }
+  ) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/bookmarks/`,
@@ -294,10 +308,9 @@ const saveToBookMark = createAsyncThunk(
           },
         }
       );
-      console.log(res.data);
       return res.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -321,6 +334,15 @@ const documentsSlice = createSlice({
     },
     hideSearchedDocumentModal: (state) => {
       state.searchedDoumentsModalActive = false;
+    },
+
+    showBookmarkModal: (state) => {
+      state.bookmark.activeModal = true;
+    },
+
+    hideBookmarkModal: (state) => {
+      state.bookmark.activeModal = false;
+      state.bookmark.error = "";
     },
   },
   extraReducers: (builder) => {
@@ -384,7 +406,14 @@ const documentsSlice = createSlice({
       .addCase(fetchDocumentsBySerial.fulfilled, (state, action) => {
         state.pdf = action.payload;
       })
-      .addCase(fetchDocumentsBySerial.rejected, (state, action) => {});
+      .addCase(fetchDocumentsBySerial.rejected, (state, action) => {})
+
+      .addCase(saveToBookMark.fulfilled, (state, action) => {
+        state.bookmark.data = action.payload;
+      })
+      .addCase(saveToBookMark.rejected, (state, action) => {
+        state.bookmark.error = action.payload as string;
+      });
   },
 });
 
@@ -395,6 +424,8 @@ export const {
   hideUserInfo,
   showSearchedDocumentModal,
   hideSearchedDocumentModal,
+  showBookmarkModal,
+  hideBookmarkModal,
 } = documentsSlice.actions;
 
 export {

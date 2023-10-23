@@ -9,7 +9,11 @@ import { logos } from "../../../pdf/imageData";
 import { Button } from "@/components/UI_Molecules/Button";
 import html2pdf from "html2pdf.js";
 
-function DocumentByID({ params: { type, serial } }) {
+function DocumentByID({
+  params: { type, serial },
+}: {
+  params: { type: string; serial: number };
+}) {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchDocumentsBySerial({ type, serial }));

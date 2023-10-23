@@ -57,7 +57,7 @@ export function middleware(request: NextRequest) {
     /^\/archive\/warida\/\d+$/,
     /^\/archive\/documents\/\d+$/,
     /^\/archive\/sadira\/\d+$/,
-    /^\/archive\/recents$/,
+    /^\/archive\/bookmarks$/,
     /^\/write\/writeMaktoob$/,
     /^\/write\/writePishnihad$/,
     /^\/write\/writeIstilam$/,

@@ -5,8 +5,11 @@ import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
 import { BsArrowDownCircle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/context/hooks";
-import { saveToBookMark } from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import {
+  saveToBookMark,
+  showBookmarkModal,
+} from "@/context/features/documentSlice";
 function Card(props: any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -47,16 +50,17 @@ function Card(props: any) {
 
       <div className="flex items-center ml-auto space-x-4">
         <MdBookmarkBorder
-          className=""
+          className="hover:scale-110"
           size={48}
-          onClick={() =>
-            dispatch(
-              saveToBookMark({
-                documentType: props.document_type,
-                documentId: props.serial,
-              })
-            )
-          }
+          onClick={() => {
+            dispatch(showBookmarkModal()),
+              dispatch(
+                saveToBookMark({
+                  documentType: props.document_type,
+                  documentId: props.serial,
+                })
+              );
+          }}
         />
         <Button
           intent="secondary"
