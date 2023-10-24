@@ -8,6 +8,7 @@ import { logout } from "@/context/features/loginSlice";
 import { useRouter } from "next/navigation";
 
 function SideBarProfile({
+  locale,
   buttonLabel,
   showProfile,
 }: {
@@ -26,7 +27,7 @@ function SideBarProfile({
 
   const handleLogOut = () => {
     dispatch(logout());
-    router.push("/");
+    router.push(`/${locale}`);
   };
 
   const showModal = () => {

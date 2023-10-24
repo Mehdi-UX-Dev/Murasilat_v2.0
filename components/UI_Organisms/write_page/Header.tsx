@@ -5,27 +5,27 @@ import ID from "./ID";
 function Header() {
   const path = usePathname();
 
+
   let title = "";
   switch (path) {
-    case "/write/writeMaktoob":
+    case "/per/write/writeMaktoob":
       title = "ایجاد مکتوب";
       break;
-    case "/write/writeIstilam":
+    case "/per/write/writeIstilam":
       title = "ایجاد استعلام";
       break;
-    case "/write/writePishnihad":
+    case "/per/write/writePishnihad":
       title = "ایجاد پيشنهاد";
       break;
-    case "/archive/sadira":
+    case "/per/archive/sadira":
       title = "لیست تمام صادره";
       break;
-    case "/archive/warida":
+    case "/per/archive/warida":
       title = "لیست تمام وارده";
       break;
   }
   return (
     <div className="flex justify-end items-center mb-8">
-      {/* <ID /> */}
       <p className="mr-8 font-IranSans text-3xl font-bold">{title}</p>
     </div>
   );

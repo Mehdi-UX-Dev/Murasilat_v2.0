@@ -35,8 +35,6 @@ function Dashboard({ params: { locale } }: localeProps) {
     dispatch(fetchDocuments());
   }, [dispatch]);
 
-  console.log(bookmark.data);
-
   useEffect(() => {
     bookmark.error &&
       setTimeout(() => {

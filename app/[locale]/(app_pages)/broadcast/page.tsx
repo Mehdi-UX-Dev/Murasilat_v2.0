@@ -1,36 +1,36 @@
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 import { logos } from "../pdf/imageData";
-import ReactQuill from 'react-quill';
-import { useEffect, useRef, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
-import { Button } from '@/components/UI_Molecules/Button';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
-import { GetQamariDate, GetShamsiDate } from '@/date-converter';
-import { useRouter } from 'next/navigation';
-import { createBroadcast } from '@/context/features/broadcastSlice';
-import { FaSpinner } from 'react-icons/fa';
+import ReactQuill from "react-quill";
+import { useEffect, useRef, useState } from "react";
+import "react-quill/dist/quill.snow.css";
+import { Button } from "@/components/UI_Molecules/Button";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { GetQamariDate, GetShamsiDate } from "@/date-converter";
+import { useRouter } from "next/navigation";
+import { createBroadcast } from "@/context/features/broadcastSlice";
+import { FaSpinner } from "react-icons/fa";
 
-function Preview() {
+function Preview({ params: { locale } }) {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4] }],
-      [{ size: ['small', false, 'large', 'huge'] }],
-      ['bold', 'italic', 'underline', 'strike'],
+      [{ size: ["small", false, "large", "huge"] }],
+      ["bold", "italic", "underline", "strike"],
       [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
       ],
 
       [
-        { align: '' },
-        { align: 'center' },
-        { align: 'right' },
-        { align: 'justify' },
+        { align: "" },
+        { align: "center" },
+        { align: "right" },
+        { align: "justify" },
       ],
-      [{ direction: 'rtl' }, { direction: 'ltr' }],
+      [{ direction: "rtl" }, { direction: "ltr" }],
     ],
   };
   const quillRef = useRef<ReactQuill>(null);
@@ -40,10 +40,10 @@ function Preview() {
     summary: string;
     remarks: string;
   }>({
-    title: '',
-    content: '',
-    summary: '',
-    remarks: '',
+    title: "",
+    content: "",
+    summary: "",
+    remarks: "",
   });
   const {
     user: { user },
@@ -54,13 +54,13 @@ function Preview() {
 
   useEffect(() => {
     if (!quillRef.current) return;
-    quillRef.current.editor?.format('align', 'right');
-    quillRef.current.editor?.format('direction', 'rtl');
-    quillRef.current.editor?.format('size', 'large');
+    quillRef.current.editor?.format("align", "right");
+    quillRef.current.editor?.format("direction", "rtl");
+    quillRef.current.editor?.format("size", "large");
   }, []);
 
   const handleCancel = () => {
-    router.push('/dashboard');
+    router.push(`/${locale}/dashboard`);
   };
 
   const handleSubmit = () => {
@@ -69,7 +69,7 @@ function Preview() {
         ...value,
         date: new Date().toISOString(),
         sender: user?.user_id,
-        callback: () => router.replace('/dashboard'),
+        callback: () => router.replace("/dashboard"),
       })
     );
   };
@@ -81,7 +81,7 @@ function Preview() {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-start">
             <Image
-              src={'/images/KabulUni.png'}
+              src={"/images/KabulUni.png"}
               width={100}
               height={100}
               alt="university logo"
@@ -94,7 +94,7 @@ function Preview() {
               <span>{user?.title}</span>
             </div>
             <Image
-              src={'/images/moh.jpg'}
+              src={"/images/moh.jpg"}
               width={100}
               height={100}
               alt="ministry logo"
@@ -105,7 +105,7 @@ function Preview() {
             <p>
               شماره:
               <span className="opacity-50 text-base ">
-                {' '}
+                {" "}
                 به صورت خودکار اظافه میشود
               </span>
             </p>
@@ -190,9 +190,9 @@ function Preview() {
 
       <div className="p-8 w-full space-x-4 flex justify-end">
         <Button
-          intent={'secondary'}
-          size={'medium'}
-          width={'half'}
+          intent={"secondary"}
+          size={"medium"}
+          width={"half"}
           label="بازگشت"
           handleClick={handleCancel}
           loading={loading}
@@ -203,9 +203,9 @@ function Preview() {
           </div>
         ) : (
           <Button
-            intent={'primary'}
-            size={'medium'}
-            width={'half'}
+            intent={"primary"}
+            size={"medium"}
+            width={"half"}
             label="ارسال"
             handleClick={handleSubmit}
           />

@@ -1,16 +1,16 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/UI_Molecules/Button';
-import { InputField } from '@/components/UI_Molecules/Input';
-import { AiFillEye } from 'react-icons/ai';
-import { FaSpinner, FaUserAlt } from 'react-icons/fa';
-import { credentialsProps_LOGIN, errorProps_LOGIN } from '@/universalTypes';
-import { clearError, login } from '@/context/features/loginSlice';
-import { useRouter } from 'next/navigation';
-import { RootState } from '@/context/store';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
+"use client";
+import React, { useEffect, useState } from "react";
+import { Button } from "@/components/UI_Molecules/Button";
+import { InputField } from "@/components/UI_Molecules/Input";
+import { AiFillEye } from "react-icons/ai";
+import { FaSpinner, FaUserAlt } from "react-icons/fa";
+import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
+import { clearError, login } from "@/context/features/loginSlice";
+import { useRouter } from "next/navigation";
+import { RootState } from "@/context/store";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 
-const Login = ({ ...lang }) => {
+const Login = ({ locale, ...lang }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -35,7 +35,7 @@ const Login = ({ ...lang }) => {
         email: credentials.username,
         password: credentials.password,
         callback: () => {
-          router.push('/dashboard');
+          router.push(`/${locale}/dashboard`);
         },
       })
     );
@@ -58,13 +58,13 @@ const Login = ({ ...lang }) => {
       <form onSubmit={handleSubmit}>
         <div className="space-y-4 max-w-[320px] mx-auto mt-12">
           <div className="relative">
-            <FaUserAlt size={16} className={'absolute left-2 bottom-3'} />
+            <FaUserAlt size={16} className={"absolute left-2 bottom-3"} />
             <InputField
               inputType="text"
               label={lang.username}
               fullWidth
               direction="ltr"
-              state={error ? 'ErrorState' : 'Default'}
+              state={error ? "ErrorState" : "Default"}
               name="username"
               handleChange={(value, name) => handleChange(value, name)}
             />
@@ -74,13 +74,13 @@ const Login = ({ ...lang }) => {
             <AiFillEye
               onClick={() => setShowPasswordState(!passwordState)}
               size={16}
-              className={'absolute left-2 bottom-3'}
+              className={"absolute left-2 bottom-3"}
             />
             <InputField
-              inputType={passwordState ? 'text' : 'password'}
+              inputType={passwordState ? "text" : "password"}
               label={lang.password}
               fullWidth
-              state={error ? 'ErrorState' : 'Default'}
+              state={error ? "ErrorState" : "Default"}
               handleChange={(value, name) => handleChange(value, name)}
               name="password"
               direction="ltr"
@@ -103,10 +103,10 @@ const Login = ({ ...lang }) => {
             <Button
               type="submit"
               label={lang.submit}
-              intent={'primary'}
-              size={'medium'}
+              intent={"primary"}
+              size={"medium"}
               loading={loading}
-              width={'full'}
+              width={"full"}
             />
           )}
         </div>

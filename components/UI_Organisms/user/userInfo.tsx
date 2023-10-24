@@ -13,12 +13,14 @@ function UserInfo() {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const handleChange = () => {};
-  const changeLanguage = () => {
-    router.push("http://ps.localhost:3000/dashboard");
-    console.log(router, pathname);
+  const changeLanguage: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    const lang = event.target.value;
+
+    router.push(`/${lang}/dashboard`);
   };
   const { userInfo } = useAppSelector((store) => store.documents);
-  console.log(userInfo);
 
   return (
     <div className=" z-20   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
@@ -51,11 +53,8 @@ function UserInfo() {
               id="language"
               onChange={changeLanguage}
             >
-              <option value="" hidden>
-                {/* the preferred lang will come here from the server */}
-              </option>
-              <option value="persian">دری</option>
-              <option value="pashto">پشتو</option>
+              <option value="per">دری</option>
+              <option value="ps">پشتو</option>
             </select>
           </div>
 

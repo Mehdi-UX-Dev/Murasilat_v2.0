@@ -10,21 +10,14 @@ const Login = React.lazy(
 const AltLogin = React.lazy(
   () => import("@/components/UI_Organisms/login_page/altLogin")
 );
+
+import React, { Suspense, useEffect, useState } from "react";
+import LoginSuspense from "@/components/suspenseOrganisms/login";
 import { getDictionary } from "@/i18n-server";
 import { langProps_LOGIN, localeProps } from "@/universalTypes";
-import React, { Suspense, useEffect, useState } from "react";
 import { useAppSelector } from "@/context/hooks";
-import LoginSuspense from "@/components/suspenseOrganisms/login";
-'use client';
-import Header from '@/components/UI_Organisms/login_page/loginHeader';
-import Login from '@/components/UI_Organisms/login_page/login';
-import { getDictionary } from '@/i18n-server';
-import AltLogin from '@/components/UI_Organisms/login_page/altLogin';
-import { langProps_LOGIN, localeProps } from '@/universalTypes';
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '@/context/hooks';
-import LoadingIndicator from '@/components/suspenseOrganisms/LoadingIndicator';
-import Redirect from '@/components/misc/Redirect';
+import LoadingIndicator from "@/components/suspenseOrganisms/LoadingIndicator";
+import Redirect from "@/components/misc/Redirect";
 
 function Home({ params: { locale } }: localeProps) {
   const [lang, setLang] = useState<langProps_LOGIN>();
@@ -51,19 +44,19 @@ function Home({ params: { locale } }: localeProps) {
             <Redirect to="/dashboard" />
           )
         ) : (
-          <Login {...lang} />
+          <Login locale={locale} {...lang} />
         )
       ) : (
         <LoadingIndicator text="لطفاً صبر کنید" />
       )}
-      <Suspense fallback={<LoginSuspense />}>
+      {/* <Suspense fallback={<LoginSuspense />}>
         {lang && (
           <>
             <Header />
             {user ? <AltLogin {...lang} /> : <Login {...lang} />}
           </>
         )}
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 }

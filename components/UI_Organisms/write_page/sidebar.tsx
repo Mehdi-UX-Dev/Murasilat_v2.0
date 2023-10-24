@@ -1,7 +1,12 @@
 import React from "react";
 import Morasilat from "../../../public/images/Morasilat.png";
 import Image from "next/image";
-import { MdBookmarks, MdDashboard, MdFolder, MdOutgoingMail } from "react-icons/md";
+import {
+  MdBookmarks,
+  MdDashboard,
+  MdFolder,
+  MdOutgoingMail,
+} from "react-icons/md";
 import SideSubOption from "../../UI_Molecules/sideBarSubOption";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsBroadcast, BsEnvelopePlusFill } from "react-icons/bs";
@@ -16,17 +21,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/context/hooks";
 import SideBarProfile from "@/components/UI_Molecules/sideBarProfile";
 
-function SideBar({ ...lang }: langProps_SideBar) {
+function SideBar({ locale, ...lang }: langProps_SideBar) {
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
   const handleLogOut = () => {
     dispatch(logout());
-    router.push("/");
+    router.push(`/${locale}`);
   };
 
-  const dashboardPath = path === "/dashboard";
-  const archivePath = /^\/archive\//.test(path);
+  const dashboardPath = path === "/per/dashboard" || path === "/ps/dashboard";
+  const archivePath = /^\/(per|ps)\/(archive|write)\//.test(path);
 
   return (
     <aside className="w-[240px] border-l grid  h-screen max-h-screen content-between  ">
@@ -41,7 +46,7 @@ function SideBar({ ...lang }: langProps_SideBar) {
 
       <div className="space-y-10">
         <SideOption
-          url={"/dashboard"}
+          url={`/${locale}/dashboard`}
           text={lang?.dashboard}
           Icon={MdDashboard}
           hasDropDown={false}
@@ -58,18 +63,18 @@ function SideBar({ ...lang }: langProps_SideBar) {
           />
 
           <SideSubOption
-            url={"/write/writeMaktoob"}
+            url={`/${locale}/write/writeMaktoob`}
             text={lang?.maktoob}
             Icon={AiOutlinePlus}
           />
           <SideSubOption
-            url={"/write/writeIstilam"}
+            url={`/${locale}/write/writeIstilam`}
             text={lang?.istilam}
             Icon={AiOutlinePlus}
           />
 
           <SideSubOption
-            url={"/write/writePishnihad"}
+            url={`/${locale}/write/writePishnihad`}
             text={lang?.pishnihad}
             Icon={AiOutlinePlus}
           />
@@ -85,21 +90,21 @@ function SideBar({ ...lang }: langProps_SideBar) {
           />
 
           <SideSubOption
-            url={"/archive/sadira"}
+            url={`/${locale}/archive/sadira`}
             text={lang?.all_sadira}
             Icon={MdOutgoingMail}
             hasType="sadira"
           />
 
           <SideSubOption
-            url={"/archive/warida"}
+            url={`/${locale}/archive/warida`}
             text={lang?.all_warida}
             Icon={RiMailDownloadFill}
             hasType="warida"
           />
 
           <SideSubOption
-            url={"/archive/bookmarks"}
+            url={`/${locale}/archive/bookmarks`}
             text={lang?.bookmarks}
             Icon={MdBookmarks}
             customClassName="pl-6"
@@ -110,7 +115,7 @@ function SideBar({ ...lang }: langProps_SideBar) {
         {/* Broadcast  */}
 
         <SideOption
-          url={"/broadcast"}
+          url={"broadcasts"}
           text={lang?.broadcast}
           Icon={BsBroadcast}
           hasDropDown={false}
@@ -133,6 +138,7 @@ function SideBar({ ...lang }: langProps_SideBar) {
 
       {archivePath && (
         <SideBarProfile
+          locale={locale}
           buttonLabel={lang?.log_out}
           showProfile={lang.show_profile}
         />
