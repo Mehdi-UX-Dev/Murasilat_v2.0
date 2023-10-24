@@ -8,7 +8,6 @@ function StackCards({ type, ...lang }) {
   const { documents } = useAppSelector((store) => store.documents);
   const containerRef = useRef<HTMLDivElement>(null!);
 
-
   const scrollLeft = () => {
     containerRef.current.scrollLeft -= 100;
   };
@@ -35,7 +34,6 @@ function StackCards({ type, ...lang }) {
   return (
     <section className="mr-8">
       <div className="flex justify-end items-center space-x-3 mb-2">
-        {/* animation is needed for this part */}
         <div
           className={cx(
             "rounded-full relative  text-center font-semibold text-sm text-white ",
@@ -71,7 +69,7 @@ function StackCards({ type, ...lang }) {
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
           >
             {documents[type].map((doc) => (
-              <Card key={doc.serial} {...doc} />
+              <Card docType={type}  key={doc.serial} {...doc} />
             ))}
             {}
           </div>

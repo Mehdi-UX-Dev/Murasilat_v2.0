@@ -33,6 +33,8 @@ function Home({ params: { locale } }: localeProps) {
   const expiryDate = new Date(user?.exp * 1000);
   const tokenExpired = new Date() > expiryDate;
 
+  
+
   return (
     <div>
       <Header />
@@ -41,7 +43,7 @@ function Home({ params: { locale } }: localeProps) {
           tokenExpired ? (
             <AltLogin {...lang} />
           ) : (
-            <Redirect to="/dashboard" />
+            <Redirect to={`/${locale}/dashboard`} />
           )
         ) : (
           <Login locale={locale} {...lang} />

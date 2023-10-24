@@ -3,37 +3,62 @@ import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
-import { BsArrowDownCircle } from "react-icons/bs";
+import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import {
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
-function Card(props: any) {
+import { cx } from "class-variance-authority";
+function Card({ docType, ...doc }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const personData = {
+    fullname: "",
+    authority: "",
+    picture: "",
+  };
+
+  if (docType === "receivedRecently" || docType === "unreadDocuments") {
+    (personData.fullname = doc.sender.fullname),
+      (personData.authority = doc?.sender?.authority?.title),
+      (personData.picture = doc?.sender?.profile_pic);
+  } else if (docType === "sentRecently") {
+    (personData.fullname = doc.receiver.fullname),
+      (personData.authority = doc?.receiver?.authority?.title),
+      (personData.picture = doc?.receiver?.profile_pic);
+  }
   return (
     <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
-      <BsArrowDownCircle
-        size={20}
-        className="absolute left-1 top-1 rounded-full text-white  bg-green-600  "
-      />
+      {docType === "receivedRecently" && (
+        <BsArrowDownCircle
+          size={20}
+          className="absolute left-1 top-1 rounded-full  text-white bg-green-400"
+        />
+      )}
+
+      {docType === "sentRecently" && (
+        <BsArrowUpCircle
+          size={20}
+          className="absolute left-1 top-1 rounded-full  text-white bg-cyan-400"
+        />
+      )}
 
       <div className="flex justify-between items-center">
         <div className="text-center">
-          <p className="font-bold text-lg">{props?.serial}</p>
-          <p className="">{GetShamsiDate(props?.date)}</p>
+          <p className="font-bold text-lg">{doc?.serial}</p>
+          <p className="">{GetShamsiDate(doc?.date)}</p>
         </div>
 
         <div className="flex space-x-[16px]">
           <div className="text-right">
-            <p className="font-semibold text-xl">{props?.sender?.fullname}</p>
-            <p>{props?.sender?.authority?.title}</p>
+            <p className="font-semibold text-xl">{personData.fullname}</p>
+            <p>{personData.authority}</p>
           </div>
           <Image
-            src={props?.sender?.profile_pic}
+            src={personData.picture}
             alt="ID"
             className=" object-cover rounded-full"
             width={48}
@@ -43,7 +68,7 @@ function Card(props: any) {
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">{props?.title}</h2>
+        <h2 className="font-bold text-[24px]">{doc?.title}</h2>
         {/* //? should there be a summary */}
         <p className="text-medium">خلاصه: کمیسیون اعطا شد</p>
       </div>
@@ -56,8 +81,8 @@ function Card(props: any) {
             dispatch(showBookmarkModal()),
               dispatch(
                 saveToBookMark({
-                  documentType: props.document_type,
-                  documentId: props.serial,
+                  documentType: doc.document_type,
+                  documentId: doc.serial,
                 })
               );
           }}
@@ -67,7 +92,7 @@ function Card(props: any) {
           label="بخوان"
           size="medium"
           handleClick={() => {
-            router.push(`archive/documents/${props.serial}`);
+            router.push(`archive/documents/${doc.serial}`);
           }}
           width={"full"}
         />

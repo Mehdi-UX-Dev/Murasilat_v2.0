@@ -31,7 +31,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar) {
   };
 
   const dashboardPath = path === "/per/dashboard" || path === "/ps/dashboard";
-  const archivePath = /^\/(per|ps)\/(archive|write)\//.test(path);
+  // const archivePath = /^\/(per|ps)\/(archive|write|broadcast)\//.test(path);
 
   return (
     <aside className="w-[240px] border-l grid  h-screen max-h-screen content-between  ">
@@ -123,7 +123,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar) {
       </div>
 
       {/* log out function */}
-      {dashboardPath && (
+      {dashboardPath ? (
         <div className="flex justify-center items-center text-primary-400">
           <BiLogOut size={24} />
           <Button
@@ -134,9 +134,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar) {
             handleClick={handleLogOut}
           />
         </div>
-      )}
-
-      {archivePath && (
+      ) : (
         <SideBarProfile
           locale={locale}
           buttonLabel={lang?.log_out}

@@ -19,12 +19,17 @@ function AltLogin({ ...lang }) {
   const handleLogout = () => {
     dispatch(logout());
   };
+  const language = localStorage.getItem("lang") || "per";
+
+  console.log(language);
+  
+
 
   const expiryDate = new Date(user?.exp * 1000);
   const currentDate = new Date();
 
   if (currentDate < expiryDate) {
-    router.replace('/dashboard');
+    router.replace(`/${language}/dashboard`);
   }
 
   const handleSubmit = (event: any) => {

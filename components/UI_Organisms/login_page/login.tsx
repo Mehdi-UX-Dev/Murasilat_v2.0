@@ -25,6 +25,8 @@ const Login = ({ locale, ...lang }) => {
   });
 
   const [passwordState, setShowPasswordState] = useState(false);
+  const language = localStorage.getItem("lang") || "per";
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
@@ -35,7 +37,9 @@ const Login = ({ locale, ...lang }) => {
         email: credentials.username,
         password: credentials.password,
         callback: () => {
-          router.push(`/${locale}/dashboard`);
+          console.log("login ");
+
+          // router.push(`/${language}/dashboard`);
         },
       })
     );

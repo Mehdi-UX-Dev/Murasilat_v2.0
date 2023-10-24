@@ -34,7 +34,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (path === "/dashboard") {
+    if (path === "/ps/dashboard" || "/per/dashboard") {
       searchValue.length == 0 && dispatch(hideSearchedDocumentModal());
     }
   }, [searchValue.length, dispatch, path]);
@@ -42,7 +42,8 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    path === "/dashboard"
+    // the code is bad in here seperation of code is needed in here
+    path === "/per/dashboard" || path === "/ps/dashboard"
       ? (dispatch(showSearchedDocumentModal()),
         dispatch(searchDocumentsDashboardPage({ value: searchValue })))
       : dispatch(searchArchiveDocuments({ type, value: searchValue }));
@@ -50,7 +51,8 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
 
   const clearSearch = () => {
     setSearchValue("");
-    path === "/dashboard" && dispatch(hideSearchedDocumentModal());
+    path === "/per/dashboard" ||
+      (path == "/ps/dashboard" && dispatch(hideSearchedDocumentModal()));
   };
 
   return (
@@ -86,10 +88,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
               placeholder={lang.placeholder}
               required
             />
-            <AiOutlineSearch
-              size={24}
-              className="absolute right-3 top-3 "
-            />
+            <AiOutlineSearch size={24} className="absolute right-3 top-3 " />
           </div>
         </form>
       </div>
