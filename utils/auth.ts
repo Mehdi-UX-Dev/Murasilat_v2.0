@@ -1,5 +1,4 @@
 'use client';
-import { useAppDispatch } from '@/context/hooks';
 import decode from 'jwt-decode';
 
 const TOKEN_KEY = 'TOKENS';
