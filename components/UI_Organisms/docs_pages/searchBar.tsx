@@ -18,6 +18,9 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
   >(undefined);
 
   const path = usePathname();
+  
+
+  
 
   const { searchedDoumentsModalActive } = useAppSelector(
     (store) => store.documents
@@ -34,7 +37,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (path === "/ps/dashboard" || "/per/dashboard") {
+    if (path === "/ps/dashboard" || "/per") {
       searchValue.length == 0 && dispatch(hideSearchedDocumentModal());
     }
   }, [searchValue.length, dispatch, path]);
@@ -42,10 +45,10 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
+    dispatch(showSearchedDocumentModal());
     // the code is bad in here seperation of code is needed in here
     path === "/per/dashboard" || path === "/ps/dashboard"
-      ? (dispatch(showSearchedDocumentModal()),
-        dispatch(searchDocumentsDashboardPage({ value: searchValue })))
+      ? dispatch(searchDocumentsDashboardPage({ value: searchValue }))
       : dispatch(searchArchiveDocuments({ type, value: searchValue }));
   };
 

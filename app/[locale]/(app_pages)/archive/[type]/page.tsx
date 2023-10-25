@@ -3,7 +3,7 @@
 import ListTable from "@/components/UI_Organisms/docs_pages/list";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 import { fetchArchiveDocuments } from "@/context/features/archiveSlice";
-import { useAppDispatch } from "@/context/hooks";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
 import { langProps_LIST, localeProps } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
@@ -19,9 +19,8 @@ function Page({
 }: localeProps & { params: { type: string } }) {
   const [lang, setLang] = useState<langProps_LIST>();
 
-  
-
   const dispatch = useAppDispatch();
+  const { documents } = useAppSelector((store) => store.archive);
 
   useEffect(() => {
     (async () => {
@@ -39,23 +38,40 @@ function Page({
   return (
     lang && (
       <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
-        <SearchBar type={type} />
+        <SearchBar locale={locale} type={type} />
 
-        <div className="flex justify-end items-center space-x-4 mt-4">
-          {listType.cardType ? (
-            <AiFillIdcard size={36} />
-          ) : (
-            <AiOutlineIdcard size={24} onClick={() => setListType({cardType: true, tableType : false})} />
-          )}
+        {documents.length && (
+          <div className="flex justify-end items-center space-x-4 mt-4">
+            {listType.cardType ? (
+              <AiFillIdcard size={36} />
+            ) : (
+              <AiOutlineIdcard
+                size={24}
+                onClick={() =>
+                  setListType({ cardType: true, tableType: false })
+                }
+              />
+            )}
 
-          {listType.tableType ? (
-            <FaListOl size={listType.tableType ? 28 : 24} />
-          ) : (
-            <AiOutlineOrderedList size={24} onClick={ () => setListType({cardType: false, tableType : true})} />
-          )}
-        </div>
+            {listType.tableType ? (
+              <FaListOl size={listType.tableType ? 28 : 24} />
+            ) : (
+              <AiOutlineOrderedList
+                size={24}
+                onClick={() =>
+                  setListType({ cardType: false, tableType: true })
+                }
+              />
+            )}
+          </div>
+        )}
 
-        <ListTable locale={locale} {...lang} type={type} showMethod={listType} />
+        <ListTable
+          locale={locale}
+          {...lang}
+          type={type}
+          showMethod={listType}
+        />
       </div>
     )
   );

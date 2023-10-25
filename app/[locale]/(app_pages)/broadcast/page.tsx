@@ -133,6 +133,7 @@ function Preview({ params: { locale } }) {
               dir="rtl"
               placeholder="عنوان را بنویسید"
             />
+            
           </div>
           {/*Editor */}
           <ReactQuill

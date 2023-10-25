@@ -41,7 +41,8 @@
       "sender":"Sender",
       "title": "Title", 
       "number": "Number", 
-      "content" : "Subject"
+      "content" : "Subject", 
+      "no_document":"No Document Found"
     },
 
     "searchBar" : {
@@ -60,6 +61,8 @@
       "title" : "Title", 
       "send_to" : "Send To", 
       "summary": "Summary",
+  "write_remarks": "...ملاحظات را بنویسید",
+
       "quill_placeholder": "Write your content"
 
     },

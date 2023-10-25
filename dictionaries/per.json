@@ -45,6 +45,8 @@
     "title": "عنوان",
     "send_to": "ارسال به",
     "summary": "خلاصه",
+  "write_remarks": "ملاحظات را بنویسید",
+
     "quill_placeholder": "مطالب خود را بنویسید"
   },
 
@@ -72,7 +74,8 @@
     "sender": "فرستنده",
     "title": "عنوان",
     "number": "شماره",
-    "content": "موضوع"
+    "content": "موضوع", 
+    "no_document":"هیچ سندی وجود ندارد"
   },
 
     "searchBar" : {

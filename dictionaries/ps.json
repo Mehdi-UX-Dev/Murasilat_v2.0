@@ -38,7 +38,8 @@
     "sender": "مرسل",
     "title": "عنوان",
     "number": "شماره",
-    "content": "موضوع"
+    "content": "موضوع", 
+    "no_document":"هیڅ سند شتون نلري"
   },
 
     "searchBar" : {
@@ -57,6 +58,8 @@
     "title": "عنوان",
     "send_to": " لیږل",
     "summary": "لنډیز",
+  "write_remarks": "...ملاحظات را بنویسید",
+
     "quill_placeholder": "خپل محتوا ولیکئ"
   },
 

@@ -9,9 +9,6 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Card from "../write_page/Card";
 import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
-import { getDictionary } from "@/i18n-server";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function ListTable({
@@ -47,29 +44,15 @@ function ListTable({
   } else {
     data = [...documents];
   }
+  const router = useRouter();
 
   useEffect(() => {
-    (async () => {
-      const dictionary = (await getDictionary(locale)).pdf;
-      setPdfLang(dictionary);
-    })();
-  }, [locale]);
-
-  const router = useRouter();
+    dispatch(clearSearch());
+  }, [dispatch]);
 
   return data?.length ? (
     <div>
       <div>
-        {pdfData.visiblility && (
-          <div className="  fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <PDFTemplate
-              {...pdfLang}
-              body={pdfData.body}
-              docType={pdfData.urgency}
-            />
-          </div>
-        )}
-
         {/* table */}
         {showMethod?.tableType && (
           <table
@@ -143,7 +126,11 @@ function ListTable({
     </div>
   ) : (
     <div>
-      <div>No Documents</div>
+      <div className="">
+        <h1 className="text-xl font-bold font-nazanin text-center mt-8">
+          {lang.no_document}
+        </h1>
+      </div>
       {isInSearch && (
         <Button
           intent={"primary"}

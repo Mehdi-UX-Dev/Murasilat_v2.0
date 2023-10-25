@@ -1,31 +1,30 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/UI_Molecules/Button';
-import TypeGroup from '@/components/UI_Molecules/documentTypeRadioButtons';
-import CustomizedSelectComponent from '@/components/UI_Organisms/write_page/customizedSelectComponent';
-import modules from '../../../../../Quill.module.';
-import React, { useEffect, useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-// import "../../../../../app/quill.rtl.css";
-import { getDictionary } from '@/i18n-server';
-import UserInfo from '@/components/UI_Organisms/user/userInfo';
-import { GetShamsiDate } from '@/date-converter';
-import PDFTemplate from '@/components/pdf/pdfTemplate';
+import { Button } from "@/components/UI_Molecules/Button";
+import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
+import CustomizedSelectComponent from "@/components/UI_Organisms/write_page/customizedSelectComponent";
+import modules from "../../../../../Quill.module.";
+import React, { useEffect, useRef, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { getDictionary } from "@/i18n-server";
+import { GetShamsiDate } from "@/date-converter";
+import PDFTemplate from "@/components/pdf/pdfTemplate";
 import {
   langProps_PDF,
   langProps_WRITE,
   localeProps,
   writtenDocumentValues_PROPS,
-} from '@/universalTypes';
-import axios from 'axios';
+} from "@/universalTypes";
+import axios from "axios";
 import {
   fetchReceivers,
   writeDocument,
-} from '@/context/features/documentSlice';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
-import { useRouter } from 'next/navigation';
-import { FaSpinner } from 'react-icons/fa';
+} from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function FileSelector({ files, setFiles }) {
   const handleFileChange = (event) => {
@@ -35,10 +34,23 @@ function FileSelector({ files, setFiles }) {
 
   return (
     <div>
-      <label htmlFor="selector">File selector</label>
-      <input id="selector" type="file" onChange={handleFileChange} />
+      <div className="relative ">
+        <label
+          htmlFor="selector"
+          className="flex w-fit items-center space-x-2 cursor-pointer border border-black  hover:bg-primary-700  hover:text-white font-bold py-3 px-6  rounded-lg"
+        >
+          <p>انتخاب سند</p>
+          <AiOutlinePlus size={16} />
+        </label>
+        <input
+          id="selector"
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+      </div>
 
-      <ul>
+      <ul className="list-decimal">
         {files.map((file, index) => (
           <li key={index}>{file.name}</li>
         ))}
@@ -60,10 +72,10 @@ function Page({ params: { locale } }: localeProps) {
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization:
-            'Bearer ' + JSON.parse(localStorage.getItem('TOKENS'))?.access,
-          accept: 'application/json',
+            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+          accept: "application/json",
         },
       })
       .then(
@@ -77,13 +89,20 @@ function Page({ params: { locale } }: localeProps) {
   }, []);
 
   const [recieverList, setRecieverList] = useState<object[]>([]);
+  const quillRef = useRef<ReactQuill>(null);
+  useEffect(() => {
+    if (!quillRef.current) return;
+    quillRef.current.editor?.format("align", "right");
+    quillRef.current.editor?.format("direction", "rtl");
+    quillRef.current.editor?.format("size", "large");
+  }, []);
 
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: new Date(),
-    urgency: 'N',
-    content: '',
-    title: '',
-    summary: '',
+    urgency: "N",
+    content: "",
+    title: "",
+    summary: "",
     attachments: [],
   });
 
@@ -93,7 +112,7 @@ function Page({ params: { locale } }: localeProps) {
       writeDocument({
         documentData: { ...docValue, receiver: selectedReceiver.id },
         callback: () => {
-          router.replace('/archive/sadira');
+          router.replace("/archive/sadira");
         },
       })
     );
@@ -140,9 +159,6 @@ function Page({ params: { locale } }: localeProps) {
     setShowPdfModal(true);
   };
 
-  const handleNot: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault();
-  };
 
   return showPdfModal ? (
     <div
@@ -159,7 +175,7 @@ function Page({ params: { locale } }: localeProps) {
       </div>
     </div>
   ) : (
-    <div>
+    <div >
       <form
         onSubmit={handleDocSumbit}
         className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12 ml-4   "
@@ -189,6 +205,7 @@ function Page({ params: { locale } }: localeProps) {
 
           {/* the quill editor is still not good in design, needs work */}
           <ReactQuill
+            ref={quillRef}
             onChange={(value) => {
               setDocValue((item: writtenDocumentValues_PROPS) => ({
                 ...item,
@@ -201,20 +218,31 @@ function Page({ params: { locale } }: localeProps) {
             value={docValue.content}
           />
 
-          <input
-            type="text"
-            className="w-full border-t  border-primary-400 pr-4 py-2"
-            placeholder={lang?.summary}
-            dir="rtl"
-            name="summary"
-            onChange={handleInputChange}
-          />
+          <div className="flex">
+            <input
+              type="text"
+              className="w-full border-t border-r  border-primary-400 pr-4 py-2"
+              placeholder={lang?.write_remarks}
+              dir="rtl"
+              name="remarks"
+              onChange={handleInputChange}
+            />
+
+            <input
+              type="text"
+              className="w-full border-t  border-primary-400 pr-4 py-2"
+              placeholder={lang?.summary}
+              dir="rtl"
+              name="summary"
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
         <FileSelector
           files={docValue.attachments}
           setFiles={handleFileChange}
         />
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end space-x-4 mb-10">
           <Button
             loading={loading}
             intent="secondary"
