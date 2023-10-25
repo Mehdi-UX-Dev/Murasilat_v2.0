@@ -8,9 +8,11 @@ import Image from "next/image";
 import { logos } from "../../../pdf/imageData";
 import { Button } from "@/components/UI_Molecules/Button";
 import html2pdf from "html2pdf.js";
+import SabtWarida from "@/components/UI_Organisms/docs_pages/sabtWarida";
+import { GrDocumentDownload } from "react-icons/gr";
 
 function DocumentByID({
-  params: { type, serial },
+  params: { locale, type, serial },
 }: {
   params: { type: string; serial: number };
 }) {
@@ -27,11 +29,13 @@ function DocumentByID({
   };
 
   let prop = {};
-  if (type === "documents") prop = pdf;
+  if (type === "documents" || "broadcasts") prop = pdf;
   else prop = pdf?.document;
 
+  
+
   return (
-    <div className="w-full min-h-screen h-auto bg-white p-8">
+    <div className="w-full min-h-screen h-auto bg-white p-8 relative">
       <div
         id="toBePDFContainer"
         className="bg-slate-50 rounded shadow flex flex-col p-8"
@@ -107,9 +111,11 @@ function DocumentByID({
       </div>
       <div className="p-8 w-full space-x-4 flex justify-end"></div>
 
-      <div>
-        <Button label="print" />
-        <Button label="Download" handleClick={() => download()} />
+      {!prop?.read && <SabtWarida />}
+
+      <div className="absolute top-64 left-14 ">
+        {/* <Button label="دانلود" width={"half"} handleClick={} /> */}
+        <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
     </div>
   );

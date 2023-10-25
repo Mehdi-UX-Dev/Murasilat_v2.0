@@ -48,7 +48,18 @@ function Dashboard({ params: { locale } }: localeProps) {
         {bookmark.activeModal && (
           <div className="absolute left-[45%]  max-w-sm  mx-auto">
             {bookmark.data ? (
-              <h1>Success</h1>
+              <h1
+                bg-white
+                shadow-lg
+                rounded-full
+                text-green-400
+                font-bold
+                px-4
+                py-4
+                text-center
+              >
+                Success
+              </h1>
             ) : (
               <div className="bg-white shadow-lg  rounded-full text-myAccent-error-300 font-bold px-4 py-4 text-center">
                 {bookmark.error}

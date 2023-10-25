@@ -137,6 +137,7 @@ const saveToWarida = createAsyncThunk(
       content_update,
       summary,
       remarks,
+      callback,
     }: {
       id: number;
       content_update: string;
@@ -160,6 +161,7 @@ const saveToWarida = createAsyncThunk(
         }
       );
 
+      callback?.();
       return [];
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);

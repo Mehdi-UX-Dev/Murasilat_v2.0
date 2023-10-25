@@ -1,14 +1,12 @@
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
-import { hidePDF, saveToWarida } from "@/context/features/documentSlice";
+import { saveToWarida } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
 import { langProps_PDF } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
-import { MdOutlineCancel } from "react-icons/md";
 
-function PDF_DASHBOARD(locale) {
+function SabtWarida(locale) {
   const dispatch = useAppDispatch();
   const { pdf } = useAppSelector((store) => store.documents);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
@@ -26,51 +24,47 @@ function PDF_DASHBOARD(locale) {
     remarks: "",
   });
   return (
-    <div className=" overflow-auto fixed inset-0 z-20   bg-black bg-opacity-30 backdrop-blur-sm flex space-x-4 justify-center items-center  ">
-      <MdOutlineCancel
-        size={48}
-        className="absolute  top-10 right-20 "
-        onClick={() => dispatch(hidePDF())}
-      />
-      <PDFTemplate
-        {...pdfLang}
-        body={pdf.pdfContent.content}
-        docType={pdf.pdfContent.urgency}
-      />
+    <form
+      className="space-y-4 max-w-4xl ml-auto"
+      onSubmit={(e) => {
+        e.preventDefault(),
+          dispatch(
+            saveToWarida(
+              {
+                id: pdf.serial,
+                ...updateDocument,
+              },
+              () => {
+                console.log("internet");
+              }
+            )
+          );
+      }}
+    >
+      <h1 className="text-xl font-bold mb-4 text-right">ثبت وارده</h1>
 
-      <div className="bg-white h-fit  p-10 w-96 mr-4">
-        <h1 className="text-xl font-bold mb-4">ثبت وارده</h1>
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault(),
-              dispatch(
-                saveToWarida({
-                  id: pdf.pdfContent.serial,
-                  ...updateDocument,
-                })
-              );
-          }}
-        >
-          <label className="text-center w-full" htmlFor="content-update">{pdfLang?.make_changes}</label>
+      <div className="flex items-center space-x-6 justify-end ">
+        <div>
+          {" "}
+          <label className="block text-right" htmlFor="content-update">
+            {pdfLang?.make_changes}
+          </label>
           <textarea
+            dir="rtl"
             name="content_update"
             id="content_update"
             className="border border-black rounded"
             cols={30}
-            rows={10}
-            onChange={() =>
-              setUpdateDocument(
-                (prevState) => (
-                  console.log(prevState),
-                  {
-                    ...prevState,
-                    //  prevSa: value,
-                  }
-                )
-              )
-            }
+            rows={5}
+            onChange={(event) => {
+              setUpdateDocument((prevState) => ({
+                ...prevState,
+                content_update: event.target.value,
+              }));
+            }}
           ></textarea>
+        </div>
+        <div className="grow max-w-sm">
           <InputField
             name="summary"
             inputType="text"
@@ -97,11 +91,13 @@ function PDF_DASHBOARD(locale) {
               }))
             }
           />
-          <Button type="submit" width={"full"} label={pdfLang?.save_changes} />
-        </form>
+        </div>
       </div>
-    </div>
+      <div className="flex justify-end">
+        <Button type="submit" width={"half"} label={pdfLang?.save_changes} />
+      </div>
+    </form>
   );
 }
 
-export default PDF_DASHBOARD;
+export default SabtWarida;

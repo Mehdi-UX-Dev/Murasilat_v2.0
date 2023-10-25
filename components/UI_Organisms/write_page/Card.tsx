@@ -3,14 +3,18 @@ import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
 import { GetShamsiDate } from "@/date-converter";
-import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
+import {
+  BsArrowDownCircle,
+  BsArrowUpCircle,
+  BsBookmarkFill,
+  BsJournalBookmarkFill,
+} from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import {
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
-import { cx } from "class-variance-authority";
 function Card({ docType, ...doc }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -74,25 +78,34 @@ function Card({ docType, ...doc }) {
       </div>
 
       <div className="flex items-center ml-auto space-x-4">
-        <MdBookmarkBorder
-          className="hover:scale-110"
-          size={48}
-          onClick={() => {
-            dispatch(showBookmarkModal()),
-              dispatch(
-                saveToBookMark({
-                  documentType: doc.document_type,
-                  documentId: doc.serial,
-                })
-              );
-          }}
-        />
+        {doc?.bookmarked ? (
+          <BsBookmarkFill size={32} className="text-yellow-400"/>
+        ) : (
+          <MdBookmarkBorder
+            className="hover:scale-110"
+            size={48}
+            onClick={() => {
+              dispatch(showBookmarkModal()),
+                dispatch(
+                  saveToBookMark({
+                    documentType: doc.document_type,
+                    documentId: doc.serial,
+                  })
+                );
+            }}
+          />
+        )}
+
         <Button
           intent="secondary"
           label="بخوان"
           size="medium"
           handleClick={() => {
-            router.push(`archive/documents/${doc.serial}`);
+            router.push(
+              `archive/${
+                doc.document_type === "broadcast" ? "broadcasts" : "documents"
+              }/${doc.serial}`
+            );
           }}
           width={"full"}
         />

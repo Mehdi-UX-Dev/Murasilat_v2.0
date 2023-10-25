@@ -12,7 +12,7 @@ const AltLogin = React.lazy(
 );
 
 import React, { Suspense, useEffect, useState } from "react";
-import LoginSuspense from "@/components/suspenseOrganisms/login";
+
 import { getDictionary } from "@/i18n-server";
 import { langProps_LOGIN, localeProps } from "@/universalTypes";
 import { useAppSelector } from "@/context/hooks";
@@ -32,8 +32,6 @@ function Home({ params: { locale } }: localeProps) {
 
   const expiryDate = new Date(user?.exp * 1000);
   const tokenExpired = new Date() > expiryDate;
-
-  
 
   return (
     <div>

@@ -16,11 +16,15 @@ function UserInfo() {
   const changeLanguage: React.ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
+
     const lang = event.target.value;
 
     router.push(`/${lang}/dashboard`);
+    localStorage.setItem("lang", lang);
   };
   const { userInfo } = useAppSelector((store) => store.documents);
+
+  const preferredLang = localStorage.getItem("lang") || "per";
 
   return (
     <div className=" z-20   drop-shadow-lg bg-white max-w-5xl py-20 rounded ">
@@ -53,8 +57,10 @@ function UserInfo() {
               id="language"
               onChange={changeLanguage}
             >
-              <option value="per">دری</option>
-              <option value="ps">پشتو</option>
+              <option selected={preferredLang === "per"} value="per">
+                دری
+              </option>
+              <option selected={preferredLang === "ps"} value="ps">پشتو</option>
             </select>
           </div>
 
