@@ -59,6 +59,8 @@ function Dashboard({ params: { locale } }: localeProps) {
                 text-center
               >
                 Success
+                {/*  */}
+                {/* {bookmark?.response} */}
               </h1>
             ) : (
               <div className="bg-white shadow-lg  rounded-full text-myAccent-error-300 font-bold px-4 py-4 text-center">

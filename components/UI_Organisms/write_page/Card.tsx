@@ -7,11 +7,11 @@ import {
   BsArrowDownCircle,
   BsArrowUpCircle,
   BsBookmarkFill,
-  BsJournalBookmarkFill,
 } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { useAppDispatch } from "@/context/hooks";
 import {
+  deleteFromBookMark,
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
@@ -78,22 +78,33 @@ function Card({ docType, ...doc }) {
       </div>
 
       <div className="flex items-center ml-auto space-x-4">
-        {doc?.bookmarked ? (
-          <BsBookmarkFill size={32} className="text-yellow-400"/>
-        ) : (
-          <MdBookmarkBorder
-            className="hover:scale-110"
-            size={48}
-            onClick={() => {
-              dispatch(showBookmarkModal()),
-                dispatch(
-                  saveToBookMark({
-                    documentType: doc.document_type,
-                    documentId: doc.serial,
-                  })
-                );
-            }}
-          />
+        {doc.read && (
+          <>
+            {doc?.bookmarked ? (
+              <BsBookmarkFill
+                size={32}
+                className="text-yellow-400 hover:scale-110"
+                onClick={() => {
+                  dispatch(showBookmarkModal());
+                  dispatch(deleteFromBookMark(doc.serial));
+                }}
+              />
+            ) : (
+              <MdBookmarkBorder
+                className="hover:scale-110"
+                size={48}
+                onClick={() => {
+                  dispatch(showBookmarkModal()),
+                    dispatch(
+                      saveToBookMark({
+                        documentType: doc.document_type,
+                        documentId: doc.serial,
+                      })
+                    );
+                }}
+              />
+            )}
+          </>
         )}
 
         <Button

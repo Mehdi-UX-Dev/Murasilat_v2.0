@@ -14,7 +14,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
     const { value } = event.target;
     setDocValue((prev: writtenDocumentValues_PROPS) => ({
       ...prev,
-      docType: value as "normal" | "emergency" | "announcment" | "confidential",
+      urgency : value as "N" | "E" | "A" | "C",
     }));
   };
 
@@ -29,7 +29,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           type="radio"
           id="normal"
           name="docType"
-          value="normal"
+          value="N"
           className="checked:bg-black border  checked:border-black"
           onChange={handleRadioClick}
         />
@@ -42,7 +42,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           type="radio"
           id="emergency"
           name="docType"
-          value="emergency"
+          value="E"
           className="checked:bg-black border checked:border-black"
           onChange={handleRadioClick}
         />
@@ -54,7 +54,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           type="radio"
           id="announcment"
           name="docType"
-          value="announcment"
+          value="A"
           className="checked:bg-black border checked:border-black"
           onChange={handleRadioClick}
         />
@@ -67,7 +67,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           type="radio"
           id="confidential"
           name="docType"
-          value="confidential"
+          value="C"
           className="checked:bg-black border checked:border-black"
           onChange={handleRadioClick}
         />

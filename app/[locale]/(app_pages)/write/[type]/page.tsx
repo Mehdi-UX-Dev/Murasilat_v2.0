@@ -22,7 +22,7 @@ import {
   writeDocument,
 } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -68,6 +68,21 @@ function Page({ params: { locale } }: localeProps) {
     (store) => store.documents
   );
 
+  let documentType = "";
+  let path = usePathname();
+
+  switch (path) {
+    case "/per/write/writeMaktoob":
+      documentType = "maktoob";
+      break;
+    case "/per/write/writeIstilam":
+      documentType = "istilam";
+      break;
+    case "/per/write/writePishnihad":
+      documentType = "pishnihad";
+      break;
+  }
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
@@ -108,9 +123,14 @@ function Page({ params: { locale } }: localeProps) {
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+
     dispatch(
       writeDocument({
-        documentData: { ...docValue, receiver: selectedReceiver.id },
+        documentData: {
+          ...docValue,
+          documentType: documentType,
+          receiver: selectedReceiver.id,
+        },
         callback: () => {
           router.replace("/archive/sadira");
         },
@@ -159,7 +179,6 @@ function Page({ params: { locale } }: localeProps) {
     setShowPdfModal(true);
   };
 
-
   return showPdfModal ? (
     <div
       onClick={() => {
@@ -175,7 +194,7 @@ function Page({ params: { locale } }: localeProps) {
       </div>
     </div>
   ) : (
-    <div >
+    <div>
       <form
         onSubmit={handleDocSumbit}
         className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12 ml-4   "

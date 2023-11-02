@@ -57,6 +57,10 @@ interface DocumentStateType {
     data: object | null;
     error: string;
   };
+  istilam: {
+    inquiry: string;
+    reply: string;
+  };
 }
 
 const initialState: DocumentStateType = {
@@ -79,6 +83,10 @@ const initialState: DocumentStateType = {
     activeModal: false,
     data: null,
     error: "",
+  },
+  istilam: {
+    inquiry: "",
+    reply: "",
   },
 };
 
@@ -187,30 +195,34 @@ const writeDocument = createAsyncThunk(
           key === "date" ? new Date(value).toISOString() : value
         );
     });
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
-          },
-        }
-      );
 
-      if (documentData?.files) {
-        // handle file upload
-      }
+    console.log(formData);
+    console.log(documentData);
 
-      callback?.();
-      return [];
-    } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
-    }
+    // try {
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //         Authorization:
+    //           "Bearer " +
+    //           JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+    //         accept: "application/json",
+    //       },
+    //     }
+    //   );
+
+    //   if (documentData?.files) {
+    //     // handle file upload
+    //   }
+
+    //   callback?.();
+    //   return [];
+    // } catch (error: any) {
+    //   return rejectWithValue(error.response.data.detail);
+    // }
   }
 );
 
@@ -317,6 +329,30 @@ const saveToBookMark = createAsyncThunk(
   }
 );
 
+const deleteFromBookMark = createAsyncThunk(
+  "deleteFromBookMark",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/bookmarks/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const documentsSlice = createSlice({
   name: "documents",
   initialState,
@@ -346,6 +382,8 @@ const documentsSlice = createSlice({
       state.bookmark.activeModal = false;
       state.bookmark.error = "";
     },
+
+    showDeletedBookmarkModal: () => {},
   },
   extraReducers: (builder) => {
     builder
@@ -439,4 +477,5 @@ export {
   getUserProfile,
   searchDocumentsDashboardPage,
   saveToBookMark,
+  deleteFromBookMark,
 };
