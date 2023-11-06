@@ -95,7 +95,7 @@ const fetchDocuments = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -156,7 +156,7 @@ const saveToWarida = createAsyncThunk(
   ) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/save_to_warida/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/save_to_warida/`,
         { content_update, summary, remarks },
         {
           headers: {
@@ -196,33 +196,30 @@ const writeDocument = createAsyncThunk(
         );
     });
 
-    console.log(formData);
-    console.log(documentData);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
 
-    // try {
-    //   const response = await axios.post(
-    //     `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         Authorization:
-    //           "Bearer " +
-    //           JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-    //         accept: "application/json",
-    //       },
-    //     }
-    //   );
+      if (documentData?.files) {
+        // handle file upload
+      }
 
-    //   if (documentData?.files) {
-    //     // handle file upload
-    //   }
-
-    //   callback?.();
-    //   return [];
-    // } catch (error: any) {
-    //   return rejectWithValue(error.response.data.detail);
-    // }
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
   }
 );
 
@@ -255,7 +252,7 @@ const searchDocumentsDashboardPage = createAsyncThunk(
   async ({ value }: { value: string }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/search/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/search/`,
         { query: value },
         {
           headers: {

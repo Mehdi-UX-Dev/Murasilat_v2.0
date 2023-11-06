@@ -1,11 +1,34 @@
 import { GetQamariDate, GetShamsiDate } from "@/date-converter";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import html2pdf from "html2pdf.js";
 
 import KabulUni from "../../public/images/KabulUni.png";
 import MOH from "../../public/images/moh.jpg";
 import { useAppSelector } from "@/context/hooks";
+import ReactQuill from "react-quill";
+
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4] }],
+    [{ size: ["small", false, "large", "huge"] }],
+    ["bold", "italic", "underline", "strike"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+
+    [
+      { align: "" },
+      { align: "center" },
+      { align: "right" },
+      { align: "justify" },
+    ],
+    [{ direction: "rtl" }, { direction: "ltr" }],
+  ],
+};
 
 function IstilamFormat() {
   const { user } = useAppSelector((store) => store.user);
@@ -13,6 +36,15 @@ function IstilamFormat() {
   //  const container = document.getElementById("container")
   //   html2pdf(container)
   // },[])
+
+  const quillRef = useRef<ReactQuill>(null);
+  const [content, setContent] = useState("");
+  useEffect(() => {
+    if (!quillRef.current) return;
+    quillRef.current.editor?.format("align", "right");
+    quillRef.current.editor?.format("direction", "rtl");
+    quillRef.current.editor?.format("size", "large");
+  }, []);
 
   return (
     <div
@@ -63,34 +95,32 @@ function IstilamFormat() {
         <div className="border border-black  w-[600px] ">
           <div className="border-b border-black h-10 text-center">احکام</div>
           <div className="px-4 py-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-            sed, consequuntur quos eum nam sit totam quae at ducimus! Autem
-            laboriosam nam ullam ex temporibus quas suscipit velit similique
-            inventore!
+            <ReactQuill
+              ref={quillRef}
+              onChange={(newValue) => {
+                setContent(newValue);
+              }}
+              className="h-[80vh] mb-8"
+              modules={modules}
+              theme="snow"
+              value={content}
+            />
           </div>
         </div>
         {/* body */}
         <div className="border border-black w-[600px]">
           <div className="border-b border-black h-10 text-center">پیشنهاد</div>
           <div className="py-2 px-4">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum
-            voluptas, atque ex dolores voluptate repellendus possimus numquam
-            quis nobis dolore itaque sit excepturi doloremque officiis fugit
-            ipsa quod odio debitis. Nam excepturi dolorem dicta! Quia
-            perspiciatis quidem itaque eum facilis temporibus nam voluptatum
-            eius id accusamus iste, vel, eveniet eaque esse, distinctio
-            possimus! Perferendis eaque, illo numquam at voluptatibus optio.
-            Laborum, consequatur fugiat? Quam aspernatur expedita reprehenderit
-            qui, maiores quos soluta laboriosam consectetur placeat, unde
-            necessitatibus ducimus alias tempore ullam repellat molestias
-            mollitia consequatur ab cumque. Eos aspernatur odio modi? Voluptatum
-            sunt nostrum maxime laudantium, dolores a corporis sit inventore
-            harum laborum facilis deleniti eos illum asperiores! Magni doloribus
-            similique eum quo impedit, nesciunt quisquam, consequuntur officia
-            at explicabo laborum. Exercitationem eligendi, perferendis quos quae
-            unde magnam, sit rerum nam dolorem quaerat porro facilis sapiente
-            autem quas! Temporibus, ut minus! Dolorum ad ullam nobis quod
-            repellendus! Aperiam sequi ex nostrum.
+            <ReactQuill
+              ref={quillRef}
+              onChange={(newValue) => {
+                setContent(newValue);
+              }}
+              className="h-[80vh] mb-8"
+              modules={modules}
+              theme="snow"
+              value={content}
+            />
           </div>
         </div>
         {/*  */}
@@ -103,4 +133,3 @@ function IstilamFormat() {
 }
 
 export default IstilamFormat;
-
