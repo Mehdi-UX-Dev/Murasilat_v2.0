@@ -120,7 +120,6 @@ function Page({ params: { locale } }: localeProps) {
     title: "",
     summary: "",
     attachments: [],
-    
   });
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -152,7 +151,6 @@ function Page({ params: { locale } }: localeProps) {
           })
         );
   };
-
 
   const [lang, setLang] = useState<langProps_WRITE>();
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();

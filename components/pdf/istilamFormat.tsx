@@ -5,8 +5,10 @@ import html2pdf from "html2pdf.js";
 
 import KabulUni from "../../public/images/KabulUni.png";
 import MOH from "../../public/images/moh.jpg";
-import { useAppSelector } from "@/context/hooks";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { fetchDocumentsBySerial } from "@/context/features/documentSlice";
 
 const modules = {
   toolbar: [
@@ -30,12 +32,19 @@ const modules = {
   ],
 };
 
-function IstilamFormat() {
+function IstilamFormat({ type, serial }) {
   const { user } = useAppSelector((store) => store.user);
   // useEffect(() => {
   //  const container = document.getElementById("container")
   //   html2pdf(container)
   // },[])
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchDocumentsBySerial({ type, serial }));
+  }, []);
+
+  const { pdf } = useAppSelector((store) => store.documents);
 
   const quillRef = useRef<ReactQuill>(null);
   const [content, setContent] = useState("");
@@ -94,34 +103,37 @@ function IstilamFormat() {
         {/* header */}
         <div className="border border-black  w-[600px] ">
           <div className="border-b border-black h-10 text-center">احکام</div>
-          <div className="px-4 py-2">
-            <ReactQuill
-              ref={quillRef}
-              onChange={(newValue) => {
-                setContent(newValue);
+          {pdf?.receiver?.id === user?.user_id && !pdf?.responded ? (
+            <div className="px-4 py-2">
+              <ReactQuill
+                ref={quillRef}
+                onChange={(newValue) => {
+                  setContent(newValue);
+                }}
+                className="h-[80vh] mb-8"
+                modules={modules}
+                theme="snow"
+                value={content}
+              />
+            </div>
+          ) : (
+            <div
+              className="py-2 px-4"
+              dangerouslySetInnerHTML={{
+                __html: pdf?.reply ? pdf?.reply : "",
               }}
-              className="h-[80vh] mb-8"
-              modules={modules}
-              theme="snow"
-              value={content}
-            />
-          </div>
+            ></div>
+          )}
         </div>
         {/* body */}
         <div className="border border-black w-[600px]">
           <div className="border-b border-black h-10 text-center">پیشنهاد</div>
-          <div className="py-2 px-4">
-            <ReactQuill
-              ref={quillRef}
-              onChange={(newValue) => {
-                setContent(newValue);
-              }}
-              className="h-[80vh] mb-8"
-              modules={modules}
-              theme="snow"
-              value={content}
-            />
-          </div>
+          <div
+            className="py-2 px-4"
+            dangerouslySetInnerHTML={{
+              __html: pdf?.request || "",
+            }}
+          ></div>
         </div>
         {/*  */}
         <div className="border border-black w-3">

@@ -137,8 +137,45 @@ const fetchReceivers = createAsyncThunk(
   }
 );
 
+const replyDocument = createAsyncThunk(
+  "documents/update",
+  async (
+    {
+      id,
+      reply,
+      callback,
+    }: {
+      id: number;
+      reply: string;
+      callback: () => {};
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/save_to_warida/`,
+        { content_update, summary, remarks },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
 const saveToWarida = createAsyncThunk(
-  "documents/Update",
+  "maktoobs/update",
   async (
     {
       id,
@@ -323,12 +360,24 @@ const searchDocumentsDashboardPage = createAsyncThunk(
 const fetchDocumentsBySerial = createAsyncThunk(
   "fetchDocumentsBySerial",
   async (
-    { type, serial }: { type: string; serial: number },
+    {
+      type,
+      serial,
+    }: {
+      type: "maktoob" | "istilam" | "pishnihad" | "broadcast";
+      serial: number;
+    },
     { rejectWithValue }
   ) => {
     try {
+      const urlMaps = {
+        maktoob: "maktoobs",
+        istilam: "documents",
+        pishnihad: "documents",
+        broadcast: "broadcasts",
+      };
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/${serial}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${urlMaps[type]}/${serial}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -468,12 +517,16 @@ const documentsSlice = createSlice({
 
         state.error = action.payload as null;
       })
-      .addCase(getUserProfile.pending, (state) => {})
+      .addCase(getUserProfile.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.userInfo = action.payload;
+        state.loading = false;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
-        state.error = action.payload as null;
+        state.error = action.payload;
+        state.loading = false;
       })
       .addCase(searchDocumentsDashboardPage.pending, (state) => {
         state.searchedDocumentLoading = true;
@@ -487,11 +540,17 @@ const documentsSlice = createSlice({
 
         state.error = action.payload as null;
       })
-      .addCase(fetchDocumentsBySerial.pending, (state) => {})
+      .addCase(fetchDocumentsBySerial.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchDocumentsBySerial.fulfilled, (state, action) => {
         state.pdf = action.payload;
+        state.loading = false;
       })
-      .addCase(fetchDocumentsBySerial.rejected, (state, action) => {})
+      .addCase(fetchDocumentsBySerial.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
 
       .addCase(saveToBookMark.fulfilled, (state, action) => {
         state.bookmark.data = action.payload;
@@ -500,15 +559,15 @@ const documentsSlice = createSlice({
         state.bookmark.error = action.payload as string;
       })
       .addCase(writeDocument.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(writeDocument.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = null
+        state.loading = false;
+        state.error = null;
       })
       .addCase(writeDocument.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload as null
+        state.loading = false;
+        state.error = action.payload as null;
       });
   },
 });
