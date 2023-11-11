@@ -7,7 +7,7 @@
     "invalid_credentials": "ایمیل یا رمز عبور اشتباه",
     "ERR_NETWORK": "خطای اتصال, لطفأ اتصال خود را بررسی کنید"
   },
-
+  
   "dashboard": {
     "dashboard": "داشبورد",
     "write" : "بنویس",

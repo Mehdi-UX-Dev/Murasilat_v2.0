@@ -20,6 +20,7 @@ import axios from "axios";
 import {
   fetchReceivers,
   writeDocument,
+  writeMaktoob,
 } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { usePathname, useRouter } from "next/navigation";
@@ -119,24 +120,39 @@ function Page({ params: { locale } }: localeProps) {
     title: "",
     summary: "",
     attachments: [],
+    
   });
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    dispatch(
-      writeDocument({
-        documentData: {
-          ...docValue,
-          documentType: documentType,
-          receiver: selectedReceiver.id,
-        },
-        callback: () => {
-          router.replace("/archive/sadira");
-        },
-      })
-    );
+    documentType === "maktoob"
+      ? dispatch(
+          writeMaktoob({
+            maktoobData: {
+              ...docValue,
+              documentType: documentType,
+              receiver: selectedReceiver?.id,
+            },
+            callback: () => {
+              router.replace("/archive/sadira");
+            },
+          })
+        )
+      : dispatch(
+          writeDocument({
+            documentData: {
+              ...docValue,
+              document_type: documentType,
+              receiver: selectedReceiver?.id,
+            },
+            callback: () => {
+              router.replace("/archive/sadira");
+            },
+          })
+        );
   };
+
 
   const [lang, setLang] = useState<langProps_WRITE>();
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();

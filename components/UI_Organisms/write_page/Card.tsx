@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
@@ -15,9 +15,12 @@ import {
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
-function Card({ docType, ...doc }) {
+// docType name to be changed
+function Card({ docType, lang, ...doc }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  
 
   const personData = {
     fullname: "",
@@ -35,6 +38,7 @@ function Card({ docType, ...doc }) {
       (personData.picture = doc?.receiver?.profile_pic);
   }
   return (
+    
     <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
       {docType === "receivedRecently" && (
         <BsArrowDownCircle
@@ -54,6 +58,7 @@ function Card({ docType, ...doc }) {
         <div className="text-center">
           <p className="font-bold text-lg">{doc?.serial}</p>
           <p className="">{GetShamsiDate(doc?.date)}</p>
+          <p>{lang[doc?.document_type]}</p>
         </div>
 
         <div className="flex space-x-[16px]">
@@ -112,11 +117,7 @@ function Card({ docType, ...doc }) {
           label="بخوان"
           size="medium"
           handleClick={() => {
-            router.push(
-              `archive/${
-                doc.document_type === "broadcast" ? "broadcasts" : "documents"
-              }/${doc.serial}`
-            );
+            router.push(`archive/${doc.document_type}/${doc.serial}`);
           }}
           width={"full"}
         />

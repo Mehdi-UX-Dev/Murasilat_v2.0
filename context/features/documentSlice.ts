@@ -95,7 +95,7 @@ const fetchDocuments = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -177,14 +177,14 @@ const saveToWarida = createAsyncThunk(
   }
 );
 
-const writeDocument = createAsyncThunk(
-  "documents/create",
+const writeMaktoob = createAsyncThunk(
+  "maktoobs/create",
   async (
-    { documentData, callback }: { documentData: any; callback: any },
+    { maktoobData, callback }: { maktoobData: any; callback: any },
     { rejectWithValue }
   ) => {
     const formData = new FormData();
-    Object.entries(documentData).map(([key, value]) => {
+    Object.entries(maktoobData).map(([key, value]) => {
       if (key === "attachments") {
         value.forEach((file) => {
           formData.append(key, file);
@@ -199,6 +199,54 @@ const writeDocument = createAsyncThunk(
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (maktoobData?.files) {
+        // handle file upload
+      }
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+const writeDocument = createAsyncThunk(
+  "documents/create",
+  async (
+    { documentData, callback }: { documentData: any; callback: any },
+    { rejectWithValue }
+  ) => {
+    const formData = new FormData();
+    Object.entries(documentData).map(([key, value]) => {
+      if (key === "attachments") {
+        value.forEach((file) => {
+          formData.append(key, file);
+        });
+      } else if (key === "content") {
+        formData.append("request", value);
+      } else
+        formData.append(
+          key,
+          key === "date" ? new Date(value).toISOString() : value
+        );
+    });
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/`,
         formData,
         {
           headers: {
@@ -396,14 +444,14 @@ const documentsSlice = createSlice({
         state.loading = false;
         state.error = action.payload as null;
       })
-      .addCase(writeDocument.pending, (state) => {
+      .addCase(writeMaktoob.pending, (state) => {
         state.loading = true;
       })
-      .addCase(writeDocument.fulfilled, (state, action) => {
+      .addCase(writeMaktoob.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
       })
-      .addCase(writeDocument.rejected, (state, action) => {
+      .addCase(writeMaktoob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as null;
       })
@@ -450,6 +498,17 @@ const documentsSlice = createSlice({
       })
       .addCase(saveToBookMark.rejected, (state, action) => {
         state.bookmark.error = action.payload as string;
+      })
+      .addCase(writeDocument.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(writeDocument.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = null
+      })
+      .addCase(writeDocument.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as null
       });
   },
 });
@@ -468,11 +527,12 @@ export const {
 export {
   fetchDocumentsBySerial,
   fetchDocuments,
-  writeDocument,
+  writeMaktoob,
   fetchReceivers,
   saveToWarida,
   getUserProfile,
   searchDocumentsDashboardPage,
   saveToBookMark,
   deleteFromBookMark,
+  writeDocument,
 };

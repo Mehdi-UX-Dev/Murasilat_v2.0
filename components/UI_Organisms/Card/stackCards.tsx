@@ -69,7 +69,7 @@ function StackCards({ type, ...lang }) {
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
           >
             {documents[type].map((doc) => (
-              <Card docType={type}  key={doc.serial} {...doc} />
+              <Card docType={type}  key={doc.serial} {...doc} lang={lang} />
             ))}
             {}
           </div>
