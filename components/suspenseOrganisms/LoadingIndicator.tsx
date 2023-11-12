@@ -1,6 +1,6 @@
 const LoadingIndicator = ({ text = 'Loading' }: { text?: string }) => {
   return (
-    <div className="flex flex-col w-full h-full items-center">
+    <div className="flex flex-col w-full h-full items-center  ">
       <div className="flex items-center justify-center space-x-2 ">
         <div
           className="w-4 h-4 bg-gray-500 rounded-full animate-bounce"

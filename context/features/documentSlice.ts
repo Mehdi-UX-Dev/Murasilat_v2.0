@@ -49,7 +49,30 @@ interface DocumentStateType {
   userInfo: UserType | any;
   receivers: UserType[];
   selectedReceiver: UserType | null;
-  searchedDocuments: object;
+  searchedDocuments: {
+    sadira?: [
+      {
+        document: {
+          serial: string;
+          title: string;
+          receiver: {
+            fullname: string;
+          };
+        };
+      }
+    ];
+    warida?: [
+      {
+        document: {
+          serial: string;
+          title: string;
+          sender: {
+            fullname: string;
+          };
+        };
+      }
+    ];
+  };
   searchedDoumentsModalActive: boolean;
   searchedDocumentLoading: boolean;
   bookmark: {

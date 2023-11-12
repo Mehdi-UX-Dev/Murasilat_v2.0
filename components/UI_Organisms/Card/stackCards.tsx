@@ -3,8 +3,9 @@ import React, { useRef } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Card from "../write_page/Card";
 import { cx } from "class-variance-authority";
+import { langProps_DASHBOARD } from "@/universalTypes";
 
-function StackCards({ type, ...lang }) {
+function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
   const { documents } = useAppSelector((store) => store.documents);
   const containerRef = useRef<HTMLDivElement>(null!);
 
@@ -54,7 +55,7 @@ function StackCards({ type, ...lang }) {
       </div>
 
       <div className="relative flex ">
-        {documents[type].length >= 3 && (
+        {documents[type as keyof typeof documents].length >= 3 && (
           <AiOutlineLeft
             className="absolute top-1/2 lg:left-2  border-2  border-primary-900 rounded-full p-1 bg-white hover:bg-primary-900  hover:text-white z-10"
             size={36}
@@ -62,14 +63,14 @@ function StackCards({ type, ...lang }) {
           />
         )}
 
-        {documents[type].length ? (
+        {documents[type as keyof typeof documents].length ? (
           <div
             ref={containerRef}
             // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
           >
-            {documents[type].map((doc) => (
-              <Card docType={type}  key={doc.serial} {...doc} lang={lang} />
+            {documents[type as keyof typeof documents].map((doc) => (
+              <Card docType={type} key={doc.serial} {...doc} lang={lang} />
             ))}
             {}
           </div>
@@ -79,7 +80,7 @@ function StackCards({ type, ...lang }) {
           </div>
         )}
 
-        {documents[type].length >= 3 && (
+        {documents[type as keyof typeof documents].length >= 3 && (
           <AiOutlineRight
             className="absolute lg:right-3 top-1/2 border-2 border-primary-900 hover:bg-primary-900 bg-white hover:text-white  rounded-full p-1  z-10"
             size={36}

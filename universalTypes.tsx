@@ -63,7 +63,6 @@ export type langProps_DASHBOARD = {
   istilam: string;
   pishnihad: string;
   archive: string;
-  recents: string;
   all_sadira: string;
   all_warida: string;
   broadcast: string;
@@ -75,6 +74,8 @@ export type langProps_DASHBOARD = {
   recently_sent: string;
   recently_received: string;
   no_document: string;
+  show_profile: string
+  bookmarks: string
 };
 
 // 3 types of document that is rendered on layout page
@@ -114,12 +115,12 @@ export type langProps_SideBar = {
   istilam: string;
   pishnihad: string;
   archive: string;
-  recents: string;
   all_sadira: string;
   all_warida: string;
   broadcast: string;
   log_out: string;
   show_profile: string;
+  bookmarks: string
 };
 
 export type sideBarSubOptionProps_SIDEBAR = {

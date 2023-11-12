@@ -14,6 +14,7 @@ function SideBarProfile({
 }: {
   buttonLabel: string;
   showProfile: string;
+  locale: string
 }) {
   const dispatch = useAppDispatch();
   const router = useRouter();

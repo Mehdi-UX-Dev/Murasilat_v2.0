@@ -1,14 +1,14 @@
-'use client';
+"use client";
 const SideBar = React.lazy(
-  () => import('@/components/UI_Organisms/write_page/sidebar')
+  () => import("@/components/UI_Organisms/write_page/sidebar")
 );
-import SideBarSuspense from '@/components/suspenseOrganisms/sideBarSuspense';
-import { getDictionary } from '@/i18n-server';
-import React, { Suspense, useEffect, useState } from 'react';
-import { langProps_DASHBOARD, localeProps } from '@/universalTypes';
-import Header from '@/components/UI_Organisms/write_page/Header';
-import UserInfo from '@/components/UI_Organisms/user/userInfo';
-import { useAppSelector } from '@/context/hooks';
+import SideBarSuspense from "@/components/suspenseOrganisms/sideBarSuspense";
+import { getDictionary } from "@/i18n-server";
+import React, { Suspense, useEffect, useState } from "react";
+import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
+import Header from "@/components/UI_Organisms/write_page/Header";
+import UserInfo from "@/components/UI_Organisms/user/userInfo";
+import { useAppSelector } from "@/context/hooks";
 
 export default function DashboardLayout({
   children,

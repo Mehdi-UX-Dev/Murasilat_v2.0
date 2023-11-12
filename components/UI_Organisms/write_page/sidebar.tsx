@@ -10,7 +10,6 @@ import {
 import SideSubOption from "../../UI_Molecules/sideBarSubOption";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsBroadcast, BsEnvelopePlusFill } from "react-icons/bs";
-import { FaHistory } from "react-icons/fa";
 import { RiMailDownloadFill } from "react-icons/ri";
 import { Button } from "../../UI_Molecules/Button";
 import { BiLogOut } from "react-icons/bi";
@@ -21,7 +20,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/context/hooks";
 import SideBarProfile from "@/components/UI_Molecules/sideBarProfile";
 
-function SideBar({ locale, ...lang }: langProps_SideBar) {
+function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
@@ -31,7 +30,6 @@ function SideBar({ locale, ...lang }: langProps_SideBar) {
   };
 
   const dashboardPath = path === "/per/dashboard" || path === "/ps/dashboard";
-  // const archivePath = /^\/(per|ps)\/(archive|write|broadcast)\//.test(path);
 
   return (
     <aside className="w-[240px] border-l grid  h-screen max-h-screen content-between  ">

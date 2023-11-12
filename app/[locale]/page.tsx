@@ -1,23 +1,16 @@
 "use client";
 
-const Header = React.lazy(
-  () => import("@/components/UI_Organisms/login_page/loginHeader")
-);
-const Login = React.lazy(
-  () => import("../../components/UI_Organisms/login_page/login")
-);
-
-const AltLogin = React.lazy(
-  () => import("@/components/UI_Organisms/login_page/altLogin")
-);
-
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { getDictionary } from "@/i18n-server";
 import { langProps_LOGIN, localeProps } from "@/universalTypes";
 import { useAppSelector } from "@/context/hooks";
 import LoadingIndicator from "@/components/suspenseOrganisms/LoadingIndicator";
 import Redirect from "@/components/misc/Redirect";
+import LoginSuspense from "@/components/suspenseOrganisms/login";
+import AltLogin from "@/components/UI_Organisms/login_page/altLogin";
+import Login from "../../components/UI_Organisms/login_page/login";
+import Header from "@/components/UI_Organisms/login_page/loginHeader";
 
 function Home({ params: { locale } }: localeProps) {
   const [lang, setLang] = useState<langProps_LOGIN>();
@@ -35,7 +28,7 @@ function Home({ params: { locale } }: localeProps) {
 
   return (
     <div>
-      <Header />
+      {lang && <Header />}
       {lang ? (
         user ? (
           tokenExpired ? (
@@ -46,17 +39,11 @@ function Home({ params: { locale } }: localeProps) {
         ) : (
           <Login locale={locale} {...lang} />
         )
+      ) : !tokenExpired ? (
+        <LoginSuspense />
       ) : (
         <LoadingIndicator text="لطفاً صبر کنید" />
       )}
-      {/* <Suspense fallback={<LoginSuspense />}>
-        {lang && (
-          <>
-            <Header />
-            {user ? <AltLogin {...lang} /> : <Login {...lang} />}
-          </>
-        )}
-      </Suspense> */}
     </div>
   );
 }
