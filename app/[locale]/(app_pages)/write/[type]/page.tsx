@@ -27,10 +27,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 
-function FileSelector({ files, setFiles }) {
-  const handleFileChange = (event) => {
-    const allFiles = [...files, ...event.target.files];
-    setFiles(allFiles);
+function FileSelector({
+  files,
+  setFiles,
+}: {
+  files: File[];
+  setFiles: (files: File[]) => void;
+}) {
+  const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    // const allFiles = [...files, ...(event.target.files as File[])];
+    // setFiles(allFiles);
+    const fileList = event.target.files;
+    if (fileList) {
+      const fileArray = Array.from(fileList);
+      const allFiles = [...files, ...fileArray];
+      setFiles(allFiles);
+    }
   };
 
   return (
@@ -61,7 +75,6 @@ function FileSelector({ files, setFiles }) {
 }
 
 function Page({ params: { locale } }: localeProps) {
-  // Create a new Date object representing the current date
   const shamsiDate = GetShamsiDate();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -90,7 +103,8 @@ function Page({ params: { locale } }: localeProps) {
         headers: {
           "Content-Type": "application/json",
           Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("TOKENS"))?.access,
+            "Bearer " +
+            JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
           accept: "application/json",
         },
       })
@@ -106,6 +120,7 @@ function Page({ params: { locale } }: localeProps) {
 
   const [recieverList, setRecieverList] = useState<object[]>([]);
   const quillRef = useRef<ReactQuill>(null);
+  //! quill formart editor not working
   useEffect(() => {
     if (!quillRef.current) return;
     quillRef.current.editor?.format("align", "right");
@@ -221,10 +236,7 @@ function Page({ params: { locale } }: localeProps) {
 
           <div className="flex items-center border border-b-0 border-primary-300  pl-2 ">
             <TypeGroup setDocValue={setDocValue} />
-            <CustomizedSelectComponent
-              recieverList={recieverList}
-              setDocValue={setDocValue}
-            />
+            <CustomizedSelectComponent />
           </div>
 
           <input

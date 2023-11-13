@@ -32,6 +32,7 @@ export type langProps_ARCHIVE = {
   title: string;
   number: string;
   content: string;
+  no_document?: string
 };
 
 // write page props
@@ -42,6 +43,7 @@ export type langProps_WRITE = {
   send_to: string;
   summary: string;
   quill_placeholder: string;
+  write_remarks: string
 };
 
 // data that must be submitted to the server

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
@@ -8,46 +8,91 @@ import {
   BsArrowUpCircle,
   BsBookmarkFill,
 } from "react-icons/bs";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/context/hooks";
 import {
   deleteFromBookMark,
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
-// docType name to be changed
-function Card({ docType, lang, ...doc }) {
+import { langProps_ARCHIVE } from "@/universalTypes";
+
+type docDataType = {
+  sender: {
+    fullname: string;
+    authority: { title: string };
+    profile_pic: string;
+  };
+  receiver: {
+    fullname: string;
+    authority: { title: string };
+    profile_pic: string;
+  };
+  document_type?: string;
+  serial: number;
+  date: string;
+  title: string;
+  read?: boolean;
+  bookmarked?: boolean;
+};
+
+function Card({
+  listType,
+  lang,
+  ...doc
+}: docDataType & {
+  lang: langProps_ARCHIVE;
+  listType: string;
+}) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const path = usePathname();
 
-  
-
-  const personData = {
+  const [personData, setPersonDate] = useState({
     fullname: "",
     authority: "",
     picture: "",
-  };
+  });
 
-  if (docType === "receivedRecently" || docType === "unreadDocuments") {
-    (personData.fullname = doc.sender.fullname),
-      (personData.authority = doc?.sender?.authority?.title),
-      (personData.picture = doc?.sender?.profile_pic);
-  } else if (docType === "sentRecently") {
-    (personData.fullname = doc.receiver.fullname),
-      (personData.authority = doc?.receiver?.authority?.title),
-      (personData.picture = doc?.receiver?.profile_pic);
-  }
+  useEffect(() => {
+    if (
+      listType === "receivedRecently" ||
+      listType === "unreadDocuments" ||
+      path == "/per/archive/warida" ||
+      path === "/ps/archive/warida"
+    ) {
+      setPersonDate({
+        fullname: doc.sender.fullname,
+        authority: doc.sender.authority.title,
+        picture: doc.sender.profile_pic,
+      });
+    } else if (
+      listType === "sentRecently" ||
+      path === "/per/archive/sadira" ||
+      path === "/ps/archive/sadira"
+    ) {
+      setPersonDate({
+        fullname: doc.receiver.fullname,
+        authority: doc.receiver.authority.title,
+        picture: doc.receiver.profile_pic,
+      });
+    }
+  }, []);
+
   return (
-    
     <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
-      {docType === "receivedRecently" && (
-        <BsArrowDownCircle
-          size={20}
-          className="absolute left-1 top-1 rounded-full  text-white bg-green-400"
-        />
-      )}
+      {listType === "receivedRecently" ||
+        path === "/per/archive/warida" ||
+        (path === "/ps/archive/warida" && (
+          <BsArrowDownCircle
+            size={20}
+            className="absolute left-1 top-1 rounded-full  text-white bg-green-400"
+          />
+        ))}
 
-      {docType === "sentRecently" && (
+      {(listType === "sentRecently" ||
+        path === "/per/archive/sadira" ||
+        path === "/ps/archive/sadira") && (
         <BsArrowUpCircle
           size={20}
           className="absolute left-1 top-1 rounded-full  text-white bg-cyan-400"
@@ -58,7 +103,7 @@ function Card({ docType, lang, ...doc }) {
         <div className="text-center">
           <p className="font-bold text-lg">{doc?.serial}</p>
           <p className="">{GetShamsiDate(doc?.date)}</p>
-          <p>{lang[doc?.document_type]}</p>
+          <p>{lang[doc.document_type as keyof typeof lang]}</p>
         </div>
 
         <div className="flex space-x-[16px]">
@@ -77,7 +122,7 @@ function Card({ docType, lang, ...doc }) {
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">{doc?.title}</h2>
+        <h2 className="font-bold text-[24px]">{doc.title}</h2>
         {/* //? should there be a summary */}
         <p className="text-medium">خلاصه: کمیسیون اعطا شد</p>
       </div>
@@ -102,7 +147,7 @@ function Card({ docType, lang, ...doc }) {
                   dispatch(showBookmarkModal()),
                     dispatch(
                       saveToBookMark({
-                        documentType: doc.document_type,
+                        documentType: doc.document_type as string,
                         documentId: doc.serial,
                       })
                     );

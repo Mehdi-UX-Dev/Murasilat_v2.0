@@ -10,8 +10,9 @@ import { GetQamariDate, GetShamsiDate } from "@/date-converter";
 import { useRouter } from "next/navigation";
 import { createBroadcast } from "@/context/features/broadcastSlice";
 import { FaSpinner } from "react-icons/fa";
+import { localeProps } from "@/universalTypes";
 
-function Preview({ params: { locale } }) {
+function Preview({ params: { locale } }: localeProps) {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4] }],
@@ -133,7 +134,6 @@ function Preview({ params: { locale } }) {
               dir="rtl"
               placeholder="عنوان را بنویسید"
             />
-            
           </div>
           {/*Editor */}
           <ReactQuill

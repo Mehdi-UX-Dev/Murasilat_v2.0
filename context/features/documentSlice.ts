@@ -448,7 +448,7 @@ const saveToBookMark = createAsyncThunk(
 
 const deleteFromBookMark = createAsyncThunk(
   "deleteFromBookMark",
-  async (id, { rejectWithValue }) => {
+  async (id : number, { rejectWithValue } )  => {
     try {
       const res = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/bookmarks/${id}`,

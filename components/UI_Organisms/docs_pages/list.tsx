@@ -19,6 +19,7 @@ function ListTable({
 }: langProps_ARCHIVE & {
   type: string;
   showMethod: { cardType: boolean; tableType: boolean };
+  locale: string;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -38,7 +39,20 @@ function ListTable({
   const paginate = ({ selected }: { selected: number }) =>
     setCurrentPage(selected + 1);
 
-  let data = [];
+  let data: {
+    document: {
+      serial: string;
+      date: string;
+      title: string;
+      receiver: {
+        fullname: string;
+      };
+      sender: {
+        fullname: string;
+      };
+    };
+    summary: string;
+  }[] = [];
   if (isInSearch) {
     data = [...searchedResults];
   } else {
@@ -93,7 +107,14 @@ function ListTable({
         <div className="flex justify-end mt-4">
           {showMethod?.cardType &&
             data.map((doc) => (
-              <Card key={doc.document.serial} {...doc.document} />
+              console.log(doc),
+              
+              <Card
+                listType=""
+                lang={lang}
+                key={doc.document.serial}
+                {...doc.document}
+              />
             ))}
         </div>
 
