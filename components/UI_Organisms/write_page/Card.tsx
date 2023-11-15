@@ -7,9 +7,9 @@ import {
   BsArrowDownCircle,
   BsArrowUpCircle,
   BsBookmarkFill,
-} from "react-icons/bs";
-import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/context/hooks";
+} from 'react-icons/bs';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/context/hooks';
 import {
   deleteFromBookMark,
   saveToBookMark,
@@ -51,17 +51,18 @@ function Card({
   const path = usePathname();
 
   const [personData, setPersonDate] = useState({
-    fullname: "",
-    authority: "",
-    picture: "",
+    fullname: '',
+    authority: '',
+    picture: '',
   });
 
   useEffect(() => {
+    if (!doc) return;
     if (
-      listType === "receivedRecently" ||
-      listType === "unreadDocuments" ||
-      path == "/per/archive/warida" ||
-      path === "/ps/archive/warida"
+      listType === 'receivedRecently' ||
+      listType === 'unreadDocuments' ||
+      path == '/per/archive/warida' ||
+      path === '/ps/archive/warida'
     ) {
       setPersonDate({
         fullname: doc.sender.fullname,
@@ -69,10 +70,11 @@ function Card({
         picture: doc.sender.profile_pic,
       });
     } else if (
-      listType === "sentRecently" ||
-      path === "/per/archive/sadira" ||
-      path === "/ps/archive/sadira"
+      listType === 'sentRecently' ||
+      path === '/per/archive/sadira' ||
+      path === '/ps/archive/sadira'
     ) {
+      console.log('kdjfkd');
       setPersonDate({
         fullname: doc.receiver.fullname,
         authority: doc.receiver.authority.title,
@@ -83,18 +85,18 @@ function Card({
 
   return (
     <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
-      {listType === "receivedRecently" ||
-        path === "/per/archive/warida" ||
-        (path === "/ps/archive/warida" && (
+      {listType === 'receivedRecently' ||
+        path === '/per/archive/warida' ||
+        (path === '/ps/archive/warida' && (
           <BsArrowDownCircle
             size={20}
             className="absolute left-1 top-1 rounded-full  text-white bg-green-400"
           />
         ))}
 
-      {(listType === "sentRecently" ||
-        path === "/per/archive/sadira" ||
-        path === "/ps/archive/sadira") && (
+      {(listType === 'sentRecently' ||
+        path === '/per/archive/sadira' ||
+        path === '/ps/archive/sadira') && (
         <BsArrowUpCircle
           size={20}
           className="absolute left-1 top-1 rounded-full  text-white bg-cyan-400"
@@ -113,13 +115,15 @@ function Card({
             <p className="font-semibold text-xl">{personData.fullname}</p>
             <p>{personData.authority}</p>
           </div>
-          <Image
-            src={personData.picture}
-            alt="ID"
-            className=" object-cover rounded-full"
-            width={48}
-            height={48}
-          />
+          {personData?.picture && (
+            <Image
+              src={personData.picture}
+              alt="ID"
+              className=" object-cover rounded-full"
+              width={48}
+              height={48}
+            />
+          )}
         </div>
       </div>
 
@@ -166,7 +170,7 @@ function Card({
           handleClick={() => {
             router.push(`archive/${doc.document_type}/${doc.serial}`);
           }}
-          width={"full"}
+          width={'full'}
         />
       </div>
     </div>

@@ -1,9 +1,9 @@
-import { useAppSelector } from "@/context/hooks";
-import React, { useRef } from "react";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Card from "../write_page/Card";
-import { cx } from "class-variance-authority";
-import { langProps_DASHBOARD } from "@/universalTypes";
+import { useAppSelector } from '@/context/hooks';
+import React, { useRef } from 'react';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import Card from '../write_page/Card';
+import { cx } from 'class-variance-authority';
+import { langProps_DASHBOARD } from '@/universalTypes';
 
 function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
   const { documents } = useAppSelector((store) => store.documents);
@@ -17,18 +17,18 @@ function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
     containerRef.current.scrollLeft += 100;
   };
 
-  let title = "";
+  let title = '';
 
   switch (type) {
-    case "unreadDocuments":
+    case 'unreadDocuments':
       title = lang?.unread;
       break;
 
-    case "sentRecently":
+    case 'sentRecently':
       title = lang.recently_sent;
       break;
 
-    case "receivedRecently":
+    case 'receivedRecently':
       title = lang.recently_received;
       break;
   }
@@ -37,16 +37,16 @@ function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
       <div className="flex justify-end items-center space-x-3 mb-2">
         <div
           className={cx(
-            "rounded-full relative  text-center font-semibold text-sm text-white ",
+            'rounded-full relative  text-center font-semibold text-sm text-white ',
             {
-              "bg-myAccent-error-300 w-5 h-5": type === "unreadDocuments",
-              "bg-green-300 w-3 h-3": type === "receivedRecently",
-              "bg-cyan-400 w-3 h-3": type === "sentRecently",
+              'bg-myAccent-error-300 w-5 h-5': type === 'unreadDocuments',
+              'bg-green-300 w-3 h-3': type === 'receivedRecently',
+              'bg-cyan-400 w-3 h-3': type === 'sentRecently',
             }
           )}
         >
-          {type === "unreadDocuments" && documents.unreadDocuments.length}
-          {type === "unreadDocuments" && (
+          {type === 'unreadDocuments' && documents.unreadDocuments.length}
+          {type === 'unreadDocuments' && (
             <p className="h-4 w-4 absolute top-0.5 -z-10 left-0.5  animate-ping bg-myAccent-error-500 rounded-full"></p>
           )}
         </div>

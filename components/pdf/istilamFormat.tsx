@@ -1,34 +1,34 @@
-import { GetQamariDate, GetShamsiDate } from "@/date-converter";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import html2pdf from "html2pdf.js";
+import { GetQamariDate, GetShamsiDate } from '@/date-converter';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import html2pdf from 'html2pdf.js';
 
-import KabulUni from "../../public/images/KabulUni.png";
-import MOH from "../../public/images/moh.jpg";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { fetchDocumentsBySerial } from "@/context/features/documentSlice";
+import KabulUni from '../../public/images/KabulUni.png';
+import MOH from '../../public/images/moh.jpg';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { fetchDocumentsBySerial } from '@/context/features/documentSlice';
 
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4] }],
-    [{ size: ["small", false, "large", "huge"] }],
-    ["bold", "italic", "underline", "strike"],
+    [{ size: ['small', false, 'large', 'huge'] }],
+    ['bold', 'italic', 'underline', 'strike'],
     [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
     ],
 
     [
-      { align: "" },
-      { align: "center" },
-      { align: "right" },
-      { align: "justify" },
+      { align: '' },
+      { align: 'center' },
+      { align: 'right' },
+      { align: 'justify' },
     ],
-    [{ direction: "rtl" }, { direction: "ltr" }],
+    [{ direction: 'rtl' }, { direction: 'ltr' }],
   ],
 };
 
@@ -53,12 +53,12 @@ function IstilamFormat({
   const { pdf } = useAppSelector((store) => store.documents);
 
   const quillRef = useRef<ReactQuill>(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   useEffect(() => {
     if (!quillRef.current) return;
-    quillRef.current.editor?.format("align", "right");
-    quillRef.current.editor?.format("direction", "rtl");
-    quillRef.current.editor?.format("size", "large");
+    quillRef.current.editor?.format('align', 'right');
+    quillRef.current.editor?.format('direction', 'rtl');
+    quillRef.current.editor?.format('size', 'large');
   }, []);
 
   return (
@@ -94,9 +94,9 @@ function IstilamFormat({
           <p>
             شماره:
             <span className="opacity-50 text-base ">
-              {" "}
+              {' '}
               {/* {data.serial} */}
-            </span>{" "}
+            </span>{' '}
           </p>
           <p>
             تاریخ: {GetShamsiDate()} ه.ش مطابق به {GetQamariDate()}
@@ -109,7 +109,7 @@ function IstilamFormat({
         {/* header */}
         <div className="border border-black  w-[600px] ">
           <div className="border-b border-black h-10 text-center">احکام</div>
-          {pdf?.receiver?.id === user?.user_id && !pdf?.responded ? (
+          {pdf?.receiver?.id === user?.user_id && pdf?.state == 'to_respond' ? (
             <div className="px-4 py-2">
               <ReactQuill
                 ref={quillRef}
@@ -126,7 +126,7 @@ function IstilamFormat({
             <div
               className="py-2 px-4"
               dangerouslySetInnerHTML={{
-                __html: pdf?.reply ? pdf?.reply : "",
+                __html: pdf?.reply ? pdf?.reply : '',
               }}
             ></div>
           )}
@@ -137,7 +137,7 @@ function IstilamFormat({
           <div
             className="py-2 px-4"
             dangerouslySetInnerHTML={{
-              __html: pdf?.request || "",
+              __html: pdf?.request || '',
             }}
           ></div>
         </div>
