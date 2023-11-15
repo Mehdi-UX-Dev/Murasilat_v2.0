@@ -70,7 +70,7 @@ function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
           >
             {documents[type as keyof typeof documents].map((doc) => (
-              <Card docType={type} key={doc.serial} {...doc} lang={lang} />
+              <Card listType={type} key={doc.serial} doc={doc}  />
             ))}
             {}
           </div>

@@ -3,10 +3,10 @@ import { InputField } from "@/components/UI_Molecules/Input";
 import { saveToWarida } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
-import { langProps_PDF } from "@/universalTypes";
+import { langProps_PDF, localeProps } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
 
-function SabtWarida(locale) {
+function SabtWarida(locale: string) {
   const dispatch = useAppDispatch();
   const { pdf } = useAppSelector((store) => store.documents);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
@@ -29,15 +29,10 @@ function SabtWarida(locale) {
       onSubmit={(e) => {
         e.preventDefault(),
           dispatch(
-            saveToWarida(
-              {
-                id: pdf.serial,
-                ...updateDocument,
-              },
-              () => {
-                console.log("internet");
-              }
-            )
+            saveToWarida({
+              id: pdf.serial,
+              ...updateDocument,
+            })
           );
       }}
     >

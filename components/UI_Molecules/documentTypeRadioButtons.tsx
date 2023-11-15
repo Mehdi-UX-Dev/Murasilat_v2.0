@@ -14,7 +14,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
     const { value } = event.target;
     setDocValue((prev: writtenDocumentValues_PROPS) => ({
       ...prev,
-      urgency : value as "N" | "E" | "A" | "C",
+      urgency : value as "N" | "U" | "A" | "C",
     }));
   };
 

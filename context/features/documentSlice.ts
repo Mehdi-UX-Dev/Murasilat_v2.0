@@ -39,12 +39,20 @@ interface DocumentStateType {
   };
   loading: boolean;
   error: string | any;
-  pdf: {
-    serial: number;
-    content: string;
-    document_type: string;
-    urgency: "N" | "U" | "C" | "A";
-  };
+  pdf:
+    | {
+        serial: number;
+        content: string;
+        document_type: string;
+        urgency: "N" | "U" | "C" | "A";
+        receiver: {
+          id: number;
+        };
+        responded: boolean;
+        reply: string;
+        request: string;
+      }
+    | any;
   userProfileView: boolean;
   userInfo: UserType | any;
   receivers: UserType[];
@@ -177,7 +185,7 @@ const replyDocument = createAsyncThunk(
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/save_to_warida/`,
-        { content_update, summary, remarks },
+        { id, reply },
         {
           headers: {
             "Content-Type": "application/json",
@@ -211,6 +219,7 @@ const saveToWarida = createAsyncThunk(
       content_update: string;
       summary: string;
       remarks: string;
+      callback: () => void;
     },
     { rejectWithValue }
   ) => {
@@ -244,16 +253,21 @@ const writeMaktoob = createAsyncThunk(
     { rejectWithValue }
   ) => {
     const formData = new FormData();
-    Object.entries(maktoobData).map(([key, value]) => {
-      if (key === "attachments") {
-        value.forEach((file) => {
-          formData.append(key, file);
+    Object.entries(maktoobData).map(([key, value]: [string, unknown]) => {
+      if (key === "attachments" && Array.isArray(value)) {
+        value.forEach((file: unknown) => {
+          if (file instanceof File) {
+            formData.append(key, file);
+          }
         });
-      } else
+      } else {
         formData.append(
           key,
-          key === "date" ? new Date(value).toISOString() : value
+          key === "date"
+            ? new Date(value as string).toISOString()
+            : (value as string)
         );
+      }
     });
 
     try {
@@ -290,17 +304,19 @@ const writeDocument = createAsyncThunk(
     { rejectWithValue }
   ) => {
     const formData = new FormData();
-    Object.entries(documentData).map(([key, value]) => {
-      if (key === "attachments") {
-        value.forEach((file) => {
-          formData.append(key, file);
+    Object.entries(documentData).map(([key, value]: [string, unknown]) => {
+      if (key === "attachments" && Array.isArray(value)) {
+        value.forEach((file: unknown) => {
+          if (file instanceof File) formData.append(key, file);
         });
       } else if (key === "content") {
-        formData.append("request", value);
+        formData.append("request", value as string);
       } else
         formData.append(
           key,
-          key === "date" ? new Date(value).toISOString() : value
+          key === "date"
+            ? new Date(value as string).toISOString()
+            : (value as string)
         );
     });
 
@@ -448,7 +464,7 @@ const saveToBookMark = createAsyncThunk(
 
 const deleteFromBookMark = createAsyncThunk(
   "deleteFromBookMark",
-  async (id : number, { rejectWithValue } )  => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const res = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/bookmarks/${id}`,

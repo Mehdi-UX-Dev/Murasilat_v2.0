@@ -94,8 +94,7 @@ function PDFTemplate({
         id="body"
         className="row-span-3 pr-4 pt-2 quill-container text-right z-50"
       ></section>
-      {/* ( <MaktoobFormat body={body} />) */}
-      {path === "/write/writeIstilam" && <IstilamFormat body={body} />}
+      {/* {path === "/write/writeIstilam" && <IstilamFormat body={body} />} */}
       {/*  */}
       <section id="footer" className="row-span-1">
         <div className="w-full border-b border-black  mt-4"></div>

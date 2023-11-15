@@ -107,13 +107,11 @@ function ListTable({
         <div className="flex justify-end mt-4">
           {showMethod?.cardType &&
             data.map((doc) => (
-              console.log(doc),
-              
               <Card
                 listType=""
                 lang={lang}
                 key={doc.document.serial}
-                {...doc.document}
+                doc={doc.document}
               />
             ))}
         </div>

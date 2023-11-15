@@ -32,7 +32,13 @@ const modules = {
   ],
 };
 
-function IstilamFormat({ type, serial }) {
+function IstilamFormat({
+  type,
+  serial,
+}: {
+  type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
+  serial: number;
+}) {
   const { user } = useAppSelector((store) => store.user);
   // useEffect(() => {
   //  const container = document.getElementById("container")

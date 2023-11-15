@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { MdBookmarkBorder } from "react-icons/md";
 import Image from "next/image";
 import { Button } from "../../UI_Molecules/Button";
@@ -15,8 +15,9 @@ import {
   saveToBookMark,
   showBookmarkModal,
 } from "@/context/features/documentSlice";
-import { langProps_ARCHIVE } from "@/universalTypes";
+import { langProps_ARCHIVE, langProps_DASHBOARD } from "@/universalTypes";
 
+//! docDataType did not correpond correctly and we had errors
 type docDataType = {
   sender: {
     fullname: string;
@@ -39,10 +40,11 @@ type docDataType = {
 function Card({
   listType,
   lang,
-  ...doc
-}: docDataType & {
-  lang: langProps_ARCHIVE;
+  doc,
+}: {
+  lang?: langProps_ARCHIVE;
   listType: string;
+  doc: any;
 }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -103,7 +105,7 @@ function Card({
         <div className="text-center">
           <p className="font-bold text-lg">{doc?.serial}</p>
           <p className="">{GetShamsiDate(doc?.date)}</p>
-          <p>{lang[doc.document_type as keyof typeof lang]}</p>
+          <p>{lang?.[doc.document_type as keyof typeof lang]}</p>
         </div>
 
         <div className="flex space-x-[16px]">

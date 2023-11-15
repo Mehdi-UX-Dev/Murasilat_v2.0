@@ -10,9 +10,13 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/context/store";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 
-const Login = ({ locale, ...lang }) => {
+const Login = ({
+  locale,
+  ...lang
+}: { header: string; username: string; password: string; submit: string } & {
+  locale: string;
+}) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const [credentials, setCredentials] = useState<credentialsProps_LOGIN>({});
   const { error, loading } = useAppSelector((store: RootState) => store.user);
@@ -97,7 +101,7 @@ const Login = ({ locale, ...lang }) => {
             dir="rtl"
             id="ErrorContainer"
           >
-            {lang[error]}
+            {lang[error as keyof typeof lang]}
           </div>
           {loading ? (
             <div className="bg-primary-700 text-white rounded text-base px-[10px] py-2 w-full">
