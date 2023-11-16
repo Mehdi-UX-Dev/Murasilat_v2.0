@@ -178,14 +178,14 @@ const replyDocument = createAsyncThunk(
     }: {
       id: number;
       reply: string;
-      callback: () => {};
+      callback: () => void;
     },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/save_to_warida/`,
-        { id, reply },
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/`,
+        { reply },
         {
           headers: {
             "Content-Type": "application/json",
@@ -607,7 +607,18 @@ const documentsSlice = createSlice({
       .addCase(writeDocument.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as null;
-      });
+      })
+      .addCase(replyDocument.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(replyDocument.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(replyDocument.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as null;
+      })
   },
 });
 
@@ -633,4 +644,5 @@ export {
   saveToBookMark,
   deleteFromBookMark,
   writeDocument,
+  replyDocument,
 };

@@ -6,7 +6,10 @@ import MaktoobFormat from "@/components/pdf/maktoobFormat";
 function DocumentByID({
   params: { type, serial },
 }: {
-  params: { type: string; serial: number };
+  params: {
+    type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
+    serial: number;
+  };
 }) {
   return type === "maktoob" || type === "broadcast" ? (
     <MaktoobFormat type={type} serial={serial} />
