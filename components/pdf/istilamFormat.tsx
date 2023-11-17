@@ -9,12 +9,14 @@ import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
+  archiveDocument,
   fetchDocumentsBySerial,
   replyDocument,
 } from "@/context/features/documentSlice";
 import { Button } from "../UI_Molecules/Button";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
+import { localeProps } from "@/universalTypes";
 
 const modules = {
   toolbar: [
@@ -41,9 +43,11 @@ const modules = {
 function IstilamFormat({
   type,
   serial,
+  locale,
 }: {
   type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
   serial: number;
+  locale: localeProps;
 }) {
   const { user } = useAppSelector((store) => store.user);
   // useEffect(() => {
@@ -68,13 +72,24 @@ function IstilamFormat({
     quillRef.current.editor?.format("size", "large");
   }, []);
 
-  const handleButtonClick = () => {
+  const handleRespondClick = () => {
     dispatch(
       replyDocument({
         id: serial,
         reply: content,
         callback: () => {
-          router.replace("/archive/sadira");
+          router.replace(`/${locale}/archive/warida`);
+        },
+      })
+    );
+  };
+
+  const handleArchiveClick = () => {
+    dispatch(
+      archiveDocument({
+        id: serial,
+        callback: () => {
+          router.replace(`/${locale}/archive/sadira`);
         },
       })
     );
@@ -128,7 +143,7 @@ function IstilamFormat({
         {/* header */}
         <div className="border border-black  w-[600px] ">
           <div className="border-b border-black h-10 text-center">احکام</div>
-          {!pdf?.responded ? (
+          {(pdf?.state === "to_respond" && pdf?.receiver.id === user?.user_id)? ( // 3 halat dara, to_resp
             <div className="px-4 py-2">
               <ReactQuill
                 ref={quillRef}
@@ -171,13 +186,27 @@ function IstilamFormat({
             <FaSpinner size={22} className="animate-spin m-auto text-white" />
           </div>
         ) : (
-          <Button
-            size={"large"}
-            label="جواب"
-            type="button"
-            width={"full"}
-            handleClick={() => handleButtonClick()}
-          />
+          <>
+            {pdf.state === "to_respond" &&
+              pdf.receiver?.id === user?.user_id && (
+                <Button
+                  size={"large"}
+                  label="جواب"
+                  type="button"
+                  width={"full"}
+                  handleClick={handleRespondClick}
+                />
+              )}
+            {pdf.state === "responded" && pdf.sender?.id === user?.user_id && (
+              <Button
+                size={"large"}
+                label="آرشیف"
+                type="button"
+                width={"full"}
+                handleClick={handleArchiveClick}
+              />
+            )}
+          </>
         )}
       </div>
     </div>

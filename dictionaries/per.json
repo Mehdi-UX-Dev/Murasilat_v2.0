@@ -75,7 +75,8 @@
     "title": "عنوان",
     "number": "شماره",
     "content": "موضوع", 
-    "no_document":"هیچ سندی وجود ندارد"
+    "no_document":"هیچ سندی وجود ندارد",
+    "summary":"خلاصه"
   },
 
     "searchBar" : {

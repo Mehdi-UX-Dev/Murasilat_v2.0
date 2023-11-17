@@ -39,7 +39,8 @@
     "title": "عنوان",
     "number": "شماره",
     "content": "موضوع", 
-    "no_document":"هیڅ سند شتون نلري"
+    "no_document":"هیڅ سند شتون نلري", 
+    "summary":"لنډیز"
   },
 
     "searchBar" : {

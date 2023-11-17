@@ -168,6 +168,9 @@ const fetchReceivers = createAsyncThunk(
   }
 );
 
+// iina sayl ko
+//kho
+// bia da file diga
 const replyDocument = createAsyncThunk(
   "documents/update",
   async (
@@ -183,7 +186,7 @@ const replyDocument = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/`,
         { reply },
         {
@@ -198,12 +201,53 @@ const replyDocument = createAsyncThunk(
       );
 
       callback?.();
-      return [];
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.detail);
     }
   }
 );
+
+// ei as dowom ish bare archive kadan?
+// ha oona name ra sayl archive document miga
+//kho 
+const archiveDocument = createAsyncThunk(
+  "archive/update",
+  async (
+    {
+      id,
+      callback,
+    }: {
+      id: number;
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+  
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/mark_as_archived/`,{},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.detail);
+    }
+  }
+);
+
+
+
 
 const saveToWarida = createAsyncThunk(
   "maktoobs/update",
@@ -619,6 +663,17 @@ const documentsSlice = createSlice({
         state.loading = false;
         state.error = action.payload as null;
       })
+      .addCase(archiveDocument.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(archiveDocument.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(archiveDocument.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as null;
+      });
   },
 });
 
@@ -645,4 +700,5 @@ export {
   deleteFromBookMark,
   writeDocument,
   replyDocument,
+  archiveDocument
 };

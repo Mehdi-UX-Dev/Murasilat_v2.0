@@ -30,20 +30,20 @@ function Home({ params: { locale } }: localeProps) {
     <div>
       {lang && <Header />}
       {lang ? (
-        user ? (
-          tokenExpired ? (
-            <AltLogin {...lang} />
+          user ? (
+            tokenExpired ? (
+              <AltLogin locale={locale} {...lang} />
+            ) : (
+              <Redirect to={`/${locale}/dashboard`} />
+            )
           ) : (
-            <Redirect to={`/${locale}/dashboard`} />
+            <Login locale={locale} {...lang} />
           )
+        ) : !tokenExpired ? (
+          <LoginSuspense />
         ) : (
-          <Login locale={locale} {...lang} />
-        )
-      ) : !tokenExpired ? (
-        <LoginSuspense />
-      ) : (
-        <LoadingIndicator text="لطفاً صبر کنید" />
-      )}
+          <LoadingIndicator text="لطفاً صبر کنید" />
+        )}
     </div>
   );
 }

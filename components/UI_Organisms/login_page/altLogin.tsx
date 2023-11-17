@@ -1,15 +1,21 @@
-import { InputField } from '../../UI_Molecules/Input';
-import { Button } from '../../UI_Molecules/Button';
-import React, { useState } from 'react';
-import { AiFillEye } from 'react-icons/ai';
-import Image from 'next/image';
-import { PiUserSwitchBold } from 'react-icons/pi';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
-import { login, logout } from '@/context/features/loginSlice';
-import { useRouter } from 'next/navigation';
-import { FaSpinner } from 'react-icons/fa';
+import { InputField } from "../../UI_Molecules/Input";
+import { Button } from "../../UI_Molecules/Button";
+import React, { useState } from "react";
+import { AiFillEye } from "react-icons/ai";
+import Image from "next/image";
+import { PiUserSwitchBold } from "react-icons/pi";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { login, logout } from "@/context/features/loginSlice";
+import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa";
 
-function AltLogin({ ...lang }) {
+function AltLogin({
+  locale,
+  ...lang
+}: {
+  password: string;
+  submit: string;
+} & { locale: string }) {
   const { user, error, loading } = useAppSelector((store) => store.user);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -19,18 +25,14 @@ function AltLogin({ ...lang }) {
   const handleLogout = () => {
     dispatch(logout());
   };
-  const language = localStorage.getItem("lang") || "per";
-
-  console.log(language);
-  
-
+  // const language = localStorage.getItem("lang") || "per";
 
   const expiryDate = new Date(user?.exp * 1000);
   const currentDate = new Date();
 
-  if (currentDate < expiryDate) {
-    router.replace(`/${language}/dashboard`);
-  }
+  // if (currentDate < expiryDate) {
+  //   router.replace(`/${language}/dashboard`);
+  // }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -40,11 +42,12 @@ function AltLogin({ ...lang }) {
       login({
         email: user?.email,
         password: password.value,
-        callback: () => router.replace('/dashboard'),
+        callback: () => router.replace(`/${locale}/dashboard`),
       })
     );
   };
 
+  //! there is an error for directly injecting the pic into the code
   return (
     <div className=" drop-shadow-lg bg-white w-[560px] mx-auto px-4 py-20 ">
       <div className="flex justify-end mr-2">
@@ -69,17 +72,17 @@ function AltLogin({ ...lang }) {
         <div className="flex flex-col mb-6">
           <div className="relative">
             <InputField
-              direction={'ltr'}
-              inputType={showPassword ? 'text' : 'password'}
+              direction={"ltr"}
+              inputType={showPassword ? "text" : "password"}
               label={lang.password}
               fullWidth
-              state={error ? 'ErrorState' : 'Default'}
+              state={error ? "ErrorState" : "Default"}
               name="password"
             />
             <AiFillEye
               onClick={() => setShowPassword((current) => !current)}
               size={16}
-              className={`absolute right-2 bottom-3 ${error && 'text-red-500'}`}
+              className={`absolute right-2 bottom-3 ${error && "text-red-500"}`}
             />
           </div>
           <div
@@ -87,7 +90,7 @@ function AltLogin({ ...lang }) {
             className="text-myAccent-error-300 "
             id="ErrorContainer"
           >
-            {lang[error]}
+            {lang[error as keyof typeof lang]}
           </div>
         </div>
         {loading ? (
@@ -98,9 +101,9 @@ function AltLogin({ ...lang }) {
           <Button
             type="submit"
             label={lang.submit}
-            intent={'primary'}
-            size={'medium'}
-            width={'full'}
+            intent={"primary"}
+            size={"medium"}
+            width={"full"}
           />
         )}
       </form>

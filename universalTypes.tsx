@@ -33,6 +33,7 @@ export type langProps_ARCHIVE = {
   number: string;
   content: string;
   no_document?: string
+  summary: string
 };
 
 // write page props
