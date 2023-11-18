@@ -12,15 +12,12 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
-function SearchBar({ locale, type }: { type: string; locale: string }) {
+function SearchBar({ locale, type }: { locale: string; type: string }) {
   let [lang, setLang] = useState<
     { placeholder: string; search: string; clear_search: string } | undefined
   >(undefined);
 
   const path = usePathname();
-  
-
-  
 
   const { searchedDoumentsModalActive } = useAppSelector(
     (store) => store.documents
@@ -66,7 +63,7 @@ function SearchBar({ locale, type }: { type: string; locale: string }) {
             <button
               type="button"
               onClick={clearSearch}
-              className="bg-primary-900 text-white w-40 font-rounded font-bold rounded text-lg  "
+              className="bg-myAccent-error-300 text-white w-40 font-rounded font-bold rounded text-lg  "
             >
               {lang.clear_search}
             </button>

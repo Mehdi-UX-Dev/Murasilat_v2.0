@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/context/store";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 
-const Login = ({
+const   Login = ({
   locale,
   ...lang
 }: { header: string; username: string; password: string; submit: string } & {

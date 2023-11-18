@@ -20,8 +20,8 @@ export type langProps_PDF = {
   warida_num?: string;
   make_changes?: string;
   write_summary?: string;
-  write_consideration?: string, 
-  save_changes?: string
+  write_consideration?: string;
+  save_changes?: string;
 };
 
 // archive main props
@@ -32,8 +32,8 @@ export type langProps_ARCHIVE = {
   title: string;
   number: string;
   content: string;
-  no_document?: string
-  summary: string
+  no_document?: string;
+  summary: string;
 };
 
 // write page props
@@ -44,7 +44,7 @@ export type langProps_WRITE = {
   send_to: string;
   summary: string;
   quill_placeholder: string;
-  write_remarks: string
+  write_remarks: string;
 };
 
 // data that must be submitted to the server
@@ -77,8 +77,9 @@ export type langProps_DASHBOARD = {
   recently_sent: string;
   recently_received: string;
   no_document: string;
-  show_profile: string
-  bookmarks: string
+  show_profile: string;
+  bookmarks: string;
+  docsHard_Archive: string;
 };
 
 // 3 types of document that is rendered on layout page
@@ -123,7 +124,8 @@ export type langProps_SideBar = {
   broadcast: string;
   log_out: string;
   show_profile: string;
-  bookmarks: string
+  bookmarks: string;
+  docsHard_Archive: string;
 };
 
 export type sideBarSubOptionProps_SIDEBAR = {
@@ -156,5 +158,5 @@ export type langProps_LIST = {
   title: string;
   number: string;
   content: string;
-  summary: string
+  summary: string;
 };

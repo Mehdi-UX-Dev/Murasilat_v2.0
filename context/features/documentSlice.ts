@@ -168,9 +168,6 @@ const fetchReceivers = createAsyncThunk(
   }
 );
 
-// iina sayl ko
-//kho
-// bia da file diga
 const replyDocument = createAsyncThunk(
   "documents/update",
   async (
@@ -208,9 +205,6 @@ const replyDocument = createAsyncThunk(
   }
 );
 
-// ei as dowom ish bare archive kadan?
-// ha oona name ra sayl archive document miga
-//kho 
 const archiveDocument = createAsyncThunk(
   "archive/update",
   async (
@@ -223,10 +217,10 @@ const archiveDocument = createAsyncThunk(
     },
     { rejectWithValue }
   ) => {
-  
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/mark_as_archived/`,{},
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/mark_as_archived/`,
+        {},
         {
           headers: {
             "Content-Type": "application/json",
@@ -245,9 +239,6 @@ const archiveDocument = createAsyncThunk(
     }
   }
 );
-
-
-
 
 const saveToWarida = createAsyncThunk(
   "maktoobs/update",
@@ -700,5 +691,5 @@ export {
   deleteFromBookMark,
   writeDocument,
   replyDocument,
-  archiveDocument
+  archiveDocument,
 };

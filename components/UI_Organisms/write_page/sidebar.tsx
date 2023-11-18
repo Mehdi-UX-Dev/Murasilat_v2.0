@@ -19,6 +19,7 @@ import { logout } from "@/context/features/loginSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/context/hooks";
 import SideBarProfile from "@/components/UI_Molecules/sideBarProfile";
+import { PiFileArchiveFill } from "react-icons/pi";
 
 function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
   const router = useRouter();
@@ -119,9 +120,9 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
         {/* Broadcast  */}
 
         <SideOption
-          url={"broadcasts"}
-          text={lang?.broadcast}
-          Icon={BsBroadcast}
+          url={`/${locale}/docs_scan_archive`}
+          text={lang?.docsHard_Archive}
+          Icon={PiFileArchiveFill}
           hasDropDown={false}
         />
       </div>

@@ -3,6 +3,7 @@ import userReducer from './features/loginSlice';
 import documentReducer from './features/documentSlice';
 import archiveReducer from './features/archiveSlice';
 import broadcastReducer from './features/broadcastSlice';
+import docsHard_Slice from './features/docsHard_scan_archive'
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     documents: documentReducer,
     broadcast: broadcastReducer,
     archive: archiveReducer,
+    docsHard_scan_archive: docsHard_Slice
   },
 });
 
