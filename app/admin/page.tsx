@@ -5,65 +5,77 @@ import AdminNavigationHeader from "@/components/UI_Organisms/user/navigation";
 
 import React from "react";
 
-//? admin cannot be accessed from outside the locale directory find the reason
-
 function Administrator() {
   return (
-    <>
+    <div>
       <AdminNavigationHeader />
       <div className="my-10">
         <div className="drop-shadow-lg bg-white w-[560px]  mx-auto  px-4 py-20">
-          <h1 className="text-xl font-bold mb-4">Register User</h1>
+          <h1 className="text-xl font-bold mb-4 text-right font-IranSans">
+            ثبت کاربر
+          </h1>
           <form className="space-y-4">
             <InputField
-              label="Full Name"
+              label="نام"
               name="name"
               fullWidth
               inputType="text"
+              state={"Default"}
             />
             <InputField
-              label="Father Name"
+              label="ایمیل"
               name="fname"
               fullWidth
               inputType="text"
+              state={"Default"}
             />
             <InputField
-              label="Faculty"
+              label="پوهخی"
               name="faculty"
               fullWidth
               inputType="text"
+              state={"Default"}
             />
             <InputField
-              label="Position"
+              label="صلاحیت"
               name="position"
               fullWidth
               inputType="text"
+              state={"Default"}
             />
             <InputField
-              label="Degree"
+              label="درجه تحصیل"
               name="degree"
               fullWidth
               inputType="text"
+              state={"Default"}
             />
             <InputField
-              label="Phone Number"
+              label="شماره تماس"
               name="phone"
               fullWidth
               inputType="number"
+              state={"Default"}
             />
-            <InputField
-              label="Tazkira"
-              name="tazkira"
-              fullWidth
-              inputType="file"
-            />
+            <div dir="rtl">
+              <InputField
+                label="تذکره"
+                name="tazkira"
+                fullWidth
+                inputType="file"
+              />
+            </div>
             {/* //?how to make this a circle which would on click open this  */}
-            <InputField label="Photo" name="photo" fullWidth inputType="file" />
-            <Button label="Submit" intent="primary" fullWidth />
+            <div dir="rtl" className="space-y-4">
+              <InputField label="عکس" name="photo" fullWidth inputType="file" />
+            </div>
+            <div className="max-w-[70%] mx-auto">
+              <Button label="ثبت کن" intent="primary" width={"full"} />
+            </div>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

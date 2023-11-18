@@ -16,7 +16,7 @@ function AdminNavigationHeader() {
         "border-b-[3px] border-black ": path == "/admin",
       })}
     >
-      Add User
+      راجستر
     </Link>
     <Link
       href={"/admin/users"}
@@ -24,7 +24,7 @@ function AdminNavigationHeader() {
         "border-b-[3px] border-black ": path == "/admin/users",
       })}
     >
-      Users List
+      لیست کاربر ها
     </Link>
   </div>
   )
