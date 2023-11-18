@@ -31,8 +31,6 @@ function page() {
     }));
   };
 
-  console.log(content);
-
   return (
     <div
       className={cx(" mx-auto shadow-md flex justify-center", {
@@ -62,6 +60,7 @@ function page() {
             inputType="text"
             state={"Default"}
             handleChange={(value, name) => handleInputChange(value, name)}
+            direction={"rtl"}
           />
           <InputField
             label="شماره سند"
