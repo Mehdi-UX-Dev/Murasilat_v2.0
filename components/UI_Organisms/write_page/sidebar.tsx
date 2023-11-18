@@ -76,6 +76,12 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
             text={lang?.pishnihad}
             Icon={AiOutlinePlus}
           />
+
+          <SideSubOption
+            url={`/${locale}/broadcast`}
+            text={lang?.broadcast}
+            Icon={BsBroadcast}
+          />
         </div>
 
         {/* Archive Group */}

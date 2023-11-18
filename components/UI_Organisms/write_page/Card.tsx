@@ -41,10 +41,12 @@ function Card({
   listType,
   lang,
   doc,
+  locale
 }: {
   lang?: langProps_ARCHIVE;
   listType: string;
   doc: any;
+  locale: string
 }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -172,7 +174,7 @@ function Card({
           label="بخوان"
           size="medium"
           handleClick={() => {
-            router.push(`archive/${doc.document_type}/${doc.serial}`);
+            router.push(`/${locale}/archive/${doc.document_type}/${doc.serial}`);
           }}
           width={"full"}
         />

@@ -149,7 +149,7 @@ function Page({ params: { locale } }: localeProps) {
               receiver: selectedReceiver?.id,
             },
             callback: () => {
-              router.replace("/archive/sadira");
+              router.replace(`/${locale}/archive/sadira`);
             },
           })
         )

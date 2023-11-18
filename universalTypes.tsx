@@ -156,4 +156,5 @@ export type langProps_LIST = {
   title: string;
   number: string;
   content: string;
+  summary: string
 };
