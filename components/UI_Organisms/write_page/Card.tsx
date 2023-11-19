@@ -58,7 +58,6 @@ function Card({
     picture: "",
   });
 
-  console.log(doc);
 
   useEffect(() => {
     if (!doc) return;

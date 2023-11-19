@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
-import { addFile } from "@/context/features/docsHard_scan_archive";
+import { addFile } from "@/context/features/docsHard_scan_archive_Slice";
 import { useAppDispatch } from "@/context/hooks";
 import { cx } from "class-variance-authority";
 import React, { useState } from "react";
@@ -13,7 +13,7 @@ type contentType = {
   serial?: number;
   case_no?: number;
   year?: number;
-  file?: File;
+  doc?: File;
 };
 
 function page() {
@@ -34,14 +34,14 @@ function page() {
   return (
     <div
       className={cx(" mx-auto shadow-md flex justify-center", {
-        "w-[600px]": !content?.file,
-        "space-x-6": content?.file,
+        "w-[600px]": !content?.doc,
+        "space-x-6": content?.doc,
       })}
     >
-      {content?.file && (
+      {content?.doc && (
         <div className="order-1">
           <iframe
-            src={URL.createObjectURL(content?.file)}
+            src={URL.createObjectURL(content?.doc)}
             title="File Viewer"
             width="500"
             height="500"
@@ -72,7 +72,7 @@ function page() {
           />
           <InputField
             label="شماره دوسیه"
-            name="case_no"
+            name="shelf_number"
             fullWidth
             inputType="text"
             state={"Default"}
@@ -100,20 +100,20 @@ function page() {
               <input
                 id="selector"
                 type="file"
-                name="file"
+                name="doc"
                 className="hidden"
                 onChange={(data) => {
                   const file = data.target.files?.[0];
                   if (file) {
                     setContent((prev) => ({
                       ...prev,
-                      file: file,
+                      doc: file,
                     }));
                   }
                 }}
               />
             </div>
-            <p className="order-1 pr-4">{content?.file?.name}</p>
+            <p className="order-1 pr-4">{content?.doc?.name}</p>
           </div>
 
           <Button label="ثبت" type="submit" width={"full"} />

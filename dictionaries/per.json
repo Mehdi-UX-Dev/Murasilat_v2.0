@@ -85,10 +85,15 @@
       "placeholder": "از طریق شماره سند یا عنوان سند جستجو کنید",
       "search": "جستجو",
     "clear_search": "جستجو را پاک کنید"
-
- 
      },
 
+     "hardDocs_scan_archive": {
+          "year": "سال",
+          "shelf_no": "شماره دوسیه",
+          "doc_number":" شماره مکتوب",
+          "title": "عنوان",
+          "select_doc" : "انتخاب سند"
+     },
   
   
     "PAGE3": "PROFILE",

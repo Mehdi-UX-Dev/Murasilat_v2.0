@@ -29,8 +29,6 @@
     "show_profile": "د کارونکي معلومات",
     "no_document": "هیڅ سند شتون نلري",
     "docsHard_Archive": "آرشیف اسکن اسناد"
-    
-
   },
 
   "list_page": {
@@ -48,8 +46,15 @@
       "placeholder": "د سند شمیره یا د سند سرلیک له لارې لټون وکړئ",
         "search": "لټون",
     "clear_search": "لټون حذف کړئ"
-
      },
+
+     "hardDocs_scan_archive": {
+      "year": "کال",
+      "shelf_no": "د دوسیه شمیره",
+      "doc_number":" د سند شمیره",
+      "title": "عنوان",
+      "select_doc" : "انتخاب سند"
+ },
 
   "Write_Page": {
     "write_maktoob": "مکتوب جوړ کړئ",

@@ -160,3 +160,11 @@ export type langProps_LIST = {
   content: string;
   summary: string;
 };
+
+export type docsHard_Type = {
+  year: string;
+  shelf_no: string;
+  doc_number: string;
+  title: string;
+  select_doc: string;
+};
