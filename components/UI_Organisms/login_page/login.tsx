@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/context/store";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 
-const   Login = ({
+const Login = ({
   locale,
   ...lang
 }: { header: string; username: string; password: string; submit: string } & {
@@ -28,7 +28,7 @@ const   Login = ({
       }, 4000);
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const [passwordState, setShowPasswordState] = useState(false);
   // const language = localStorage.getItem("lang") || "per";

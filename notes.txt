@@ -1,6 +1,0 @@
-1: I think i should make a central type file and then export everything from there
-2: the suspend is still not working for the login page 
-3: the placeholder in the react quill is not working 
-4: the lang props and useEffect all over the place just for the same purpose so they should be used as a custom hook
-5: add draft option to the side bar archive 
-6: using setdangeroulsyinnerhtml how to sanitize properly  
