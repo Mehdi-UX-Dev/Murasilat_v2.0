@@ -9,6 +9,7 @@ import { langProps_DASHBOARD, localeProps } from "@/universalTypes";
 import Header from "@/components/UI_Organisms/write_page/Header";
 import UserInfo from "@/components/UI_Organisms/user/userInfo";
 import { useAppSelector } from "@/context/hooks";
+import UnAuthorizedRedirect from "@/components/misc/UnauthorizedRedirect";
 
 export default function DashboardLayout({
   children,
@@ -17,6 +18,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 } & localeProps) {
   const [lang, setLang] = useState<langProps_DASHBOARD | undefined>(undefined);
+
+  const { user } = useAppSelector((store) => store.user);
 
   useEffect(() => {
     (async () => {
@@ -27,7 +30,7 @@ export default function DashboardLayout({
 
   const { userProfileView } = useAppSelector((store) => store.documents);
 
-  return (
+  return user ? (
     <div className="flex  flex-row-reverse ">
       {/* Include shared UI here e.g. a header or sidebar */}
 
@@ -47,5 +50,7 @@ export default function DashboardLayout({
         {children}
       </div>
     </div>
+  ) : (
+    <UnAuthorizedRedirect locale={locale} />
   );
 }

@@ -56,6 +56,11 @@
       "select_doc" : "انتخاب سند"
  },
 
+ "unauhtorized_redirect": {
+  "header": "تاسو دې پاڼې ته د ننوتلو اجازه نه لرئ",
+  "redirect": "د ننوتلو پاڼې ته بیرته راشئ"
+ },
+
   "Write_Page": {
     "write_maktoob": "مکتوب جوړ کړئ",
     "write_istilam": "اسټیلام جوړ کړئ",

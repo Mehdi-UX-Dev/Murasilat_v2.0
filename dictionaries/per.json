@@ -95,6 +95,10 @@
           "select_doc" : "انتخاب سند"
      },
   
+     "unauhtorized_redirect": {
+      "header": "شما اجازه ورود به این صفحه را ندارید",
+      "redirect": "بازگشت به صفحه ورود"
+     },
   
     "PAGE3": "PROFILE",
     "change_password": "تغییر رمز عبور",
