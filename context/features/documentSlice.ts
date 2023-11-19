@@ -38,7 +38,16 @@ interface DocumentStateType {
     receivedRecently: DocumentType[];
   };
   loading: boolean;
-  error: string | any;
+  error: {
+    userError?: null;
+    fetchDocumentsError?: null;
+    archiveDocumentError?: null;
+    replyDocumentError?: null;
+    writeDocumentError?: null;
+    fetchDocumentsBySerialError?: null;
+    searchDocumentsDashboardPageError?: null;
+    fetchReceiversError?: null;
+  };
   pdf:
     | {
         serial: number;
@@ -103,7 +112,7 @@ const initialState: DocumentStateType = {
   receivers: [],
   pdf: {},
   loading: false,
-  error: null,
+  error: {},
   selectedReceiver: null,
   userProfileView: false,
   userInfo: {},
@@ -140,7 +149,7 @@ const fetchDocuments = createAsyncThunk(
 
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -163,7 +172,7 @@ const fetchReceivers = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -200,7 +209,7 @@ const replyDocument = createAsyncThunk(
       callback?.();
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -235,7 +244,7 @@ const archiveDocument = createAsyncThunk(
       callback?.();
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -276,7 +285,7 @@ const saveToWarida = createAsyncThunk(
       callback?.();
       return [];
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -320,6 +329,7 @@ const writeMaktoob = createAsyncThunk(
         }
       );
 
+      //! not handled
       if (maktoobData?.files) {
         // handle file upload
       }
@@ -327,7 +337,7 @@ const writeMaktoob = createAsyncThunk(
       callback?.();
       return [];
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -370,6 +380,7 @@ const writeDocument = createAsyncThunk(
         }
       );
 
+      //! not handled
       if (documentData?.files) {
         // handle file upload
       }
@@ -377,7 +388,7 @@ const writeDocument = createAsyncThunk(
       callback?.();
       return [];
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -401,7 +412,7 @@ const getUserProfile = createAsyncThunk(
 
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -426,7 +437,7 @@ const searchDocumentsDashboardPage = createAsyncThunk(
 
       return res.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -465,7 +476,7 @@ const fetchDocumentsBySerial = createAsyncThunk(
 
       return res.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -552,6 +563,9 @@ const documentsSlice = createSlice({
     },
 
     showDeletedBookmarkModal: () => {},
+    hideSearchModalError: (state) => {
+      state.error.searchDocumentsDashboardPageError = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -561,22 +575,22 @@ const documentsSlice = createSlice({
       .addCase(fetchDocuments.fulfilled, (state, action) => {
         state.documents = action.payload;
         state.loading = false;
-        state.error = null;
+        state.error.fetchDocumentsError = null;
       })
       .addCase(fetchDocuments.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as null;
+        state.error.fetchDocumentsError = action.payload as null;
       })
       .addCase(writeMaktoob.pending, (state) => {
         state.loading = true;
       })
       .addCase(writeMaktoob.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
+        state.error.writeDocumentError = null;
       })
       .addCase(writeMaktoob.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as null;
+        state.error.writeDocumentError = action.payload as null;
       })
       .addCase(fetchReceivers.pending, (state) => {
         state.loading = true;
@@ -584,12 +598,11 @@ const documentsSlice = createSlice({
       .addCase(fetchReceivers.fulfilled, (state, action) => {
         state.receivers = action.payload;
         state.loading = false;
-        state.error = null;
+        state.error.fetchReceiversError = null;
       })
       .addCase(fetchReceivers.rejected, (state, action) => {
         state.loading = false;
-
-        state.error = action.payload as null;
+        state.error.fetchReceiversError = action.payload as null;
       })
       .addCase(getUserProfile.pending, (state) => {
         state.loading = true;
@@ -597,9 +610,10 @@ const documentsSlice = createSlice({
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.userInfo = action.payload;
         state.loading = false;
+        state.error.userError = null;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error.userError = action.payload as null;
         state.loading = false;
       })
       .addCase(searchDocumentsDashboardPage.pending, (state) => {
@@ -608,11 +622,11 @@ const documentsSlice = createSlice({
       .addCase(searchDocumentsDashboardPage.fulfilled, (state, action) => {
         state.searchedDocumentLoading = false;
         state.searchedDocuments = action.payload;
+        state.error.searchDocumentsDashboardPageError = null;
       })
       .addCase(searchDocumentsDashboardPage.rejected, (state, action) => {
         state.searchedDocumentLoading = false;
-
-        state.error = action.payload as null;
+        state.error.searchDocumentsDashboardPageError = action.payload as null;
       })
       .addCase(fetchDocumentsBySerial.pending, (state) => {
         state.loading = true;
@@ -620,9 +634,10 @@ const documentsSlice = createSlice({
       .addCase(fetchDocumentsBySerial.fulfilled, (state, action) => {
         state.pdf = action.payload;
         state.loading = false;
+        state.error.fetchDocumentsBySerialError = null;
       })
       .addCase(fetchDocumentsBySerial.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error.fetchDocumentsBySerialError = action.payload as null;
         state.loading = false;
       })
 
@@ -637,33 +652,33 @@ const documentsSlice = createSlice({
       })
       .addCase(writeDocument.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
+        state.error.writeDocumentError = null;
       })
       .addCase(writeDocument.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as null;
+        state.error.writeDocumentError = action.payload as null;
       })
       .addCase(replyDocument.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(replyDocument.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
+        state.error.replyDocumentError = null;
       })
       .addCase(replyDocument.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as null;
+        state.error.replyDocumentError = action.payload as null;
       })
       .addCase(archiveDocument.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(archiveDocument.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
+        state.error.archiveDocumentError = null;
       })
       .addCase(archiveDocument.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as null;
+        state.error.archiveDocumentError = action.payload as null;
       });
   },
 });
@@ -677,6 +692,7 @@ export const {
   hideSearchedDocumentModal,
   showBookmarkModal,
   hideBookmarkModal,
+  hideSearchModalError,
 } = documentsSlice.actions;
 
 export {

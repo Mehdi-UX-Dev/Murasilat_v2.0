@@ -11,6 +11,7 @@ import { getDictionary } from "@/i18n-server";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { RxCrossCircled } from "react-icons/rx";
 
 function SearchBar({ locale, type }: { locale: string; type: string }) {
   let [lang, setLang] = useState<
@@ -55,6 +56,8 @@ function SearchBar({ locale, type }: { locale: string; type: string }) {
       (path == "/ps/dashboard" && dispatch(hideSearchedDocumentModal()));
   };
 
+  
+
   return (
     lang && (
       <div className="max-w-3xl mx-auto">
@@ -63,8 +66,9 @@ function SearchBar({ locale, type }: { locale: string; type: string }) {
             <button
               type="button"
               onClick={clearSearch}
-              className="bg-myAccent-error-300 text-white w-40 font-rounded font-bold rounded text-lg  "
+              className="bg-myAccent-error-400 text-white w-40 font-rounded font-bold rounded text-lg flex items-center justify-center space-x-2 "
             >
+              <RxCrossCircled size={24}/>
               {lang.clear_search}
             </button>
           ) : (

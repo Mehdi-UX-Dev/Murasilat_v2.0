@@ -32,6 +32,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           value="N"
           className="checked:bg-black border  checked:border-black"
           onChange={handleRadioClick}
+          
         />
       </div>
 

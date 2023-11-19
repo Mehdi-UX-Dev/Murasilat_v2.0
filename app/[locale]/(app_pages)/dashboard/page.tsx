@@ -13,6 +13,7 @@ import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
 import StackCards from "@/components/UI_Organisms/Card/stackCards";
 import SearchedResults from "@/components/UI_Organisms/Card/searchedResultsModal";
 import ID from "@/components/UI_Organisms/write_page/ID";
+import ErrorBox from "@/components/misc/errorBox";
 
 function Dashboard({ params: { locale } }: localeProps) {
   const [lang, setDashLang] = useState<langProps_DASHBOARD | undefined>(
@@ -25,9 +26,11 @@ function Dashboard({ params: { locale } }: localeProps) {
     })();
   }, [locale]);
 
-  const { bookmark, searchedDoumentsModalActive } = useAppSelector(
-    (store) => store.documents
-  );
+  const {
+    bookmark,
+    searchedDoumentsModalActive,
+    error: { fetchDocumentsError },
+  } = useAppSelector((store) => store.documents);
 
   const dispatch = useAppDispatch();
 
@@ -42,24 +45,14 @@ function Dashboard({ params: { locale } }: localeProps) {
       }, 4000);
   }, [dispatch, bookmark.error]);
 
-  return (
+  return !fetchDocumentsError ? (
     lang && (
       <div className="relative">
         {bookmark.activeModal && (
           <div className="absolute left-[45%]  max-w-sm  mx-auto">
             {bookmark.data ? (
-              <h1
-                bg-white
-                shadow-lg
-                rounded-full
-                text-green-400
-                font-bold
-                px-4
-                py-4
-                text-center
-              >
+              <h1 className="bg-white shadow-lg rounded-full text-green-400 font-bold px-4 py-4  text-center">
                 Success
-                {/*  */}
                 {/* {bookmark?.response} */}
               </h1>
             ) : (
@@ -84,6 +77,8 @@ function Dashboard({ params: { locale } }: localeProps) {
         </div>
       </div>
     )
+  ) : (
+    <ErrorBox message={fetchDocumentsError} />
   );
 }
 

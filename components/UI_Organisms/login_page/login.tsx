@@ -4,7 +4,7 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { AiFillEye } from "react-icons/ai";
 import { FaSpinner, FaUserAlt } from "react-icons/fa";
-import { credentialsProps_LOGIN, errorProps_LOGIN } from "@/universalTypes";
+import { credentialsProps_LOGIN } from "@/universalTypes";
 import { clearError, login } from "@/context/features/loginSlice";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/context/store";

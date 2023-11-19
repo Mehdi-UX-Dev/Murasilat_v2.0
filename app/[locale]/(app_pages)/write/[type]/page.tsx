@@ -16,7 +16,6 @@ import {
   localeProps,
   writtenDocumentValues_PROPS,
 } from "@/universalTypes";
-import axios from "axios";
 import {
   fetchReceivers,
   writeDocument,
@@ -37,8 +36,6 @@ function FileSelector({
   const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    // const allFiles = [...files, ...(event.target.files as File[])];
-    // setFiles(allFiles);
     const fileList = event.target.files;
     if (fileList) {
       const fileArray = Array.from(fileList);
@@ -78,9 +75,11 @@ function Page({ params: { locale } }: localeProps) {
   const shamsiDate = GetShamsiDate();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { selectedReceiver, loading } = useAppSelector(
-    (store) => store.documents
-  );
+  const {
+    selectedReceiver,
+    loading,
+    error: { writeDocumentError },
+  } = useAppSelector((store) => store.documents);
 
   let documentType = "";
   let path = usePathname();
@@ -97,30 +96,8 @@ function Page({ params: { locale } }: localeProps) {
       break;
   }
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Bearer " +
-            JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-          accept: "application/json",
-        },
-      })
-      .then(
-        (res) => {
-          setRecieverList(res.data);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-  }, []);
-
   const [recieverList, setRecieverList] = useState<object[]>([]);
   const quillRef = useRef<ReactQuill>(null);
-  //! quill formart editor not working
   useEffect(() => {
     if (!quillRef.current) return;
     quillRef.current.editor?.format("align", "right");
@@ -223,7 +200,13 @@ function Page({ params: { locale } }: localeProps) {
       </div>
     </div>
   ) : (
-    <div>
+    <div className="relative">
+      {writeDocumentError && (
+        <div className="absolute left-[50%] -top-[10%] bg-myAccent-error-500 text-white px-5 py-2.5  rounded-full ">
+          {writeDocumentError}
+        </div>
+      )}
+
       <form
         onSubmit={handleDocSumbit}
         className=" xl:w-[1024px] 2xl:w-[1200px]  mt-12 ml-4   "
@@ -231,7 +214,6 @@ function Page({ params: { locale } }: localeProps) {
         <div className="border border-primary-400 mb-4">
           <div className="flex justify-between border border-b-0 border-primary-400 py-3 px-4 bg-primary-300 font-bold">
             <p>{shamsiDate}</p>
-            {/* <p>01</p> */}
           </div>
 
           <div className="flex items-center border border-b-0 border-primary-300  pl-2 ">
@@ -246,6 +228,7 @@ function Page({ params: { locale } }: localeProps) {
             dir="rtl"
             onChange={handleInputChange}
             name="title"
+            required
           />
 
           {/* the quill editor is still not good in design, needs work */}
@@ -271,6 +254,7 @@ function Page({ params: { locale } }: localeProps) {
               dir="rtl"
               name="remarks"
               onChange={handleInputChange}
+              required
             />
 
             <input
@@ -280,6 +264,7 @@ function Page({ params: { locale } }: localeProps) {
               dir="rtl"
               name="summary"
               onChange={handleInputChange}
+              required
             />
           </div>
         </div>
