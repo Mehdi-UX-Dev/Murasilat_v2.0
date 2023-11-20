@@ -23,9 +23,10 @@ function SideOption({
           "bg-primary-200 border-l-2 border-primary-900 text-primary-900":
             path == url,
           "hover:bg-primary-200 !cursor-pointer":
-            url === "/broadcast" || url === "/dashboard",
-          //? why would not this work
-          // `${customClassName}` : customClassName,
+            url === "/per/dashboard" ||
+            url === "/ps/dashboard" ||
+            url === "/per/docsHard_scan_archive" ||
+            url === "/per/docsHard_scan_archive",
         }
       )}
     >

@@ -4,24 +4,34 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { InputField } from "@/components/UI_Molecules/Input";
 import { addFile } from "@/context/features/docsHard_scan_archive_Slice";
 import { useAppDispatch } from "@/context/hooks";
+import { localeProps } from "@/universalTypes";
 import { cx } from "class-variance-authority";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 type contentType = {
   title?: string;
   serial?: number;
-  case_no?: number;
+  shlef_number?: number;
   year?: number;
-  doc?: File;
+  archived_document?: File;
 };
 
-function page() {
+function page({ params: { locale } }: localeProps) {
+  const { replace } = useRouter();
   const dispatch = useAppDispatch();
   const [content, setContent] = useState<contentType | undefined>(undefined);
   const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    dispatch(addFile({ content, callback: () => {} }));
+    dispatch(
+      addFile({
+        content,
+        callback: () => {
+          replace(`/${locale}/docsHard_scan_archive`);
+        },
+      })
+    );
   };
 
   const handleInputChange = (value: string, name: string) => {
@@ -34,14 +44,14 @@ function page() {
   return (
     <div
       className={cx(" mx-auto shadow-md flex justify-center", {
-        "w-[600px]": !content?.doc,
-        "space-x-6": content?.doc,
+        "w-[600px]": !content?.archived_document,
+        "space-x-6": content?.archived_document,
       })}
     >
-      {content?.doc && (
+      {content?.archived_document && (
         <div className="order-1">
           <iframe
-            src={URL.createObjectURL(content?.doc)}
+            src={URL.createObjectURL(content?.archived_document)}
             title="File Viewer"
             width="500"
             height="500"
@@ -59,7 +69,7 @@ function page() {
             fullWidth
             inputType="text"
             state={"Default"}
-            handleChange={(value, name) => handleInputChange(value, name)}
+            handleChange={handleInputChange}
             direction={"rtl"}
           />
           <InputField
@@ -69,14 +79,16 @@ function page() {
             inputType="text"
             state={"Default"}
             handleChange={handleInputChange}
+            direction={"rtl"}
           />
           <InputField
             label="شماره دوسیه"
-            name="shelf_number"
+            name="shelf"
             fullWidth
             inputType="text"
             state={"Default"}
             handleChange={handleInputChange}
+            direction={"rtl"}
           />
 
           <InputField
@@ -86,6 +98,7 @@ function page() {
             inputType="text"
             state={"Default"}
             handleChange={handleInputChange}
+            direction={"rtl"}
           />
 
           <div className="flex items-center  justify-end ">
@@ -100,20 +113,20 @@ function page() {
               <input
                 id="selector"
                 type="file"
-                name="doc"
+                name="archive_document"
                 className="hidden"
                 onChange={(data) => {
                   const file = data.target.files?.[0];
                   if (file) {
                     setContent((prev) => ({
                       ...prev,
-                      doc: file,
+                      archived_document: file,
                     }));
                   }
                 }}
               />
             </div>
-            <p className="order-1 pr-4">{content?.doc?.name}</p>
+            <p className="order-1 pr-4">{content?.archived_document?.name}</p>
           </div>
 
           <Button label="ثبت" type="submit" width={"full"} />

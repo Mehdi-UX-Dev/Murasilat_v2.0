@@ -1,13 +1,40 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {
+type stateTypes = {
+  error: null;
+  documents: {
+    document: {
+      serial: string;
+      date: string;
+      title: string;
+      receiver: { fullname: string };
+      sender: { fullname: string };
+    };
+    summary: string;
+    document_type: string;
+  }[];
+  searchedResults: {
+    document: {
+      serial: string;
+      date: string;
+      title: string;
+      receiver: { fullname: string };
+      sender: { fullname: string };
+    };
+    summary: string;
+    document_type: string;
+  }[];
+  isInSearch: boolean;
+  loading: boolean;
+};
+
+const initialState: stateTypes = {
   documents: [],
   searchedResults: [],
   isInSearch: false,
   loading: true,
   error: null,
-  
 };
 
 const fetchArchiveDocuments = createAsyncThunk(
@@ -28,7 +55,7 @@ const fetchArchiveDocuments = createAsyncThunk(
       );
       return res.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -56,12 +83,10 @@ const searchArchiveDocuments = createAsyncThunk(
 
       return res.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.detail);
+      return rejectWithValue(error.message);
     }
   }
 );
-
-
 
 const archiveSlice = createSlice({
   name: "archive",
@@ -94,9 +119,7 @@ const archiveSlice = createSlice({
       .addCase(searchArchiveDocuments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as null;
-      })
-
-    
+      });
   },
 });
 

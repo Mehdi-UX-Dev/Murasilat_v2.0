@@ -41,12 +41,12 @@ function Card({
   listType,
   lang,
   doc,
-  locale
+  locale,
 }: {
   lang?: langProps_ARCHIVE;
   listType: string;
   doc: any;
-  locale: string
+  locale: string;
 }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -58,7 +58,6 @@ function Card({
     picture: "",
   });
 
-
   useEffect(() => {
     if (!doc) return;
     if (
@@ -68,9 +67,9 @@ function Card({
       path === "/ps/archive/warida"
     ) {
       setPersonDate({
-        fullname: doc.sender.fullname,
-        authority: doc.sender.authority.title,
-        picture: doc.sender.profile_pic,
+        fullname: doc?.sender?.fullname,
+        authority: doc?.sender?.authority?.title,
+        picture: doc?.sender?.profile_pic,
       });
     } else if (
       listType === "sentRecently" ||
@@ -78,9 +77,9 @@ function Card({
       path === "/ps/archive/sadira"
     ) {
       setPersonDate({
-        fullname: doc.receiver.fullname,
-        authority: doc.receiver.authority.title,
-        picture: doc.receiver.profile_pic,
+        fullname: doc?.receiver?.fullname,
+        authority: doc?.receiver?.authority.title,
+        picture: doc?.receiver?.profile_pic,
       });
     }
   }, []);
@@ -173,7 +172,9 @@ function Card({
           label="بخوان"
           size="medium"
           handleClick={() => {
-            router.push(`/${locale}/archive/${doc.document_type}/${doc.serial}`);
+            router.push(
+              `/${locale}/archive/${doc.document_type}/${doc.serial}`
+            );
           }}
           width={"full"}
         />

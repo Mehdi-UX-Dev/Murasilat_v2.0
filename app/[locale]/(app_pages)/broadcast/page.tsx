@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { logos } from "../pdf/imageData";
 import ReactQuill from "react-quill";
 import { useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
@@ -11,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { createBroadcast } from "@/context/features/broadcastSlice";
 import { FaSpinner } from "react-icons/fa";
 import { localeProps } from "@/universalTypes";
+import ErrorBox from "@/components/misc/errorBox";
 
 function Preview({ params: { locale } }: localeProps) {
   const modules = {
@@ -48,7 +48,7 @@ function Preview({ params: { locale } }: localeProps) {
   });
   const {
     user: { user },
-    broadcast: { loading },
+    broadcast: { loading, error },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -64,18 +64,20 @@ function Preview({ params: { locale } }: localeProps) {
     router.push(`/${locale}/dashboard`);
   };
 
+  
+
   const handleSubmit = () => {
     dispatch(
       createBroadcast({
         ...value,
         date: new Date().toISOString(),
         sender: user?.user_id,
-        callback: () => router.replace("/dashboard"),
+        callback: () => router.replace(`/${locale}/dashboard`),
       })
     );
   };
 
-  return (
+  return !error ? (
     <div className="w-full min-h-screen h-auto bg-white p-8">
       <div className="bg-slate-50 rounded shadow flex flex-col p-8">
         {/* Header */}
@@ -133,6 +135,7 @@ function Preview({ params: { locale } }: localeProps) {
               className="py-2 px-4 outline-1 w-full outline-slate-50 rounded text-xl"
               dir="rtl"
               placeholder="عنوان را بنویسید"
+              required
             />
           </div>
           {/*Editor */}
@@ -157,6 +160,7 @@ function Preview({ params: { locale } }: localeProps) {
               className="py-2 px-4 outline-1 w-1/2 outline-slate-50 rounded text-xl"
               dir="rtl"
               placeholder="ملاحظات را بنویسید"
+              required
             />
             <input
               value={value.summary}
@@ -167,6 +171,7 @@ function Preview({ params: { locale } }: localeProps) {
               className="py-2 px-4 outline-1 w-1/2 outline-slate-50 rounded text-xl"
               dir="rtl"
               placeholder="خلاصه را بنویسید"
+              required
             />
           </div>
         </div>
@@ -213,6 +218,8 @@ function Preview({ params: { locale } }: localeProps) {
         )}
       </div>
     </div>
+  ) : (
+    <ErrorBox message={error.message} />
   );
 }
 

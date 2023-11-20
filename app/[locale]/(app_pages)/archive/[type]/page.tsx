@@ -2,6 +2,7 @@
 
 import ListTable from "@/components/UI_Organisms/docs_pages/list";
 import SearchBar from "@/components/UI_Organisms/docs_pages/searchBar";
+import ErrorBox from "@/components/misc/errorBox";
 import { fetchArchiveDocuments } from "@/context/features/archiveSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
@@ -20,7 +21,7 @@ function Page({
   const [lang, setLang] = useState<langProps_LIST>();
 
   const dispatch = useAppDispatch();
-  const { documents } = useAppSelector((store) => store.archive);
+  const { documents, error } = useAppSelector((store) => store.archive);
 
   useEffect(() => {
     (async () => {
@@ -35,7 +36,7 @@ function Page({
     tableType: true,
   });
 
-  return (
+  return !error ? (
     lang && (
       <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
         <SearchBar locale={locale} type={type} />
@@ -74,6 +75,8 @@ function Page({
         />
       </div>
     )
+  ) : (
+    <ErrorBox message={error} />
   );
 }
 

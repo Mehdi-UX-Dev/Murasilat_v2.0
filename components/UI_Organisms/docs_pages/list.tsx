@@ -52,7 +52,7 @@ function ListTable({
       };
     };
     summary: string;
-    document_type: string
+    document_type: string;
   }[] = [];
   if (isInSearch) {
     data = [...searchedResults];
@@ -84,32 +84,25 @@ function ListTable({
               </tr>
             </thead>
             <tbody className="font-rounded ">
-              {data.map(
-                (item) => (
-                  console.log(item),
-                  (
-                    <tr
-                      key={item.document.serial}
-                      className="border-b border-primary-500 hover:bg-primary-400"
-                      onClick={() =>
-                        router.push(
-                          `${item.document_type}/${item.document.serial}`
-                        )
-                      }
-                    >
-                      <td>{GetShamsiDate(item?.document?.date)}</td>
-                      <td>{item?.document?.title}</td>
-                      <td>
-                        {type === "sadira"
-                          ? item?.document?.receiver?.fullname
-                          : item?.document?.sender?.fullname}
-                      </td>
-                      <td>{item?.summary}</td>
-                      <td>{item?.document?.serial}</td>
-                    </tr>
-                  )
-                )
-              )}
+              {data.map((item) => (
+                <tr
+                  key={item.document.serial}
+                  className="border-b border-primary-500 hover:bg-primary-400"
+                  onClick={() =>
+                    router.push(`${item.document_type}/${item.document.serial}`)
+                  }
+                >
+                  <td>{GetShamsiDate(item?.document?.date)}</td>
+                  <td>{item?.document?.title}</td>
+                  <td>
+                    {type === "sadira"
+                      ? item?.document?.receiver?.fullname
+                      : item?.document?.sender?.fullname}
+                  </td>
+                  <td>{item?.summary}</td>
+                  <td>{item?.document?.serial}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}

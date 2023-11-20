@@ -55,7 +55,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
         {/* Write Group */}
         <div className="space-y-3">
           <SideOption
-            url={""}
+            url={"#"}
             text={lang?.write}
             Icon={BsEnvelopePlusFill}
             hasDropDown={true}
@@ -88,7 +88,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
         {/* Archive Group */}
         <div className="space-y-3">
           <SideOption
-            url={""}
+            url={"#"}
             text={lang?.archive}
             Icon={MdFolder}
             hasDropDown={true}
@@ -120,7 +120,7 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
         {/* Broadcast  */}
 
         <SideOption
-          url={`/${locale}/docs_scan_archive`}
+          url={`/${locale}/docsHard_scan_archive`}
           text={lang?.docsHard_Archive}
           Icon={PiFileArchiveFill}
           hasDropDown={false}
