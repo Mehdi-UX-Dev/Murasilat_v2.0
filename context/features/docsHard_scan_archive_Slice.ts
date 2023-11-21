@@ -7,10 +7,16 @@ type stateTypes = {
   error: null;
   shelf: { shelf_number: number }[];
   documents: {
-    serial: number;
-    title: string;
-    archived_document: string;
-    shelf: number;
+    serial?: number;
+    title?: string;
+    archived_document?: string;
+    shelf?: number;
+  }[];
+  documentDetail: {
+    serial?: number;
+    title?: string;
+    archived_document?: string;
+    shelf?: number;
   }[];
 };
 
@@ -20,6 +26,7 @@ const initialState: stateTypes = {
   error: null,
   shelf: [],
   documents: [],
+  documentDetail: [],
 };
 
 const addFile = createAsyncThunk(
@@ -76,7 +83,7 @@ const getAllFolders = createAsyncThunk(
 
 const getShelf = createAsyncThunk(
   "getAll_Files_From_Folder/docsHard_scan_archive",
-  async (year, { rejectWithValue }) => {
+  async ({ year }: { year: number }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/search/`,
@@ -94,8 +101,6 @@ const getShelf = createAsyncThunk(
         }
       );
 
-      console.log(response);
-
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -106,7 +111,7 @@ const getShelf = createAsyncThunk(
 const getDocumentsFromShelf = createAsyncThunk(
   "getAll_Files_From_Shelf/docsHard_scan_archive",
   async (
-    { year, shelf }: { year: string; shelf: number },
+    { year, shelf }: { year: number; shelf: number },
     { rejectWithValue }
   ) => {
     try {
@@ -127,8 +132,6 @@ const getDocumentsFromShelf = createAsyncThunk(
         }
       );
 
-      console.log(response);
-
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -136,6 +139,37 @@ const getDocumentsFromShelf = createAsyncThunk(
   }
 );
 
+const getDocumentBySerial = createAsyncThunk(
+  "getDocument/docsHard_scan_archive",
+  async (
+    { year, shelf, serial }: { year: number; shelf: number; serial: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/search/`,
+        {
+          year: year,
+          shelf: shelf,
+          serial: serial,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 const docsHard_Slice = createSlice({
   name: "docsHard_scan_archive",
   initialState,
@@ -162,9 +196,22 @@ const docsHard_Slice = createSlice({
     builder.addCase(getDocumentsFromShelf.rejected, (state, action) => {
       state.error = action.payload as null;
     });
+    builder.addCase(getDocumentBySerial.pending, (state) => {});
+    builder.addCase(getDocumentBySerial.fulfilled, (state, action) => {
+      state.documentDetail = action.payload;
+    });
+    builder.addCase(getDocumentBySerial.rejected, (state, action) => {
+      state.error = action.payload as null;
+    });
   },
 });
 
 export default docsHard_Slice.reducer;
 
-export { addFile, getAllFolders, getShelf, getDocumentsFromShelf };
+export {
+  addFile,
+  getAllFolders,
+  getShelf,
+  getDocumentsFromShelf,
+  getDocumentBySerial,
+};

@@ -62,38 +62,7 @@ function Archive({ params: { locale } }: localeProps) {
           ))}
         </div>
 
-        {/* <table id="table" className="w-full text-center table-auto mt-8 border">
-          <thead className="border-b border-primary-500  bg-primary-900 text-white ">
-            <tr className=" bg-light font-IranSans ">
-              <th>{lang.title}</th>
-              <th>{lang.doc_number}</th>
-              <th>{lang.shelf_no}</th>
-              <th>{lang.year}</th>
-            </tr>
-          </thead>
-          <tbody className="font-rounded ">
-            {documents?.map(
-              (item) => (
-                console.log(item),
-                (
-                  <tr
-                    key={item.serial}
-                    className="border-b border-primary-500 hover:bg-primary-400"
-                    onClick={() =>
-                      // push(`${item.document_type}/${item.document.serial}`)
-                    }
-                  >
-                    <td>{GetShamsiDate(item?.document?.date)}</td>
-                    <td>{item.title}</td>
-
-                    <td>{item?.summary}</td>
-                    <td>{item?.document?.serial}</td>
-                  </tr>
-                )
-              )
-            )}
-          </tbody>
-        </table> */}
+      
       </div>
     )
   );
