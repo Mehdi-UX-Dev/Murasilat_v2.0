@@ -6,7 +6,7 @@ import { getDictionary } from "@/i18n-server";
 import { langProps_PDF, localeProps } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
 
-function SabtWarida(locale: string) {
+function SabtWarida({ locale }: { locale: string }) {
   const dispatch = useAppDispatch();
   const { pdf } = useAppSelector((store) => store.documents);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
@@ -32,6 +32,7 @@ function SabtWarida(locale: string) {
             saveToWarida({
               id: pdf.serial,
               ...updateDocument,
+              callback: () => {},
             })
           );
       }}

@@ -48,7 +48,7 @@ function IstilamFormat({
 }: {
   type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
   serial: number;
-  locale: localeProps;
+  locale: string;
 }) {
   const { user } = useAppSelector((store) => store.user);
 

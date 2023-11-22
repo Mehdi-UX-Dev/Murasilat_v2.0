@@ -9,13 +9,16 @@ import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { fetchDocumentsBySerial } from "@/context/features/documentSlice";
 import KabulUni from "../../public/images/KabulUni.png";
 import MOH from "../../public/images/moh.jpg";
+import { Locale } from "@/i18n-config";
 
 function MaktoobFormat({
   type,
   serial,
+  locale,
 }: {
   type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
   serial: number;
+  locale: Locale
 }) {
   const download = () => {
     const PDF_Container = document.getElementById("toBePDFContainer");
@@ -106,7 +109,7 @@ function MaktoobFormat({
       </div>
       <div className="p-8 w-full space-x-4 flex justify-end"></div>
 
-      {!pdf?.read && <SabtWarida />}
+      {!pdf?.read && <SabtWarida locale={locale} />}
 
       <div className="absolute top-64 left-14 ">
         <GrDocumentDownload size={36} onClick={() => download()} />
