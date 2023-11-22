@@ -22,7 +22,7 @@ function page({
       <h1 className="font-IranSans font-bold text-3xl text-right mr-5 mb-10">
         دوسیه های سال {year}
       </h1>
-      <SearchBar locale={locale} type="" />
+      <SearchBar locale={locale} page="docs_scan_archive" />
 
       <div className="flex space-x-7 items-center justify-end flex-wrap mt-8">
         {shelf?.map((item: { shelf_number: number }, idx: number) => (

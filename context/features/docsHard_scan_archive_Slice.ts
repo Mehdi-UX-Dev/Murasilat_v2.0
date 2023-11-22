@@ -1,3 +1,4 @@
+import { clearSearch } from '@/context/features/archiveSlice';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -12,7 +13,8 @@ type stateTypes = {
     archived_document?: string;
     shelf?: number;
   }[];
-  documentDetail: {
+  searchDetail: {
+    id?: number;
     serial?: number;
     title?: string;
     archived_document?: string;
@@ -26,7 +28,7 @@ const initialState: stateTypes = {
   error: null,
   shelf: [],
   documents: [],
-  documentDetail: [],
+  searchDetail: [],
 };
 
 const addFile = createAsyncThunk(
@@ -86,7 +88,7 @@ const getShelf = createAsyncThunk(
   async ({ year }: { year: number }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/search/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/get_details/`,
         {
           year: year,
         },
@@ -116,7 +118,7 @@ const getDocumentsFromShelf = createAsyncThunk(
   ) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/search/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/get_details/`,
         {
           year: year,
           shelf: shelf,
@@ -139,19 +141,14 @@ const getDocumentsFromShelf = createAsyncThunk(
   }
 );
 
-const getDocumentBySerial = createAsyncThunk(
-  "getDocument/docsHard_scan_archive",
-  async (
-    { year, shelf, serial }: { year: number; shelf: number; serial: number },
-    { rejectWithValue }
-  ) => {
+const searchDocScans = createAsyncThunk(
+  "search/docsHard_scan_archive",
+  async ({ serial }: { serial: string }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/local_archive/search/`,
         {
-          year: year,
-          shelf: shelf,
-          serial: serial,
+          serial,
         },
         {
           headers: {
@@ -170,10 +167,15 @@ const getDocumentBySerial = createAsyncThunk(
     }
   }
 );
+
 const docsHard_Slice = createSlice({
   name: "docsHard_scan_archive",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSearch_scan: (state) => {
+      state.searchDetail = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllFolders.pending, (state) => {});
     builder.addCase(getAllFolders.fulfilled, (state, action) => {
@@ -196,11 +198,11 @@ const docsHard_Slice = createSlice({
     builder.addCase(getDocumentsFromShelf.rejected, (state, action) => {
       state.error = action.payload as null;
     });
-    builder.addCase(getDocumentBySerial.pending, (state) => {});
-    builder.addCase(getDocumentBySerial.fulfilled, (state, action) => {
-      state.documentDetail = action.payload;
+    builder.addCase(searchDocScans.pending, (state) => {});
+    builder.addCase(searchDocScans.fulfilled, (state, action) => {
+      state.searchDetail = action.payload;
     });
-    builder.addCase(getDocumentBySerial.rejected, (state, action) => {
+    builder.addCase(searchDocScans.rejected, (state, action) => {
       state.error = action.payload as null;
     });
   },
@@ -208,10 +210,12 @@ const docsHard_Slice = createSlice({
 
 export default docsHard_Slice.reducer;
 
+export const  {clearSearch_scan} = docsHard_Slice.actions
+
 export {
   addFile,
   getAllFolders,
   getShelf,
   getDocumentsFromShelf,
-  getDocumentBySerial,
+  searchDocScans,
 };

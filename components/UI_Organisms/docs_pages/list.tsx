@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/UI_Molecules/Button";
 import { clearSearch } from "@/context/features/archiveSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { GetShamsiDate } from "@/date-converter";
@@ -10,6 +9,7 @@ import ReactPaginate from "react-paginate";
 import Card from "../write_page/Card";
 import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/UI_Molecules/Button";
 
 function ListTable({
   showMethod,
@@ -61,9 +61,9 @@ function ListTable({
   }
   const router = useRouter();
 
-  useEffect(() => {
-    dispatch(clearSearch());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   !isInSearch && dispatch(clearSearch());
+  // }, [isInSearch]);
 
   return data?.length ? (
     <div>
@@ -154,13 +154,15 @@ function ListTable({
           {lang.no_document}
         </h1>
       </div>
-      {isInSearch && (
-        <Button
-          intent={"primary"}
-          handleClick={() => dispatch(clearSearch())}
-          label="Clear Search"
-        />
-      )}
+      <div className="flex justify-center mt-4">
+        {isInSearch && (
+          <Button
+            intent={"primary"}
+            handleClick={() => dispatch(clearSearch())}
+            label="جستجو را پاک کنید"
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -28,6 +28,7 @@ function MaktoobFormat({
   }, []);
 
   const { pdf } = useAppSelector((store) => store.documents);
+  console.log(pdf);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8 relative">
@@ -48,8 +49,8 @@ function MaktoobFormat({
             <div className="flex flex-col text-lg items-center ">
               <span>د کابل پوهنتون ریاست</span>
               <span>Kabul University</span>
-              <span>{pdf?.authority?.title}</span>
-              <span>{pdf?.sender?.title}</span>
+              <span>{pdf?.sender?.authority?.title}</span>
+              {/* <span>{pdf?.sender?.title}</span> */}
             </div>
             <Image
               src={MOH}
@@ -64,8 +65,7 @@ function MaktoobFormat({
               شماره:
               <span className="opacity-50 text-base "> {pdf?.serial}</span>
             </p>
-            <div className="flex justify-between w-full">
-              <p>متحدالمال</p>
+            <div className="flex justify-end">
               <p>
                 تاریخ: {GetShamsiDate()} ه.ش مطابق به {GetQamariDate()}
                 ه.ق
@@ -73,7 +73,7 @@ function MaktoobFormat({
             </div>
           </div>
         </div>
-        <div className="w-full h-[2px] bg-slate-900" />
+        <div className="w-full h-[2px] bg-slate-900 my-4" />
         {/* Body */}
         <div className="flex flex-col w-full py-8 h-screen">
           <h1 className="font-bold font-IranSans text-lgl text-right mb-4">
@@ -109,7 +109,6 @@ function MaktoobFormat({
       {!pdf?.read && <SabtWarida />}
 
       <div className="absolute top-64 left-14 ">
-        {/* <Button label="دانلود" width={"half"} handleClick={} /> */}
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
     </div>

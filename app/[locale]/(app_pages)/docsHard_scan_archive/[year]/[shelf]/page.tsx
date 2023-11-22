@@ -18,43 +18,42 @@ function page({
     dispatch(getDocumentsFromShelf({ year, shelf }));
   });
 
-  const { push } = useRouter();
   return (
     <div>
-      <h1 className="font-bold font-IranSans text-lg text-right">
+      <h1 className="font-bold font-IranSans text-2xl text-right mb-14 ">
         لیست اسناد در دوسیه {shelf}
       </h1>
 
-      <SearchBar type="" locale={locale} />
+      <SearchBar page="docs_scan_archive" locale={locale} />
+
 
       <table
         id="table"
-        className="w-full mx-10 text-center table-auto mt-8 border"
+        className="w-full mx-10 text-center table-auto mt-14 border"
       >
         <thead className="border-b border-primary-500  bg-primary-900 text-white ">
           <tr className=" bg-light font-IranSans ">
-            <th>شماره</th>
-            <th>عنوان</th>
+            <th></th>
             <th>دوسیه</th>
+            <th>عنوان</th>
+            <th>شماره</th>
           </tr>
         </thead>
         <tbody className="font-rounded ">
           {documents?.map((item) => (
-            <tr
-              key={item.serial}
-              className="hover:bg-primary-300"
-              onClick={() =>
-                push(
-                  `/${locale}/docsHard_scan_archive/${year}/${shelf}/${item.serial}`
-                )
-              }
-            >
-              <td>{item.serial}</td>
-              <td>{item.title}</td>
-              <td>{item.shelf}</td>
+            <tr key={item.serial} className="hover:bg-primary-300">
               <td>
-                <a></a>
+                <a
+                  className="bg-primary-900 text-white py-2 px-2 rounded hover:bg-primary-600"
+                  href={`${process.env.NEXT_PUBLIC_MEDIA_SERVER}${item.archived_document}`}
+                  download={item.title}
+                >
+                  دانلود
+                </a>
               </td>
+              <td>{item.shelf}</td>
+              <td>{item.title}</td>
+              <td>{item.serial}</td>
             </tr>
           ))}
         </tbody>

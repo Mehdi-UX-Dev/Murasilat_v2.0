@@ -1,6 +1,7 @@
 "use client";
 
 import { searchArchiveDocuments } from "@/context/features/archiveSlice";
+import { clearSearch_scan, searchDocScans } from "@/context/features/docsHard_scan_archive_Slice";
 import {
   hideSearchedDocumentModal,
   searchDocumentsDashboardPage,
@@ -13,7 +14,15 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxCrossCircled } from "react-icons/rx";
 
-function SearchBar({ locale, type }: { locale: string; type: string }) {
+function SearchBar({
+  locale,
+  type,
+  page,
+}: {
+  locale: string;
+  type?: string;
+  page: string;
+}) {
   let [lang, setLang] = useState<
     { placeholder: string; search: string; clear_search: string } | undefined
   >(undefined);
@@ -27,7 +36,6 @@ function SearchBar({ locale, type }: { locale: string; type: string }) {
   useEffect(() => {
     (async () => {
       const langRes = (await getDictionary(locale)).searchBar;
-
       setLang(langRes);
     })();
   }, [locale]);
@@ -35,40 +43,38 @@ function SearchBar({ locale, type }: { locale: string; type: string }) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (path === "/ps/dashboard" || "/per") {
-      searchValue.length == 0 && dispatch(hideSearchedDocumentModal());
-    }
+    page === "dashboard" &&
+      searchValue.length == 0 &&
+      dispatch(hideSearchedDocumentModal());
   }, [searchValue.length, dispatch, path]);
 
   const Search: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
     dispatch(showSearchedDocumentModal());
-    // the code is bad in here seperation of code is needed in here
-    path === "/per/dashboard" || path === "/ps/dashboard"
-      ? dispatch(searchDocumentsDashboardPage({ value: searchValue }))
-      : dispatch(searchArchiveDocuments({ type, value: searchValue }));
+    page === "dashboard" &&
+      dispatch(searchDocumentsDashboardPage({ value: searchValue }));
+    type && dispatch(searchArchiveDocuments({ type, value: searchValue }));
+    page === "docs_scan_archive" &&
+      dispatch(searchDocScans({ serial: searchValue }));
   };
 
   const clearSearch = () => {
     setSearchValue("");
-    path === "/per/dashboard" ||
-      (path == "/ps/dashboard" && dispatch(hideSearchedDocumentModal()));
+    page === "dashboard" &&  dispatch(hideSearchedDocumentModal());
+    page === "docs_scan_archive" && dispatch(clearSearch_scan())
   };
-
-  
 
   return (
     lang && (
       <div className="max-w-3xl mx-auto">
         <form className="flex space-x-2" onSubmit={Search}>
-          {searchedDoumentsModalActive && searchValue.length ? (
+          {searchValue.length ? (
             <button
               type="button"
               onClick={clearSearch}
               className="bg-myAccent-error-400 text-white w-40 font-rounded font-bold rounded text-lg flex items-center justify-center space-x-2 "
             >
-              <RxCrossCircled size={24}/>
+              <RxCrossCircled size={24} />
               {lang.clear_search}
             </button>
           ) : (

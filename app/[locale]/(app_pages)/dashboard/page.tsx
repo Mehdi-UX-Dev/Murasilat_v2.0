@@ -66,7 +66,7 @@ function Dashboard({ params: { locale } }: localeProps) {
         <ID />
 
         <div className=" relative mt-8 mb-16 max-w-3xl mx-auto">
-          <SearchBar type="" locale={locale} />
+          <SearchBar page="dashboard" locale={locale} />
           {searchedDoumentsModalActive && <SearchedResults {...lang} />}
         </div>
 

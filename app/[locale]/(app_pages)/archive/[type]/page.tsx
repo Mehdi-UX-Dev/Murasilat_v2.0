@@ -39,7 +39,7 @@ function Page({
   return !error ? (
     lang && (
       <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
-        <SearchBar locale={locale} type={type} />
+        <SearchBar page="archive" locale={locale} type={type} />
 
         {documents.length && (
           <div className="flex justify-end items-center space-x-4 mt-4">

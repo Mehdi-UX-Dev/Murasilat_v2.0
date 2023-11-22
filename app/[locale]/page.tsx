@@ -29,21 +29,22 @@ function Home({ params: { locale } }: localeProps) {
   return (
     <div>
       {lang && <Header />}
+
       {lang ? (
-          user ? (
-            tokenExpired ? (
-              <AltLogin locale={locale} {...lang} />
-            ) : (
-              <Redirect to={`/${locale}/dashboard`} />
-            )
+        user ? (
+          tokenExpired ? (
+            <AltLogin locale={locale} {...lang} />
           ) : (
-            <Login locale={locale} {...lang} />
+            <Redirect to={`/${locale}/dashboard`} />
           )
-        ) : !tokenExpired ? (
-          <LoginSuspense />
         ) : (
-          <LoadingIndicator text="لطفاً صبر کنید" />
-        )}
+          <Login locale={locale} {...lang} />
+        )
+      ) : !tokenExpired ? (
+        <LoginSuspense />
+      ) : (
+        <LoadingIndicator text="لطفاً صبر کنید" />
+      )}
     </div>
   );
 }
