@@ -3,11 +3,12 @@ import axios from "axios";
 const TokenKey = "TOKEN";
 
 function getTokens() {
-  const tokens = JSON.parse(localStorage.getItem(TokenKey));
-  console.log(tokens);
+  const tokens = JSON.parse(localStorage.getItem(TokenKey) || "");
 
-  if (tokens && tokens?.access)
+  if (tokens && tokens.access) {
     return { access: tokens.access, refresh: tokens.refresh };
+  }
+  
   return null;
 }
 
@@ -36,7 +37,7 @@ axiosInstance.interceptors.response.use(
       error?.response?.status === 401 &&
       error?.response?.statusText === "Unauthorized"
     ) {
-      const { refresh: refresh_token } = getTokens();
+      const { refresh: refresh_token } = getTokens() as any;
       retryCount++;
       if (retryCount < 3) {
         return axiosInstance

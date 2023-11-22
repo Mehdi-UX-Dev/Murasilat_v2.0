@@ -14,7 +14,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
     const { value } = event.target;
     setDocValue((prev: writtenDocumentValues_PROPS) => ({
       ...prev,
-      urgency : value as "N" | "U" | "A" | "C",
+      urgency: value as "N" | "U" | "A" | "C",
     }));
   };
 
@@ -32,7 +32,6 @@ function TypeGroup({ setDocValue }: setDocValue) {
           value="N"
           className="checked:bg-black border  checked:border-black"
           onChange={handleRadioClick}
-          
         />
       </div>
 
@@ -43,7 +42,7 @@ function TypeGroup({ setDocValue }: setDocValue) {
           type="radio"
           id="emergency"
           name="docType"
-          value="E"
+          value="U"
           className="checked:bg-black border checked:border-black"
           onChange={handleRadioClick}
         />

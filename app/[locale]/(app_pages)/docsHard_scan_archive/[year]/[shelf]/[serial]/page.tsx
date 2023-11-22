@@ -1,6 +1,5 @@
 "use client";
 
-import { getDocumentBySerial } from "@/context/features/docsHard_scan_archive_Slice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import React, { useEffect } from "react";
 
