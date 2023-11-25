@@ -97,7 +97,7 @@ function IstilamFormat({
     html2pdf(PDF_Container);
   };
 
-  return (
+  return Object.keys(pdf).length ? (
     <div className="relative">
       <div
         id="container"
@@ -183,6 +183,23 @@ function IstilamFormat({
             <div className="border-b border-black h-10"></div>
           </div>
         </div>
+
+        {/* Footer */}
+        <div className="flex justify-between w-full p-4 text-sm font-semibold">
+          <div className="flex items-end">
+            <div className="h-16 w-16 bg-slate-600 flex items-center justify-center text-center text-slate-50">
+              خودکار اظافه میشود
+            </div>
+            <p className="ml-4">
+              لطفا این کود را اسکن نمایید تا فایل مربوطه باز گردد
+            </p>
+          </div>
+          <div className="flex flex-col" dir="rtl">
+            <p>آدرس: کارته چهار, کابل - افغانستان</p>
+            <p>شماره تماس: 0202222222</p>
+            <p>ایمیل: {pdf?.sender?.email}</p>
+          </div>
+        </div>
       </div>
       <div className="w-40 ml-96 mt-4">
         {loading ? (
@@ -217,6 +234,8 @@ function IstilamFormat({
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
     </div>
+  ) : (
+    <div className="font-bold text-xl text-center font-IranSans ">فایل خالی</div>
   );
 }
 

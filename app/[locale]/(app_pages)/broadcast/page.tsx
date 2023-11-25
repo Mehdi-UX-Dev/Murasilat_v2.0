@@ -40,11 +40,13 @@ function Preview({ params: { locale } }: localeProps) {
     content: string;
     summary: string;
     remarks: string;
+    subject: string;
   }>({
     title: "",
     content: "",
     summary: "",
     remarks: "",
+    subject: "",
   });
   const {
     user: { user },
@@ -63,8 +65,6 @@ function Preview({ params: { locale } }: localeProps) {
   const handleCancel = () => {
     router.push(`/${locale}/dashboard`);
   };
-
-  
 
   const handleSubmit = () => {
     dispatch(
@@ -136,6 +136,16 @@ function Preview({ params: { locale } }: localeProps) {
               dir="rtl"
               placeholder="عنوان را بنویسید"
               required
+            />
+            <input
+              value={value.subject}
+              onChange={({ target }) =>
+                setValue((prev) => ({ ...prev, subject: target.value }))
+              }
+              type="text"
+              className="py-2 px-4 outline-1 w-full outline-slate-50 rounded text-xl"
+              dir="rtl"
+            placeholder=" موضوع را بنویسید"
             />
           </div>
           {/*Editor */}

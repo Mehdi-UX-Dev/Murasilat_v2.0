@@ -20,9 +20,8 @@ function Dashboard({ params: { locale } }: localeProps) {
     undefined
   );
 
-  const {user} = useAppSelector(store => store.user)
-  console.log(user);
-  
+  const { user } = useAppSelector((store) => store.user);
+
   useEffect(() => {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;
@@ -74,11 +73,15 @@ function Dashboard({ params: { locale } }: localeProps) {
           {searchedDoumentsModalActive && <SearchedResults {...lang} />}
         </div>
 
-        <div className="pb-10 space-y-8">
-          <StackCards type={"unreadDocuments"} {...lang} />
-          <StackCards type={"receivedRecently"} {...lang} />
-          <StackCards type={"sentRecently"} {...lang} />
-        </div>
+        {user?.role === "head" ? (
+          <div>head</div>
+        ) : (
+          <div className="pb-10 space-y-8">
+            <StackCards type={"unreadDocuments"} {...lang} />
+            <StackCards type={"receivedRecently"} {...lang} />
+            <StackCards type={"sentRecently"} {...lang} />
+          </div>
+        )}
       </div>
     )
   ) : (
