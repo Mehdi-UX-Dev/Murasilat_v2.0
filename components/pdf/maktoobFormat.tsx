@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import html2pdf from "html2pdf.js";
 
 import { GetQamariDate, GetShamsiDate } from "../../date-converter";
@@ -10,7 +10,8 @@ import { fetchDocumentsBySerial } from "@/context/features/documentSlice";
 import KabulUni from "../../public/images/KabulUni.png";
 import MOH from "../../public/images/moh.jpg";
 import { Locale } from "@/i18n-config";
-
+import PDFViewer from "./pdfViewer";
+import { Button } from "../UI_Molecules/Button";
 function MaktoobFormat({
   type,
   serial,
@@ -18,7 +19,7 @@ function MaktoobFormat({
 }: {
   type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
   serial: number;
-  locale: Locale
+  locale: Locale;
 }) {
   const download = () => {
     const PDF_Container = document.getElementById("toBePDFContainer");
@@ -31,7 +32,8 @@ function MaktoobFormat({
   }, []);
 
   const { pdf } = useAppSelector((store) => store.documents);
-  console.log(pdf);
+  const [showAttachments, setShowAttachments] = useState(false);
+  const togglePortal = () => setShowAttachments(!showAttachments);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8 relative">
@@ -109,11 +111,23 @@ function MaktoobFormat({
       </div>
       <div className="p-8 w-full space-x-4 flex justify-end"></div>
 
-      {!pdf?.read && <SabtWarida locale={locale} />}
-
       <div className="absolute top-64 left-14 ">
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
+
+      {pdf?.attachments?.length && (
+        <Button label="نمایش ضمیمه ها" handleClick={togglePortal} />
+      )}
+
+      {pdf?.attachments?.length &&
+        showAttachments &&
+        pdf.attachments.map((item: any) => (
+          <div>
+            <PDFViewer pdfUrl={item.attachment} />
+          </div>
+        ))}
+
+      {!pdf?.read && <SabtWarida locale={locale} />}
     </div>
   );
 }

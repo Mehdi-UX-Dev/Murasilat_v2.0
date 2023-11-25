@@ -13,6 +13,7 @@ import UnAuthorizedRedirect from "@/components/misc/UnauthorizedRedirect";
 import { RxCrossCircled } from "react-icons/rx";
 import { hideSearchModalError } from "@/context/features/documentSlice";
 import { useRouter } from "next/navigation";
+import HeadSideBar from "@/components/UI_Organisms/write_page/headSidebar";
 
 export default function DashboardLayout({
   children,
@@ -38,7 +39,6 @@ export default function DashboardLayout({
 
   const { userProfileView } = useAppSelector((store) => store.documents);
 
-  //? may a prompt would be good
   useEffect(() => {
     const expiryDate = new Date(user?.exp * 1000);
     const tokenExpired = new Date() > expiryDate;
@@ -48,7 +48,11 @@ export default function DashboardLayout({
   return user ? (
     <div className=" relative flex  flex-row-reverse ">
       <Suspense fallback={<SideBarSuspense />}>
-        {lang && <SideBar locale={locale} {...lang} />}
+        {lang && user.role === "head" ? (
+          <HeadSideBar locale={locale} {...lang}/>
+        ) : (
+          lang && <SideBar locale={locale} {...lang} />
+        )}
       </Suspense>
 
       {userProfileView && (

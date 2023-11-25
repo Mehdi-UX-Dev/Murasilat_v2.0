@@ -221,15 +221,24 @@ function Page({ params: { locale } }: localeProps) {
             <CustomizedSelectComponent />
           </div>
 
-          <input
-            type="text"
-            className="w-full border border-b-0 border-primary-400 pr-4 py-2"
-            placeholder={lang?.title}
-            dir="rtl"
-            onChange={handleInputChange}
-            name="title"
-            required
-          />
+          <div className="flex">
+            <input
+              type="text"
+              className="w-full border-r border border-b-0 border-primary-400 pr-4 py-2"
+              placeholder="موضوع"
+              dir="rtl"
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              className=" w-full  border-primary-400 pr-4 py-2 border border-b-0"
+              placeholder={lang?.title}
+              dir="rtl"
+              onChange={handleInputChange}
+              name="title"
+              required
+            />
+          </div>
 
           {/* the quill editor is still not good in design, needs work */}
           <ReactQuill

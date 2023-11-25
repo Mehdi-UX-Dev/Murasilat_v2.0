@@ -129,11 +129,14 @@ function Card({
       </div>
 
       <div className="py-6 space-y-[8px] text-right">
-        <h2 className="font-bold text-[24px]">{doc.title}</h2>
-        {/* //? should there be a summary */}
+        <h2 className="font-bold text-[24px]">
+          <span>عنوان</span> <span>:</span> <span>{doc.title}</span>
+        </h2>
 
-        <p className="text-medium">
-          {lang?.summary}:{doc?.summary}
+        <p className="text-medium flex space-x-1 justify-end">
+          <span>{doc.subject ? doc?.subject : "موضوع ندارد"}</span>{" "}
+          <span>:</span>
+          <span> موضوع</span>
         </p>
       </div>
 

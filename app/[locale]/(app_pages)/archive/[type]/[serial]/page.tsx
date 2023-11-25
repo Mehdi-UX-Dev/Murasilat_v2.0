@@ -19,6 +19,7 @@ function DocumentByID({
   ) : (
     <IstilamFormat type={type} serial={serial} locale={locale}/>
   );
+  
 }
 
 export default DocumentByID;

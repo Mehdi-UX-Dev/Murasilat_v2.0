@@ -19,6 +19,10 @@ function Dashboard({ params: { locale } }: localeProps) {
   const [lang, setDashLang] = useState<langProps_DASHBOARD | undefined>(
     undefined
   );
+
+  const {user} = useAppSelector(store => store.user)
+  console.log(user);
+  
   useEffect(() => {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;

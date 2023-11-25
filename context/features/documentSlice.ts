@@ -49,7 +49,7 @@ interface DocumentStateType {
     fetchReceiversError?: null;
   };
   pdf:
-    | {
+     {
         serial: number;
         content: string;
         document_type: string;
