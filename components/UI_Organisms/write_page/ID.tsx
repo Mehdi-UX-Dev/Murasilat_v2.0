@@ -1,8 +1,8 @@
-'use client';
-import Image from 'next/image';
-import { useAppDispatch, useAppSelector } from '@/context/hooks';
-import { useEffect } from 'react';
-import { getUserProfile, showUserInfo } from '@/context/features/documentSlice';
+"use client";
+import Image from "next/image";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { useEffect } from "react";
+import { getUserProfile, showUserInfo } from "@/context/features/documentSlice";
 
 function ID() {
   const dispatch = useAppDispatch();
@@ -11,6 +11,8 @@ function ID() {
   useEffect(() => {
     dispatch(getUserProfile());
   }, [dispatch]);
+
+  console.log(userInfo);
 
   return (
     <section
@@ -22,10 +24,10 @@ function ID() {
           {userInfo?.fullname}
         </p>
         <p className="font-bold text-lg font-rounded text-primary-600">
-          {userInfo?.faculty}
+          {userInfo?.authority?.title}
         </p>
         <p className="font-bold text-lg font-rounded text-primary-600">
-          {userInfo?.authority?.title}
+          {userInfo?.title}
         </p>
       </div>
       {userInfo?.profile_pic && (

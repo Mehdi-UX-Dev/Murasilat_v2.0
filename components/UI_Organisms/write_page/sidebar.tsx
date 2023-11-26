@@ -17,11 +17,12 @@ import SideOption from "../../UI_Molecules/sidebarOption";
 import { langProps_SideBar } from "@/universalTypes";
 import { logout } from "@/context/features/loginSlice";
 import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/context/hooks";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import SideBarProfile from "@/components/UI_Molecules/sideBarProfile";
 import { PiFileArchiveFill } from "react-icons/pi";
 
 function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
+  const { user } = useAppSelector((store) => store.user);
   const router = useRouter();
   const path = usePathname();
   const dispatch = useAppDispatch();
@@ -78,11 +79,13 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
             Icon={AiOutlinePlus}
           />
 
-          <SideSubOption
-            url={`/${locale}/broadcast`}
-            text={lang?.broadcast}
-            Icon={BsBroadcast}
-          />
+          {user?.role === "head" && (
+            <SideSubOption
+              url={`/${locale}/broadcast`}
+              text={lang?.broadcast}
+              Icon={BsBroadcast}
+            />
+          )}
         </div>
 
         {/* Archive Group */}

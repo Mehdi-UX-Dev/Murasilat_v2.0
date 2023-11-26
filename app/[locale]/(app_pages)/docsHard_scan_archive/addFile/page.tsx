@@ -9,6 +9,7 @@ import { cx } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { FaArrowLeft } from "react-icons/fa";
 
 type contentType = {
   title?: string;
@@ -19,7 +20,7 @@ type contentType = {
 };
 
 function page({ params: { locale } }: localeProps) {
-  const { replace } = useRouter();
+  const { replace, back } = useRouter();
   const dispatch = useAppDispatch();
   const [content, setContent] = useState<contentType | undefined>(undefined);
   const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -48,6 +49,14 @@ function page({ params: { locale } }: localeProps) {
         "space-x-6": content?.archived_document,
       })}
     >
+      <div className="flex items-center space-x-2 ">
+        <FaArrowLeft
+          size={32}
+          onClick={() => back()}
+          className="hover:cursor-pointer"
+        />
+        <p className="font-bold text-lg ">برگشت</p>
+      </div>
       {content?.archived_document && (
         <div className="order-1">
           <iframe

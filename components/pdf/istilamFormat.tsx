@@ -15,7 +15,7 @@ import {
 } from "@/context/features/documentSlice";
 import { Button } from "../UI_Molecules/Button";
 import { useRouter } from "next/navigation";
-import { FaSpinner } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import { localeProps } from "@/universalTypes";
 import { GrDocumentDownload } from "react-icons/gr";
 
@@ -56,7 +56,7 @@ function IstilamFormat({
   useEffect(() => {
     dispatch(fetchDocumentsBySerial({ type, serial }));
   }, []);
-  const router = useRouter();
+  const { replace, back } = useRouter();
 
   const { pdf, loading } = useAppSelector((store) => store.documents);
 
@@ -75,7 +75,7 @@ function IstilamFormat({
         id: serial,
         reply: content,
         callback: () => {
-          router.replace(`/${locale}/archive/warida`);
+          replace(`/${locale}/archive/warida`);
         },
       })
     );
@@ -86,7 +86,7 @@ function IstilamFormat({
       archiveDocument({
         id: serial,
         callback: () => {
-          router.replace(`/${locale}/archive/sadira`);
+          replace(`/${locale}/archive/sadira`);
         },
       })
     );
@@ -99,6 +99,14 @@ function IstilamFormat({
 
   return Object.keys(pdf).length ? (
     <div className="relative">
+      <div className="flex items-center space-x-2 ">
+        <FaArrowLeft
+          size={32}
+          onClick={() => back()}
+          className="hover:cursor-pointer"
+        />
+        <p className="font-bold text-lg ">برگشت</p>
+      </div>
       <div
         id="container"
         className="bg-slate-5 w-full min-h-screen h-auto bg-slate-50 p-8 mx-4  "
@@ -235,7 +243,9 @@ function IstilamFormat({
       </div>
     </div>
   ) : (
-    <div className="font-bold text-xl text-center font-IranSans ">فایل خالی</div>
+    <div className="font-bold text-xl text-center font-IranSans ">
+      فایل خالی
+    </div>
   );
 }
 

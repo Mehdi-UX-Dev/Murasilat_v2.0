@@ -14,6 +14,8 @@ import { RxCrossCircled } from "react-icons/rx";
 import { hideSearchModalError } from "@/context/features/documentSlice";
 import { useRouter } from "next/navigation";
 import HeadSideBar from "@/components/UI_Organisms/write_page/headSidebar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function DashboardLayout({
   children,
@@ -49,7 +51,7 @@ export default function DashboardLayout({
     <div className=" relative flex  flex-row-reverse ">
       <Suspense fallback={<SideBarSuspense />}>
         {lang && user.role === "head" ? (
-          <HeadSideBar locale={locale} {...lang}/>
+          <HeadSideBar locale={locale} {...lang} />
         ) : (
           lang && <SideBar locale={locale} {...lang} />
         )}
@@ -70,6 +72,8 @@ export default function DashboardLayout({
           />
         </div>
       )}
+
+      <ToastContainer />
 
       <div className="mt-8 overflow-y-auto mr-4 h-screen grow  ">
         <Header />

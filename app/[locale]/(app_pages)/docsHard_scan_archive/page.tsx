@@ -35,6 +35,8 @@ function Archive({ params: { locale } }: localeProps) {
   return (
     lang && (
       <div>
+
+        
         <h1 className="font-IranSans font-bold text-3xl text-right mr-5 mb-10">
           آرشیف اسناد
         </h1>

@@ -5,6 +5,7 @@ import { getDocumentsFromShelf } from "@/context/features/docsHard_scan_archive_
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 
 function page({
   params: { locale, year, shelf },
@@ -18,14 +19,24 @@ function page({
     dispatch(getDocumentsFromShelf({ year, shelf }));
   });
 
+  const { back } = useRouter();
+
   return (
     <div>
       <h1 className="font-bold font-IranSans text-2xl text-right mb-14 ">
         لیست اسناد در دوسیه {shelf}
       </h1>
 
-      <SearchBar page="docs_scan_archive" locale={locale} />
+      <div className="flex items-center space-x-2 ">
+        <FaArrowLeft
+          size={32}
+          onClick={() => back()}
+          className="hover:cursor-pointer"
+        />
+        <p className="font-bold text-lg ">برگشت</p>
+      </div>
 
+      <SearchBar page="docs_scan_archive" locale={locale} />
 
       <table
         id="table"

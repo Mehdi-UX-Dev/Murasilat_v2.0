@@ -12,6 +12,8 @@ import MOH from "../../public/images/moh.jpg";
 import { Locale } from "@/i18n-config";
 import PDFViewer from "./pdfViewer";
 import { Button } from "../UI_Molecules/Button";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 function MaktoobFormat({
   type,
   serial,
@@ -26,20 +28,31 @@ function MaktoobFormat({
     html2pdf(PDF_Container);
   };
 
+  const { back } = useRouter();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchDocumentsBySerial({ type, serial }));
   }, []);
 
+  const { user } = useAppSelector((store) => store.user);
   const { pdf } = useAppSelector((store) => store.documents);
   const [showAttachments, setShowAttachments] = useState(false);
   const togglePortal = () => setShowAttachments(!showAttachments);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8 relative">
+      <div className="flex items-center space-x-2 ">
+        <FaArrowLeft
+          size={32}
+          onClick={() => back()}
+          className="hover:cursor-pointer"
+        />
+        <p className="font-bold text-lg ">برگشت</p>
+      </div>
+
       <div
         id="toBePDFContainer"
-        className="bg-slate-50 rounded shadow flex flex-col p-8"
+        className="bg-slate-50 rounded shadow flex flex-col p-8 "
       >
         {/* Header */}
         <div className="flex flex-col w-full">
@@ -111,7 +124,7 @@ function MaktoobFormat({
       </div>
       <div className="p-8 w-full space-x-4 flex justify-end"></div>
 
-      <div className="absolute top-64 left-14 ">
+      <div className="absolute top-56 left-14 ">
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
 
@@ -127,7 +140,10 @@ function MaktoobFormat({
           </div>
         ))}
 
-      {!pdf?.read && <SabtWarida locale={locale} />}
+      {pdf.sender.id !== user?.user_id && !pdf?.read && (
+        <SabtWarida locale={locale} />
+      )}
+      {}
     </div>
   );
 }
