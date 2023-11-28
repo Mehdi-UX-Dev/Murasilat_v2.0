@@ -16,8 +16,8 @@ import {
 import { Button } from "../UI_Molecules/Button";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaSpinner } from "react-icons/fa";
-import { localeProps } from "@/universalTypes";
 import { GrDocumentDownload } from "react-icons/gr";
+import { toast } from "react-toastify";
 
 const modules = {
   toolbar: [
@@ -76,6 +76,7 @@ function IstilamFormat({
         reply: content,
         callback: () => {
           replace(`/${locale}/archive/warida`);
+          toast.success("احکام صادر شد");
         },
       })
     );
@@ -87,6 +88,7 @@ function IstilamFormat({
         id: serial,
         callback: () => {
           replace(`/${locale}/archive/sadira`);
+          toast.success("موفقانه آرشیف شد");
         },
       })
     );

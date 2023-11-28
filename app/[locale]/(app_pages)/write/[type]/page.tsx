@@ -25,6 +25,8 @@ import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { usePathname, useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { cx } from "class-variance-authority";
 
 function FileSelector({
   files,
@@ -127,6 +129,7 @@ function Page({ params: { locale } }: localeProps) {
             },
             callback: () => {
               router.replace(`/${locale}/archive/sadira`);
+              toast.success("مکتوب ایجاد شد");
             },
           })
         )
@@ -139,6 +142,7 @@ function Page({ params: { locale } }: localeProps) {
             },
             callback: () => {
               router.replace(`/${locale}/archive/sadira`);
+              toast.success("سند ایجاد شد");
             },
           })
         );
@@ -216,9 +220,19 @@ function Page({ params: { locale } }: localeProps) {
             <p>{shamsiDate}</p>
           </div>
 
-          <div className="flex items-center border border-b-0 border-primary-300  pl-2 ">
-            <TypeGroup setDocValue={setDocValue} />
-            <CustomizedSelectComponent />
+          <div
+            className={cx(
+              " items-center border border-b-0 border-primary-300  pl-2 ",
+              {
+                flex: documentType === "maktoob",
+              }
+            )}
+          >
+            {documentType === "maktoob" && (
+              <TypeGroup setDocValue={setDocValue} />
+            )}
+
+            <CustomizedSelectComponent documentType={documentType} />
           </div>
 
           <div className="flex">

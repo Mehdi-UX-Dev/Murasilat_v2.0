@@ -14,7 +14,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { hideSearchModalError } from "@/context/features/documentSlice";
 import { useRouter } from "next/navigation";
 import HeadSideBar from "@/components/UI_Organisms/write_page/headSidebar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function DashboardLayout({

@@ -4,8 +4,9 @@ import Person from "@/components/UI_Molecules/personSendList";
 import SelectedPerson from "@/components/UI_Molecules/personSelectedAvatar";
 
 import { useAppSelector } from "@/context/hooks";
+import { cx } from "class-variance-authority";
 
-function CustomizedSelectComponent() {
+function CustomizedSelectComponent({ documentType }: { documentType: string }) {
   const { receivers, selectedReceiver } = useAppSelector(
     (store) => store.documents
   );
@@ -18,7 +19,13 @@ function CustomizedSelectComponent() {
   return (
     <div
       dir="rtl"
-      className="relative grow text-end pr-4 border-l border-primary-400 h-16 py-4 ml-2"
+      className={cx(
+        "relative   text-end pr-4 border-l border-primary-400 h-16 py-4 ",
+        {
+          "grow ml-2": documentType === "maktoob",
+          "w-1/2 ml-auto": documentType !== "maktoob",
+        }
+      )}
     >
       <div
         className="flex items-center justify-between pl-2"

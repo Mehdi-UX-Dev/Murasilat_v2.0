@@ -49,7 +49,7 @@ interface DocumentStateType {
     fetchReceiversError?: null;
   };
   pdf:
-     {
+    | {
         serial: number;
         content: string;
         document_type: string;
@@ -227,7 +227,12 @@ const archiveDocument = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.put(
+      console.log("try block");
+
+      console.log(
+        JSON.parse(localStorage.getItem("TOKENS") || "")?.access + "token"
+      );
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/mark_as_archived/`,
         {},
         {
@@ -329,10 +334,6 @@ const writeMaktoob = createAsyncThunk(
         }
       );
 
-      //! not handled
-      if (maktoobData?.files) {
-        // handle file upload
-      }
 
       callback?.();
       return [];

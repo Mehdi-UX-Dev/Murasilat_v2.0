@@ -3,8 +3,9 @@ import { InputField } from "@/components/UI_Molecules/Input";
 import { saveToWarida } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
-import { langProps_PDF, localeProps } from "@/universalTypes";
+import { langProps_PDF } from "@/universalTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function SabtWarida({ locale }: { locale: string }) {
   const dispatch = useAppDispatch();
@@ -32,7 +33,9 @@ function SabtWarida({ locale }: { locale: string }) {
             saveToWarida({
               id: pdf.serial,
               ...updateDocument,
-              callback: () => {},
+              callback: () => {
+                toast.success("ثبت وارده گردید");
+              },
             })
           );
       }}
