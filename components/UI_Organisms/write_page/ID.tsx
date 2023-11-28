@@ -12,8 +12,6 @@ function ID() {
     dispatch(getUserProfile());
   }, [dispatch]);
 
-  console.log(userInfo);
-
   return (
     <section
       className="flex max-w-fit space-x-6 ml-4"

@@ -4,6 +4,7 @@ import documentReducer from "./features/documentSlice";
 import archiveReducer from "./features/archiveSlice";
 import broadcastReducer from "./features/broadcastSlice";
 import docsHard_Slice from "./features/docsHard_scan_archive_Slice";
+import adminSlice from "./features/adminSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     broadcast: broadcastReducer,
     archive: archiveReducer,
     docsHard_scan_archive: docsHard_Slice,
+    adminSlice : adminSlice
   },
 });
 

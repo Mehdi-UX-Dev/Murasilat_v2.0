@@ -1,36 +1,59 @@
-import React from "react";
+"use client";
+
+import { getAllUsers, deleteUser } from "@/context/features/adminSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function List() {
+  const dispatch = useAppDispatch();
+  const { allUsers } = useAppSelector((store) => store.adminSlice);
+  const { refresh } = useRouter();
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
 
+  const removeUser = (id: number) => {
+    dispatch(
+      deleteUser({
+        id,
+        callback: () => {
+          refresh();
+
+          toast.success("کاربر موفقانه حذف شد");
+        },
+      })
+    );
+  };
   return (
     <table className="table-auto w-full max-w-4xl mx-auto mt-10 border ">
       <thead className="bg-primary-300">
         <tr>
-          <th>Id</th>
-          <th>Full Name</th>
-          <th>Faculty</th>
-          <th>role</th>
+          <th></th>
+          <th>اداره</th>
+          <th>ایمیل</th>
+          <th>اسم</th>
+          <th>شماره</th>
         </tr>
       </thead>
       <tbody className="text-center ">
-        <tr>
-          <td>1</td>
-          <td>Mohammad Mehdi Wahid</td>
-          <td>Computer Science</td>
-          <td>Assistant Professor</td>
-        </tr>
-        <tr className="even:bg-primary-200">
-          <td>2</td>
-          <td>Mohammad Mehdi Wahid</td>
-          <td>Computer Science</td>
-          <td>Assistant Professor</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Mohammad Mehdi Wahid</td>
-          <td>Computer Science</td>
-          <td>Assistant Professor</td>
-        </tr>
+        {allUsers?.map((item) => (
+          <tr key={item.id}>
+            <td>
+              <MdDelete
+                size={32}
+                onClick={() => removeUser(item.id)}
+                className="hover:scale-110 hover:cursor-pointer"
+              />
+            </td>
+            <td>{item.authority.title}</td>
+            <td>{item.email}</td>
+            <td>{item.fullname}</td>
+            <td>{item.id}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
