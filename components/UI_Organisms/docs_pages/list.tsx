@@ -41,6 +41,7 @@ function ListTable({
 
   let data: {
     document: {
+      document_type: string
       serial: string;
       date: string;
       title: string;
@@ -52,7 +53,6 @@ function ListTable({
       };
     };
     summary: string;
-    document_type: string;
   }[] = [];
   if (isInSearch) {
     data = [...searchedResults];
@@ -89,7 +89,9 @@ function ListTable({
                   key={item.document.serial}
                   className="border-b border-primary-500 hover:bg-primary-400"
                   onClick={() =>
-                    router.push(`${item.document_type}/${item.document.serial}`)
+                    router.push(
+                      `${item.document.document_type}/${item.document.serial}`
+                    )
                   }
                 >
                   <td>{GetShamsiDate(item?.document?.date)}</td>

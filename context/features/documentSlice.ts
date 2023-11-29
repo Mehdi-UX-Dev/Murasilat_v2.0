@@ -158,6 +158,7 @@ const fetchReceivers = createAsyncThunk(
   "documents/receivers",
   async (_, { rejectWithValue }) => {
     try {
+      //
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`,
         {
@@ -170,6 +171,30 @@ const fetchReceivers = createAsyncThunk(
           },
         }
       );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+const fetchHeadReceivers = createAsyncThunk(
+  "documents/receivers",
+  async (_, { rejectWithValue }) => {
+    try {
+      //
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/get_draft_receivers/`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -295,6 +320,194 @@ const saveToWarida = createAsyncThunk(
   }
 );
 
+const approveDocumentDraft = createAsyncThunk(
+  "maktoobs/approve",
+  async (
+    {
+      id,
+      remarks,
+      callback,
+    }: {
+      id: number;
+      remarks: string | any;
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/approve/`,
+        { remarks },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const sendDocumentDraft = createAsyncThunk(
+  "maktoobs/send",
+  async (
+    {
+      id,
+      remarks,
+      summary,
+      callback,
+    }: {
+      id: number;
+      remarks: string | any;
+      summary: string | any;
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/send/`,
+        { remarks, summary },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+const sendForOrder = createAsyncThunk(
+  "maktoobs/order",
+  async (
+    {
+      id,
+      remarks,
+      summary,
+      callback,
+    }: {
+      id: number;
+      remarks: string | any;
+      summary: string | any;
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/send_to_order/`,
+        { remarks, summary },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const giveDirections = createAsyncThunk(
+  "maktoobs/directions",
+  async (
+    {
+      id,
+      orders,
+      callback,
+    }: {
+      id: number;
+      orders: string | any;
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/order/`,
+        { orders },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const forwardTo = createAsyncThunk(
+  "maktoobs/forward",
+  async (
+    {
+      id,
+      user_ids,
+      callback,
+    }: {
+      id: number;
+      user_ids: any[];
+      callback: () => void;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/maktoobs/${id}/forward/`,
+        { user_ids },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+      return [];
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const writeMaktoob = createAsyncThunk(
   "maktoobs/create",
   async (
@@ -333,7 +546,6 @@ const writeMaktoob = createAsyncThunk(
           },
         }
       );
-
 
       callback?.();
       return [];
@@ -680,7 +892,23 @@ const documentsSlice = createSlice({
       .addCase(archiveDocument.rejected, (state, action) => {
         state.loading = false;
         state.error.archiveDocumentError = action.payload as null;
+      })
+      .addCase(approveDocumentDraft.fulfilled, () => {
+        // state.loading = false;
+      })
+      .addCase(sendDocumentDraft.fulfilled, () => {
+        // state.loading = false;
+      })
+      .addCase(sendForOrder.fulfilled, () => {
+        // state.loading = false;
+      })
+      .addCase(giveDirections.fulfilled, () => {
+        // state.loading = false;
+      })
+      .addCase(forwardTo.fulfilled, () => {
+        // state.loading = false;
       });
+    // .addCase(fetchHeadReceivers.fulfilled, (state, action) => {});
   },
 });
 
@@ -701,6 +929,7 @@ export {
   fetchDocuments,
   writeMaktoob,
   fetchReceivers,
+  fetchHeadReceivers,
   saveToWarida,
   getUserProfile,
   searchDocumentsDashboardPage,
@@ -709,4 +938,9 @@ export {
   writeDocument,
   replyDocument,
   archiveDocument,
+  approveDocumentDraft,
+  sendDocumentDraft,
+  sendForOrder,
+  giveDirections,
+  forwardTo,
 };

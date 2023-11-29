@@ -10,9 +10,9 @@ type stateTypes = {
       title: string;
       receiver: { fullname: string };
       sender: { fullname: string };
+      document_type: string;
     };
     summary: string;
-    document_type: string;
   }[];
   searchedResults: {
     document: {
@@ -21,9 +21,9 @@ type stateTypes = {
       title: string;
       receiver: { fullname: string };
       sender: { fullname: string };
+      document_type: string;
     };
     summary: string;
-    document_type: string;
   }[];
   isInSearch: boolean;
   loading: boolean;

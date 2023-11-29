@@ -3,10 +3,16 @@ import { useAppDispatch } from "@/context/hooks";
 import Image from "next/image";
 import React from "react";
 
-function Person({ info }: { info: any }) {
+function Person({
+  info,
+  onClick,
+}: {
+  info: any;
+  onClick?: (info: any) => any;
+}) {
   const dispatch = useAppDispatch();
   const handlePersonClick = () => {
-    dispatch(selectReceiver(info));
+    onClick ? onClick(info) : dispatch(selectReceiver(info));
   };
 
   return (

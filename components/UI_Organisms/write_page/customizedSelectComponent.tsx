@@ -41,7 +41,7 @@ function CustomizedSelectComponent({ documentType }: { documentType: string }) {
         hidden={listVisbile}
         className="bg-primary-100 relative z-10 shadow-lg w-72  py-4  space-y-4 "
       >
-        {receivers.map((person) => (
+        {receivers?.map((person) => (
           <Person key={person.id} info={person} />
         ))}
       </div>

@@ -17,6 +17,7 @@ import {
   writtenDocumentValues_PROPS,
 } from "@/universalTypes";
 import {
+  fetchHeadReceivers,
   fetchReceivers,
   writeDocument,
   writeMaktoob,
@@ -148,6 +149,7 @@ function Page({ params: { locale } }: localeProps) {
         );
   };
 
+
   const [lang, setLang] = useState<langProps_WRITE>();
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
   const [showPdfModal, setShowPdfModal] = useState(false);
@@ -163,6 +165,8 @@ function Page({ params: { locale } }: localeProps) {
   useEffect(() => {
     if (recieverList.length) return;
     dispatch(fetchReceivers());
+    dispatch(fetchHeadReceivers());
+
   }, [dispatch, recieverList.length]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
