@@ -11,6 +11,8 @@ function CustomizedSelectComponent({ documentType }: { documentType: string }) {
     (store) => store.documents
   );
 
+  console.log(receivers);
+
   const [listVisbile, setListVisible] = useState(true);
   const showList = () => {
     setListVisible(!listVisbile);

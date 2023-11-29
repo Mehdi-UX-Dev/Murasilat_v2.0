@@ -20,8 +20,6 @@ function Dashboard({ params: { locale } }: localeProps) {
     undefined
   );
 
-  const { user } = useAppSelector((store) => store.user);
-
   useEffect(() => {
     (async () => {
       const res = (await getDictionary(locale)).dashboard;

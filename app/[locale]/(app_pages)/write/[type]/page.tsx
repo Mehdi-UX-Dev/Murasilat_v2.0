@@ -149,7 +149,6 @@ function Page({ params: { locale } }: localeProps) {
         );
   };
 
-
   const [lang, setLang] = useState<langProps_WRITE>();
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
   const [showPdfModal, setShowPdfModal] = useState(false);
@@ -164,9 +163,11 @@ function Page({ params: { locale } }: localeProps) {
 
   useEffect(() => {
     if (recieverList.length) return;
-    dispatch(fetchReceivers());
-    dispatch(fetchHeadReceivers());
-
+    if (["maktoob", "pishnihad", "istilam"].includes(documentType)) {
+      dispatch(fetchHeadReceivers());
+    } else {
+      dispatch(fetchReceivers());
+    }
   }, [dispatch, recieverList.length]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (

@@ -53,8 +53,13 @@ function SearchedResults({ ...lang }) {
 
         {searchedDocuments?.warida?.map((item, idx) => (
           <div
+            onClick={() =>
+              router.push(
+                `archive/${item.document.document_type}/${item.document.serial}`
+              )
+            }
             key={item?.document?.serial}
-            className="flex justify-end items-center "
+            className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 hover:bg-primary-300 hover:cursor-pointer "
           >
             <div className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 ">
               <div>

@@ -11,6 +11,7 @@ import "react-quill/dist/quill.snow.css";
 import {
   archiveDocument,
   fetchDocumentsBySerial,
+  processDocument,
   replyDocument,
 } from "@/context/features/documentSlice";
 import { Button } from "../UI_Molecules/Button";
@@ -18,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import { GrDocumentDownload } from "react-icons/gr";
 import { toast } from "react-toastify";
+import { InputField } from "../UI_Molecules/Input";
 
 const modules = {
   toolbar: [
@@ -56,9 +58,10 @@ function IstilamFormat({
   useEffect(() => {
     dispatch(fetchDocumentsBySerial({ type, serial }));
   }, []);
-  const { replace, back } = useRouter();
+  const { replace, back, push } = useRouter();
 
   const { pdf, loading } = useAppSelector((store) => store.documents);
+  console.log(pdf);
 
   const quillRef = useRef<ReactQuill>(null);
   const [content, setContent] = useState("");
@@ -71,8 +74,9 @@ function IstilamFormat({
 
   const handleRespondClick = () => {
     dispatch(
-      replyDocument({
+      processDocument({
         id: serial,
+        action_type: "reply",
         reply: content,
         callback: () => {
           replace(`/${locale}/archive/warida`);
@@ -153,8 +157,7 @@ function IstilamFormat({
           {/* header */}
           <div className="border border-black  w-[600px] ">
             <div className="border-b border-black h-10 text-center">احکام</div>
-            {pdf?.state === "to_respond" &&
-            pdf?.receiver.id === user?.user_id ? (
+            {pdf?.state === "to_reply" && pdf?.receiver.id === user?.user_id ? (
               <div className="px-4 py-2">
                 <ReactQuill
                   ref={quillRef}
@@ -218,16 +221,15 @@ function IstilamFormat({
           </div>
         ) : (
           <>
-            {pdf.state === "to_respond" &&
-              pdf.receiver?.id === user?.user_id && (
-                <Button
-                  size={"large"}
-                  label="جواب"
-                  type="button"
-                  width={"full"}
-                  handleClick={handleRespondClick}
-                />
-              )}
+            {pdf.state === "to_reply" && pdf.receiver?.id === user?.user_id && (
+              <Button
+                size={"large"}
+                label="جواب"
+                type="button"
+                width={"full"}
+                handleClick={handleRespondClick}
+              />
+            )}
             {pdf.state === "responded" && pdf.sender?.id === user?.user_id && (
               <Button
                 size={"large"}
@@ -243,6 +245,165 @@ function IstilamFormat({
       <div className="absolute top-44 left-14 ">
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
+
+      {pdf?.state === "draft" && (
+        <div>
+          <form
+            onSubmit={(event: any) => {
+              event.preventDefault();
+              const fd = new FormData(event.target);
+              dispatch(
+                processDocument({
+                  id: pdf.serial,
+                  action_type: "approve",
+                  remarks: fd.get("remarks"),
+                  callback: () => {
+                    toast.success("تآیید شد");
+                    push("/per/dashboard");
+                  },
+                })
+              );
+            }}
+          >
+            <InputField
+              label="remarks"
+              name="remarks"
+              fullWidth={false}
+              inputType="text"
+              state={"Default"}
+            />
+            <Button intent={"primary"} label="تایید" type="submit" />
+          </form>
+        </div>
+      )}
+
+      {pdf.state === "approved" && (
+        <div>
+          <form
+            onSubmit={(event: any) => {
+              event.preventDefault();
+              const fd = new FormData(event.target);
+              dispatch(
+                processDocument({
+                  id: pdf.serial,
+                  remarks: fd.get("remarks"),
+                  summary: fd.get("summary"),
+                  action_type: "send",
+                  callback: () => {
+                    toast.success("ارسال شد");
+                    push("/per/dashboard");
+                  },
+                })
+              );
+            }}
+          >
+            <InputField
+              label="summary"
+              name="summary"
+              fullWidth={false}
+              inputType="text"
+              state={"Default"}
+            />
+            <InputField
+              label="remarks"
+              name="remarks"
+              fullWidth={false}
+              inputType="text"
+              state={"Default"}
+            />
+            <Button intent={"primary"} label="ارسال" type="submit" />
+          </form>
+        </div>
+      )}
+
+      {pdf.state === "unread" &&
+        pdf?.receiver?.authority === user?.authority && (
+          <div>
+            <form
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const fd = new FormData(event.target);
+                dispatch(
+                  processDocument({
+                    id: pdf.serial,
+                    remarks: fd.get("remarks"),
+                    summary: fd.get("summary"),
+                    action_type: "send_to_reply",
+                    callback: () => {
+                      toast.success("موفقانه ثبت وارده شد");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <InputField
+                label="summary"
+                name="summary"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+              />
+              <InputField
+                label="remarks"
+                name="remarks"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+              />
+              <Button
+                intent={"primary"}
+                label="ثبت وارده و ارسال به احکام"
+                type="submit"
+              />
+            </form>
+          </div>
+        )}
+
+      {pdf.state === "to_resend" &&
+        pdf?.receiver?.authority === user?.authority && (
+          <div>
+            <form
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                dispatch(
+                  processDocument({
+                    id: pdf.serial,
+                    action_type: "resend",
+                    callback: () => {
+                      toast.success("ارسال شد");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <Button intent={"primary"} label="ارسال دوباره" type="submit" />
+            </form>
+          </div>
+        )}
+      {pdf.state === "responded" &&
+        pdf?.sender?.authority?.title === user?.authority && (
+          <div>
+            <form
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                dispatch(
+                  processDocument({
+                    id: pdf.serial,
+                    action_type: "archive",
+                    callback: () => {
+                      toast.success("موفقانه آرشیف شد");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <Button intent={"primary"} label="آرشیف" type="submit" />
+            </form>
+          </div>
+        )}
     </div>
   ) : (
     <div className="font-bold text-xl text-center font-IranSans ">

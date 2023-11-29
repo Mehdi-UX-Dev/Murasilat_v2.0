@@ -75,6 +75,7 @@ interface DocumentStateType {
           receiver: {
             fullname: string;
           };
+          document_type: string;
         };
       }
     ];
@@ -86,6 +87,7 @@ interface DocumentStateType {
           sender: {
             fullname: string;
           };
+          document_type: string;
         };
       }
     ];
@@ -745,6 +747,36 @@ const deleteFromBookMark = createAsyncThunk(
   }
 );
 
+const processDocument = createAsyncThunk(
+  "processDocument",
+  async (
+    { id, action_type, callback, ...params }: any,
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/documents/${id}/process/`,
+        { action_type, ...params },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+
+      callback?.();
+
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const documentsSlice = createSlice({
   name: "documents",
   initialState,
@@ -907,6 +939,9 @@ const documentsSlice = createSlice({
       })
       .addCase(forwardTo.fulfilled, () => {
         // state.loading = false;
+      })
+      .addCase(processDocument.fulfilled, () => {
+        // state.loading = false;
       });
     // .addCase(fetchHeadReceivers.fulfilled, (state, action) => {});
   },
@@ -943,4 +978,5 @@ export {
   sendForOrder,
   giveDirections,
   forwardTo,
+  processDocument,
 };

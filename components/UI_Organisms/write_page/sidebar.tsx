@@ -54,40 +54,51 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
         />
 
         {/* Write Group */}
-        <div className="space-y-3">
-          <SideOption
-            url={"#"}
-            text={lang?.write}
-            Icon={BsEnvelopePlusFill}
-            hasDropDown={true}
-          />
 
-          <SideSubOption
-            url={`/${locale}/write/writeMaktoob`}
-            text={lang?.maktoob}
-            Icon={AiOutlinePlus}
-          />
-          <SideSubOption
-            url={`/${locale}/write/writeIstilam`}
-            text={lang?.istilam}
-            Icon={AiOutlinePlus}
-          />
-
-          <SideSubOption
-            url={`/${locale}/write/writePishnihad`}
-            text={lang?.pishnihad}
-            Icon={AiOutlinePlus}
-          />
-
-          {user?.role === "head" && (
-            <SideSubOption
-              url={`/${locale}/broadcast`}
-              text={lang?.broadcast}
-              Icon={BsBroadcast}
+        {user?.role !== "head" && (
+          <div className="space-y-3">
+            <SideOption
+              url={"#"}
+              text={lang?.write}
+              Icon={BsEnvelopePlusFill}
+              hasDropDown={true}
             />
-          )}
-        </div>
 
+            <SideSubOption
+              url={`/${locale}/write/writeMaktoob`}
+              text={lang?.maktoob}
+              Icon={AiOutlinePlus}
+            />
+            <SideSubOption
+              url={`/${locale}/write/writeIstilam`}
+              text={lang?.istilam}
+              Icon={AiOutlinePlus}
+            />
+
+            <SideSubOption
+              url={`/${locale}/write/writePishnihad`}
+              text={lang?.pishnihad}
+              Icon={AiOutlinePlus}
+            />
+
+            {user?.role === "head" && (
+              <SideSubOption
+                url={`/${locale}/broadcast`}
+                text={lang?.broadcast}
+                Icon={BsBroadcast}
+              />
+            )}
+          </div>
+        )}
+
+        {user?.role === "head" && (
+          <SideOption
+            url={`/${locale}/broadcast`}
+            text={lang?.broadcast}
+            Icon={BsBroadcast}
+            hasDropDown={false}
+          />
+        )}
         {/* Archive Group */}
         <div className="space-y-3">
           <SideOption

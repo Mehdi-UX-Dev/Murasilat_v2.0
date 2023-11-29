@@ -41,7 +41,7 @@ function ListTable({
 
   let data: {
     document: {
-      document_type: string
+      document_type: string;
       serial: string;
       date: string;
       title: string;
@@ -78,7 +78,7 @@ function ListTable({
               <tr className=" bg-light font-IranSans ">
                 <th>{lang.date}</th>
                 <th>{lang.title}</th>
-                <th>{type === "sadira" ? lang.sender : lang.search}</th>
+                <th>{type === "sadira" ? "گیرنده" : lang.sender}</th>
                 <th>{lang.content}</th>
                 <th>{lang.number}</th>
               </tr>

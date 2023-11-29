@@ -104,11 +104,13 @@ function MaktoobFormat({
           </div>
         </div>
         <div className="w-full h-[2px] bg-slate-900 my-4" />
-        <div className="px-4 py-2 -rotate-45 absolute top-64 left-6">
-          <p className="w-full bg-myAccent-error-300 text-white px-8">
-            راجع شده
-          </p>
-        </div>
+        {pdf?.forwarded && (
+          <div className="px-4 py-2 -rotate-45 absolute top-64 left-6">
+            <p className="w-full bg-myAccent-error-300 text-white px-8">
+              راجع شده
+            </p>
+          </div>
+        )}
         {/* Body */}
         <div className="flex flex-col w-full py-8 h-screen">
           <h1 className="font-bold font-IranSans text-lgl text-right mb-4">

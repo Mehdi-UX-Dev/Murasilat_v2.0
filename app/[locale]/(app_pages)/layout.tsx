@@ -50,11 +50,7 @@ export default function DashboardLayout({
   return user ? (
     <div className=" relative flex  flex-row-reverse ">
       <Suspense fallback={<SideBarSuspense />}>
-        {lang && user.role === "head" ? (
-          <HeadSideBar locale={locale} {...lang} />
-        ) : (
-          lang && <SideBar locale={locale} {...lang} />
-        )}
+        {lang && <SideBar locale={locale} {...lang} />}
       </Suspense>
 
       {userProfileView && (

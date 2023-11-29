@@ -79,7 +79,7 @@ function Card({
       setPersonDate({
         fullname: doc?.receiver?.fullname,
         authority: doc?.receiver?.authority.title,
-        picture: doc?.receiver?.profile_pic,
+        picture: doc?.receiver?.profile_pic ?? doc?.sender?.profile_pic,
       });
     }
   }, []);
