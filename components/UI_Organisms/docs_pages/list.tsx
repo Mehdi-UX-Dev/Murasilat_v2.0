@@ -1,6 +1,10 @@
 "use client";
 
-import { clearSearch } from "@/context/features/archiveSlice";
+import {
+  clearSearch,
+  documentDataType,
+  fetchArchiveDocuments,
+} from "@/context/features/archiveSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { GetShamsiDate } from "@/date-converter";
 import { langProps_ARCHIVE, langProps_PDF } from "@/universalTypes";
@@ -12,23 +16,16 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/UI_Molecules/Button";
 
 function ListTable({
-  showMethod,
+  setTable,
   type,
   locale,
   ...lang
 }: langProps_ARCHIVE & {
   type: string;
-  showMethod: { cardType: boolean; tableType: boolean };
   locale: string;
+  setTable: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }) {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [pdfLang, setPdfLang] = useState<langProps_PDF>();
-  const [pdfData, setPdfData] = useState({
-    visiblility: false,
-    body: "",
-    urgency: "",
-  });
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { documents, searchedResults, isInSearch } = useAppSelector(
     (store) => store.archive
@@ -39,114 +36,96 @@ function ListTable({
   const paginate = ({ selected }: { selected: number }) =>
     setCurrentPage(selected + 1);
 
-  let data: {
-    document: {
-      document_type: string;
-      serial: string;
-      date: string;
-      title: string;
-      receiver: {
-        fullname: string;
-      };
-      sender: {
-        fullname: string;
-      };
-    };
-    summary: string;
-  }[] = [];
+  useEffect(() => {
+    dispatch(fetchArchiveDocuments({ type, page: currentPage }));
+  }, []);
+
+  useEffect(() => {
+    setTable(document.getElementById("table"));
+  });
+
+  let data: documentDataType = {};
   if (isInSearch) {
-    data = [...searchedResults];
+    data = {
+      results: searchedResults.results,
+    };
   } else {
-    data = [...documents];
+    data = { ...documents };
   }
-  const router = useRouter();
 
-  // useEffect(() => {
-  //   !isInSearch && dispatch(clearSearch());
-  // }, [isInSearch]);
+  const { push } = useRouter();
 
-  return data?.length ? (
+  return data?.results?.length ? (
     <div>
       <div>
-        {/* table */}
-        {showMethod?.tableType && (
-          <table
-            id="table"
-            className="w-full text-center table-auto mt-8 border"
-          >
-            <thead className="border-b border-primary-500  bg-primary-900 text-white ">
-              <tr className=" bg-light font-IranSans ">
-                <th>{lang.date}</th>
-                <th>{lang.title}</th>
-                <th>{type === "sadira" ? "گیرنده" : lang.sender}</th>
-                <th>{lang.content}</th>
-                <th>{lang.number}</th>
+        <table
+          id="table"
+          className="w-11/12 text-center table-auto mt-8 border mx-auto  "
+        >
+          <thead className="border-b border-primary-500  bg-primary-900 text-white ">
+            <tr className=" bg-light font-IranSans hover:cursor-pointer ">
+              <th>{lang.date}</th>
+              <th>{lang.title}</th>
+              <th>{type === "sadira" ? "گیرنده" : lang.sender}</th>
+              <th>{lang.content}</th>
+              <th>{lang.number}</th>
+            </tr>
+          </thead>
+          <tbody className="font-rounded ">
+            {data?.results?.map((item: any) => (
+              <tr
+                key={item.document.serial}
+                className="border-b border-primary-500 hover:bg-primary-400 hover:cursor-pointer py-2"
+                onClick={() =>
+                  push(`${item.document.document_type}/${item.document.serial}`)
+                }
+              >
+                <td>{GetShamsiDate(item?.document?.date)}</td>
+                <td>{item?.document?.title}</td>
+                <td>
+                  {type === "sadira"
+                    ? item?.document?.receiver?.fullname
+                    : item?.document?.sender?.fullname}
+                </td>
+                <td>{item?.summary}</td>
+                <td>{item?.document?.serial}</td>
               </tr>
-            </thead>
-            <tbody className="font-rounded ">
-              {data.map((item) => (
-                <tr
-                  key={item.document.serial}
-                  className="border-b border-primary-500 hover:bg-primary-400"
-                  onClick={() =>
-                    router.push(
-                      `${item.document.document_type}/${item.document.serial}`
-                    )
-                  }
-                >
-                  <td>{GetShamsiDate(item?.document?.date)}</td>
-                  <td>{item?.document?.title}</td>
-                  <td>
-                    {type === "sadira"
-                      ? item?.document?.receiver?.fullname
-                      : item?.document?.sender?.fullname}
-                  </td>
-                  <td>{item?.summary}</td>
-                  <td>{item?.document?.serial}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-
-        <div className="flex justify-end mt-4">
-          {showMethod?.cardType &&
-            data.map((doc) => (
-              <Card
-                locale={locale}
-                listType=""
-                lang={lang}
-                key={doc.document.serial}
-                doc={doc.document}
-              />
             ))}
-        </div>
+          </tbody>
+        </table>
 
-        <ReactPaginate
-          onPageChange={paginate}
-          pageCount={Math.ceil(documents.length / 10)}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={0}
-          previousLabel={
-            <TfiArrowCircleLeft
-              size={24}
-              className="hover:bg-black bg-white rounded-full hover:border hover:border-black hover:text-white"
-            />
-          }
-          nextLabel={
-            <TfiArrowCircleRight
-              size={24}
-              className="hover:bg-black bg-white rounded-full hover:border hover:border-black hover:text-white"
-            />
-          }
-          containerClassName={" flex justify-center gap-8 mt-8"}
-          pageLinkClassName={
-            " px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  "
-          }
-          previousLinkClassName={"font-bold"}
-          nextLinkClassName={"font-bold"}
-          activeLinkClassName={"border-b-4 border-primary-900 "}
-        />
+        {!isInSearch && (
+          <ReactPaginate
+            pageCount={Math.ceil((documents.count || 0) / 10)}
+            pageRangeDisplayed={5}
+            marginPagesDisplayed={0}
+            previousLabel={
+              data.previous && (
+                <TfiArrowCircleLeft
+                  size={24}
+                  className="hover:bg-black bg-white rounded-full hover:border hover:border-black hover:text-white"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                />
+              )
+            }
+            nextLabel={
+              data.next && (
+                <TfiArrowCircleRight
+                  size={24}
+                  className="hover:bg-black bg-white rounded-full hover:border hover:border-black hover:text-white"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                />
+              )
+            }
+            containerClassName={" flex justify-center gap-8 mt-8"}
+            pageLinkClassName={
+              " px-[8px] py-[1px] hover:border-b-2 hover:border-primary-900  "
+            }
+            previousLinkClassName={"font-bold"}
+            nextLinkClassName={"font-bold"}
+            activeLinkClassName={"border-b-4 border-primary-700 mt-1 "}
+          />
+        )}
       </div>
     </div>
   ) : (

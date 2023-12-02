@@ -1,48 +1,81 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export type documentDataType = {
+  count?: number;
+  next?: null;
+  previous?: null;
+  results?: {
+    document?: {
+      serial?: number;
+      title?: string;
+      document_type?: string;
+      sender?: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        fullname: string;
+        email: string;
+        contact_number: string;
+        profile_pic: string;
+        username: string;
+        authority: {
+          title: string;
+        };
+        title: string;
+        role: string;
+      };
+      receiver?: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        fullname: string;
+        email: string;
+        contact_number: string;
+        profile_pic: string;
+        username: string;
+        authority: {
+          title: string;
+        };
+        title: string;
+        role: string;
+      };
+      date?: string;
+      request?: string;
+      reply?: string;
+      state?: string;
+      bookmarked?: false;
+    };
+    summary?: string;
+    remarks?: string;
+  }[];
+};
+
 type stateTypes = {
   error: null;
-  documents: {
-    document: {
-      serial: string;
-      date: string;
-      title: string;
-      receiver: { fullname: string };
-      sender: { fullname: string };
-      document_type: string;
-    };
-    summary: string;
-  }[];
-  searchedResults: {
-    document: {
-      serial: string;
-      date: string;
-      title: string;
-      receiver: { fullname: string };
-      sender: { fullname: string };
-      document_type: string;
-    };
-    summary: string;
-  }[];
+  documents: documentDataType;
+  searchedResults: Pick<documentDataType, "results">;
   isInSearch: boolean;
   loading: boolean;
 };
 
 const initialState: stateTypes = {
-  documents: [],
-  searchedResults: [],
+  documents: {},
+  searchedResults: { results: [] },
   isInSearch: false,
   loading: true,
   error: null,
 };
 
 const fetchArchiveDocuments = createAsyncThunk(
-  "documents/warida",
-  async (type: string, { rejectWithValue }) => {
+  "documents/warida && sadira",
+  async (
+    { type, page }: { type: string; page: number },
+    { rejectWithValue }
+  ) => {
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${type}/?page=${page}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,6 +86,7 @@ const fetchArchiveDocuments = createAsyncThunk(
           },
         }
       );
+
       return res.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -93,7 +127,7 @@ const archiveSlice = createSlice({
   initialState,
   reducers: {
     clearSearch: (state) => {
-      state.searchedResults = [];
+      state.searchedResults = {};
       state.isInSearch = false;
     },
   },
@@ -113,7 +147,7 @@ const archiveSlice = createSlice({
         state.loading = true;
       })
       .addCase(searchArchiveDocuments.fulfilled, (state, action) => {
-        state.searchedResults = action.payload;
+        state.searchedResults.results = action.payload;
         state.isInSearch = true;
       })
       .addCase(searchArchiveDocuments.rejected, (state, action) => {

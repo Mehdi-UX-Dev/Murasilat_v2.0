@@ -1,7 +1,13 @@
 "use client";
 
-import { searchArchiveDocuments } from "@/context/features/archiveSlice";
-import { clearSearch_scan, searchDocScans } from "@/context/features/docsHard_scan_archive_Slice";
+import {
+  clearSearch,
+  searchArchiveDocuments,
+} from "@/context/features/archiveSlice";
+import {
+  clearSearch_scan,
+  searchDocScans,
+} from "@/context/features/docsHard_scan_archive_Slice";
 import {
   hideSearchedDocumentModal,
   searchDocumentsDashboardPage,
@@ -58,10 +64,11 @@ function SearchBar({
       dispatch(searchDocScans({ serial: searchValue }));
   };
 
-  const clearSearch = () => {
+  const clearSearchBar = () => {
     setSearchValue("");
-    page === "dashboard" &&  dispatch(hideSearchedDocumentModal());
-    page === "docs_scan_archive" && dispatch(clearSearch_scan())
+    page === "dashboard" && dispatch(hideSearchedDocumentModal());
+    page === "docs_scan_archive" && dispatch(clearSearch_scan());
+    page === "archive" && dispatch(clearSearch());
   };
 
   return (
@@ -71,7 +78,7 @@ function SearchBar({
           {searchValue.length ? (
             <button
               type="button"
-              onClick={clearSearch}
+              onClick={clearSearchBar}
               className="bg-myAccent-error-400 text-white w-40 font-rounded font-bold rounded text-lg flex items-center justify-center space-x-2 "
             >
               <RxCrossCircled size={24} />

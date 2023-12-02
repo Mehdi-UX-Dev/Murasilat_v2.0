@@ -1,10 +1,8 @@
 import { usePathname } from "next/navigation";
 import React from "react";
-import ID from "./ID";
 
 function Header() {
   const path = usePathname();
-
 
   let title = "";
   switch (path) {
@@ -18,10 +16,10 @@ function Header() {
       title = "ایجاد پيشنهاد";
       break;
     case "/per/archive/sadira":
-      title = "لیست تمام صادره";
+      title = "آرشیف تمام صادره";
       break;
     case "/per/archive/warida":
-      title = "لیست تمام وارده";
+      title = "آرشیف تمام وارده";
       break;
   }
   return (

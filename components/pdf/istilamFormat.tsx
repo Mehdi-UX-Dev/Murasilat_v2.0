@@ -61,7 +61,6 @@ function IstilamFormat({
   const { replace, back, push } = useRouter();
 
   const { pdf, loading } = useAppSelector((store) => store.documents);
-  console.log(pdf);
 
   const quillRef = useRef<ReactQuill>(null);
   const [content, setContent] = useState("");
