@@ -83,7 +83,7 @@ const saveBroadCast = createAsyncThunk(
         },
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization:
               "Bearer " +
               JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
