@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { UserType } from "./documentSlice";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { UserType } from './documentSlice';
 
 export interface BroadcastType {
   serial: number;
@@ -31,7 +31,6 @@ export interface BroadcastCreateProps {
     subject?: string;
     attachments?: File;
   };
-  sender: number | any;
 
   callback?: () => void | any;
 }
@@ -40,24 +39,24 @@ const initialState: BroadcastStateType = {
   broadcasts: [],
   searchResults: [],
   selectedDocument: null,
-  query: "",
+  query: '',
   loading: false,
   error: null,
 };
 
 const fetchBroadcasts = createAsyncThunk<any, DocumentType[]>(
-  "broadcast/fetch",
+  'broadcast/fetch',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/broadcasts/`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -70,7 +69,7 @@ const fetchBroadcasts = createAsyncThunk<any, DocumentType[]>(
 );
 
 const saveBroadCast = createAsyncThunk(
-  "broadcast/create",
+  'broadcast/create',
   async (
     { serial, callback }: { serial: number; callback: () => void },
     { rejectWithValue }
@@ -83,11 +82,11 @@ const saveBroadCast = createAsyncThunk(
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -100,24 +99,24 @@ const saveBroadCast = createAsyncThunk(
 );
 
 const createBroadcast = createAsyncThunk<BroadcastType, BroadcastCreateProps>(
-  "broadcast/create",
-  async ({ callback, date, value }, { rejectWithValue }) => {
+  'broadcast/create',
+  async ({ callback, date, value = {} }, { rejectWithValue }) => {
+    const data = new FormData();
+    Object.entries(value).forEach(([key, value]) => {
+      data.append(key, value);
+    });
+    data.append('date', date);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/broadcasts/`,
-        {
-          content: value?.content,
-          title: value?.title,
-          date,
-          attachments: value?.attachments,
-        },
+        data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -130,7 +129,7 @@ const createBroadcast = createAsyncThunk<BroadcastType, BroadcastCreateProps>(
 );
 
 const searchBroadcast = createAsyncThunk<BroadcastType[], { query: string }>(
-  "broadcast/search",
+  'broadcast/search',
   async ({ query }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
@@ -138,11 +137,11 @@ const searchBroadcast = createAsyncThunk<BroadcastType[], { query: string }>(
         { query },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-            accept: "application/json",
+              'Bearer ' +
+              JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+            accept: 'application/json',
           },
         }
       );
@@ -155,7 +154,7 @@ const searchBroadcast = createAsyncThunk<BroadcastType[], { query: string }>(
 );
 
 const broadcastsSlice = createSlice({
-  name: "broadcasts",
+  name: 'broadcasts',
   initialState,
   reducers: {
     showBroadcast: (state, action) => {
@@ -165,7 +164,7 @@ const broadcastsSlice = createSlice({
       state.query = action.payload;
     },
     resetQuery: (state) => {
-      state.query = "";
+      state.query = '';
     },
   },
   extraReducers: (builder) => {

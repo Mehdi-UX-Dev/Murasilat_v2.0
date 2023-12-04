@@ -1,25 +1,25 @@
-"use client";
-import Image from "next/image";
-import ReactQuill from "react-quill";
-import { useEffect, useRef, useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import { Button } from "@/components/UI_Molecules/Button";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import { GetQamariDate, GetShamsiDate } from "@/date-converter";
-import { useRouter } from "next/navigation";
+'use client';
+import Image from 'next/image';
+import ReactQuill from 'react-quill';
+import { useEffect, useRef, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { Button } from '@/components/UI_Molecules/Button';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
+import { GetQamariDate, GetShamsiDate } from '@/date-converter';
+import { useRouter } from 'next/navigation';
 import {
   BroadcastCreateProps,
   createBroadcast,
-} from "@/context/features/broadcastSlice";
-import { FaSpinner } from "react-icons/fa";
-import { localeProps } from "@/universalTypes";
-import ErrorBox from "@/components/misc/errorBox";
-import modules from "@/Quill.module.";
-import { AiOutlinePlus } from "react-icons/ai";
+} from '@/context/features/broadcastSlice';
+import { FaSpinner } from 'react-icons/fa';
+import { localeProps } from '@/universalTypes';
+import ErrorBox from '@/components/misc/errorBox';
+import modules from '@/Quill.module.';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 function Preview({ params: { locale } }: localeProps) {
   const quillRef = useRef<ReactQuill>(null);
-  const [value, setValue] = useState<BroadcastCreateProps["value"]>(undefined);
+  const [value, setValue] = useState<BroadcastCreateProps['value']>(undefined);
   const {
     user: { user },
     broadcast: { loading, error },
@@ -29,9 +29,9 @@ function Preview({ params: { locale } }: localeProps) {
 
   useEffect(() => {
     if (!quillRef.current) return;
-    quillRef.current.editor?.format("align", "right");
-    quillRef.current.editor?.format("direction", "rtl");
-    quillRef.current.editor?.format("size", "large");
+    quillRef.current.editor?.format('align', 'right');
+    quillRef.current.editor?.format('direction', 'rtl');
+    quillRef.current.editor?.format('size', 'large');
   }, []);
 
   const handleCancel = () => {
@@ -43,7 +43,6 @@ function Preview({ params: { locale } }: localeProps) {
       createBroadcast({
         value,
         date: new Date().toISOString(),
-        sender: user?.user_id,
         callback: () => router.replace(`/${locale}/dashboard`),
       })
     );
@@ -56,7 +55,7 @@ function Preview({ params: { locale } }: localeProps) {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-start">
             <Image
-              src={"/images/KabulUni.png"}
+              src={'/images/KabulUni.png'}
               width={100}
               height={100}
               alt="university logo"
@@ -69,7 +68,7 @@ function Preview({ params: { locale } }: localeProps) {
               <span>{user?.title}</span>
             </div>
             <Image
-              src={"/images/moh.jpg"}
+              src={'/images/moh.jpg'}
               width={100}
               height={100}
               alt="ministry logo"
@@ -80,7 +79,7 @@ function Preview({ params: { locale } }: localeProps) {
             <p>
               شماره:
               <span className="opacity-50 text-base ">
-                {" "}
+                {' '}
                 به صورت خودکار اظافه میشود
               </span>
             </p>
@@ -206,9 +205,9 @@ function Preview({ params: { locale } }: localeProps) {
 
       <div className="p-8 w-full space-x-4 flex justify-end">
         <Button
-          intent={"secondary"}
-          size={"medium"}
-          width={"half"}
+          intent={'secondary'}
+          size={'medium'}
+          width={'half'}
           label="بازگشت"
           handleClick={handleCancel}
           loading={loading}
@@ -219,9 +218,9 @@ function Preview({ params: { locale } }: localeProps) {
           </div>
         ) : (
           <Button
-            intent={"primary"}
-            size={"medium"}
-            width={"half"}
+            intent={'primary'}
+            size={'medium'}
+            width={'half'}
             label="ارسال"
             handleClick={handleSubmit}
           />
