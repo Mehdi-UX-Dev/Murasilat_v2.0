@@ -69,6 +69,36 @@ const fetchBroadcasts = createAsyncThunk<any, DocumentType[]>(
   }
 );
 
+const saveBroadCast = createAsyncThunk(
+  "broadcast/create",
+  async (
+    { serial, callback }: { serial: number; callback: () => void },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/broadcasts/mark_as_read/`,
+        {
+          broadcastIds: [serial],
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
+            accept: "application/json",
+          },
+        }
+      );
+      callback?.();
+      console.log(response);
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const createBroadcast = createAsyncThunk<BroadcastType, BroadcastCreateProps>(
   "broadcast/create",
   async ({ callback, date, value }, { rejectWithValue }) => {
@@ -181,4 +211,4 @@ const broadcastsSlice = createSlice({
 export default broadcastsSlice.reducer;
 export const { showBroadcast, setQuery, resetQuery } = broadcastsSlice.actions;
 
-export { fetchBroadcasts, searchBroadcast, createBroadcast };
+export { fetchBroadcasts, searchBroadcast, createBroadcast, saveBroadCast };

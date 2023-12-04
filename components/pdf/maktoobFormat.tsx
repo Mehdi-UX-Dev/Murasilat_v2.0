@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import CustomizedSelectComponent from "../UI_Organisms/write_page/customizedSelectComponent";
 import ForwardSelectComponent from "../UI_Organisms/write_page/ForwardSelectComponent";
 import { GiCancel } from "react-icons/gi";
+import { saveBroadCast } from "@/context/features/broadcastSlice";
 function MaktoobFormat({
   type,
   serial,
@@ -53,6 +54,8 @@ function MaktoobFormat({
   const [forwardReceiver, setForwardReceiver] = useState<any>();
   const [showModal, setShowModal] = useState(false);
 
+  console.log(pdf);
+
   let state = "";
   switch (pdf.state) {
     case "approved":
@@ -77,8 +80,6 @@ function MaktoobFormat({
       state = "آرشیف";
       break;
   }
-
-  console.log(pdf);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8 relative">
@@ -176,12 +177,36 @@ function MaktoobFormat({
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
 
-      <div className="absolute bg-myAccent-error-300 text-white top-80 left-14 ">
-        <h1 className="font-bold py-2 px-3 rounded font-nazanin">{state}</h1>
-      </div>
+      {pdf.document_type !== "broadcast" && (
+        <div className="absolute bg-myAccent-error-300 text-white top-80 left-14 ">
+          <h1 className="font-bold py-2 px-3 rounded font-nazanin">{state}</h1>
+        </div>
+      )}
+
+      {pdf.document_type === "broadcast" &&
+        user?.role === "head" &&
+        !pdf.read && (
+          <div className="absolute  top-80 left-14">
+            <Button
+              label="ثبت متحدالمال "
+              handleClick={() =>
+                dispatch(
+                  saveBroadCast({
+                    serial: pdf.serial,
+                    callback: () => {
+                      toast.success("متحدالمال موفقانه ثبت شد");
+                    },
+                  })
+                )
+              }
+            />
+          </div>
+        )}
 
       {pdf?.attachments?.length && (
-        <Button label="نمایش ضمیمه ها" handleClick={togglePortal} />
+        <div className="flex justify-end ">
+          <Button label="نمایش ضمیمه ها" handleClick={togglePortal} />
+        </div>
       )}
 
       {pdf?.attachments?.length &&
