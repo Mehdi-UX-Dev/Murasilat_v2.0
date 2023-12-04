@@ -7,47 +7,19 @@ import { Button } from "@/components/UI_Molecules/Button";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { GetQamariDate, GetShamsiDate } from "@/date-converter";
 import { useRouter } from "next/navigation";
-import { createBroadcast } from "@/context/features/broadcastSlice";
+import {
+  BroadcastCreateProps,
+  createBroadcast,
+} from "@/context/features/broadcastSlice";
 import { FaSpinner } from "react-icons/fa";
 import { localeProps } from "@/universalTypes";
 import ErrorBox from "@/components/misc/errorBox";
+import modules from "@/Quill.module.";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function Preview({ params: { locale } }: localeProps) {
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, 4] }],
-      [{ size: ["small", false, "large", "huge"] }],
-      ["bold", "italic", "underline", "strike"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-
-      [
-        { align: "" },
-        { align: "center" },
-        { align: "right" },
-        { align: "justify" },
-      ],
-      [{ direction: "rtl" }, { direction: "ltr" }],
-    ],
-  };
   const quillRef = useRef<ReactQuill>(null);
-  const [value, setValue] = useState<{
-    title: string;
-    content: string;
-    summary: string;
-    remarks: string;
-    subject: string;
-  }>({
-    title: "",
-    content: "",
-    summary: "",
-    remarks: "",
-    subject: "",
-  });
+  const [value, setValue] = useState<BroadcastCreateProps["value"]>(undefined);
   const {
     user: { user },
     broadcast: { loading, error },
@@ -69,7 +41,7 @@ function Preview({ params: { locale } }: localeProps) {
   const handleSubmit = () => {
     dispatch(
       createBroadcast({
-        ...value,
+        value,
         date: new Date().toISOString(),
         sender: user?.user_id,
         callback: () => router.replace(`/${locale}/dashboard`),
@@ -127,7 +99,7 @@ function Preview({ params: { locale } }: localeProps) {
           {/* Meta */}
           <div className="flex flex-col items-end w-full pb-4">
             <input
-              value={value.title}
+              value={value?.title}
               onChange={({ target }) =>
                 setValue((prev) => ({ ...prev, title: target.value }))
               }
@@ -138,14 +110,14 @@ function Preview({ params: { locale } }: localeProps) {
               required
             />
             <input
-              value={value.subject}
+              value={value?.subject}
               onChange={({ target }) =>
                 setValue((prev) => ({ ...prev, subject: target.value }))
               }
               type="text"
               className="py-2 px-4 outline-1 w-full outline-slate-50 rounded text-xl"
               dir="rtl"
-            placeholder=" موضوع را بنویسید"
+              placeholder=" موضوع را بنویسید"
             />
           </div>
           {/*Editor */}
@@ -157,12 +129,12 @@ function Preview({ params: { locale } }: localeProps) {
             className="h-[80vh] mb-8"
             modules={modules}
             theme="snow"
-            value={value.content}
+            value={value?.content}
           />
           {/**Sadira Section */}
           <div className="flex items-center justify-between w-full pt-8">
             <input
-              value={value.remarks}
+              value={value?.remarks}
               onChange={({ target }) =>
                 setValue((prev) => ({ ...prev, remarks: target.value }))
               }
@@ -173,7 +145,7 @@ function Preview({ params: { locale } }: localeProps) {
               required
             />
             <input
-              value={value.summary}
+              value={value?.summary}
               onChange={({ target }) =>
                 setValue((prev) => ({ ...prev, summary: target.value }))
               }
@@ -202,6 +174,34 @@ function Preview({ params: { locale } }: localeProps) {
             <p>ایمیل: {user?.email}</p>
           </div>
         </div>
+      </div>
+
+      <div className="flex items-center  justify-end ">
+        <div className="relative order-2 ">
+          <label
+            htmlFor="selector"
+            className="flex w-fit items-center space-x-2 cursor-pointer border border-black  hover:bg-primary-700  hover:text-white font-bold py-3 px-6  rounded-lg"
+          >
+            <p>انتخاب سند</p>
+            <AiOutlinePlus size={16} />
+          </label>
+          <input
+            id="selector"
+            type="file"
+            name="attachment"
+            className="hidden"
+            onChange={(data) => {
+              const file = data.target.files?.[0];
+              if (file) {
+                setValue((prev) => ({
+                  ...prev,
+                  attachments: file,
+                }));
+              }
+            }}
+          />
+        </div>
+        <p className="order-1 pr-4">{value?.attachments?.name}</p>
       </div>
 
       <div className="p-8 w-full space-x-4 flex justify-end">

@@ -21,11 +21,18 @@ interface BroadcastStateType {
   error: string | any;
 }
 
-interface BroadcastCreateProps {
-  title: string;
-  content: string;
+export interface BroadcastCreateProps {
   date: string | any;
+  value?: {
+    title?: string;
+    content?: string;
+    summary?: string;
+    remarks?: string;
+    subject?: string;
+    attachments?: File;
+  };
   sender: number | any;
+
   callback?: () => void | any;
 }
 
@@ -64,14 +71,19 @@ const fetchBroadcasts = createAsyncThunk<any, DocumentType[]>(
 
 const createBroadcast = createAsyncThunk<BroadcastType, BroadcastCreateProps>(
   "broadcast/create",
-  async ({ callback, ...data }, { rejectWithValue }) => {
+  async ({ callback, date, value }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/broadcasts/`,
-        data,
+        {
+          content: value?.content,
+          title: value?.title,
+          date,
+          attachments: value?.attachments,
+        },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization:
               "Bearer " +
               JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
@@ -79,12 +91,9 @@ const createBroadcast = createAsyncThunk<BroadcastType, BroadcastCreateProps>(
           },
         }
       );
-
       callback?.();
       return response.data;
     } catch (error: any) {
-      console.log(error.message);
-
       return rejectWithValue(error);
     }
   }

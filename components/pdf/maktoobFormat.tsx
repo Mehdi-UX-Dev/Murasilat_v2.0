@@ -25,6 +25,7 @@ import { InputField } from "../UI_Molecules/Input";
 import { toast } from "react-toastify";
 import CustomizedSelectComponent from "../UI_Organisms/write_page/customizedSelectComponent";
 import ForwardSelectComponent from "../UI_Organisms/write_page/ForwardSelectComponent";
+import { GiCancel } from "react-icons/gi";
 function MaktoobFormat({
   type,
   serial,
@@ -50,6 +51,34 @@ function MaktoobFormat({
   const [showAttachments, setShowAttachments] = useState(false);
   const togglePortal = () => setShowAttachments(!showAttachments);
   const [forwardReceiver, setForwardReceiver] = useState<any>();
+  const [showModal, setShowModal] = useState(false);
+
+  let state = "";
+  switch (pdf.state) {
+    case "approved":
+      state = "تایید شد";
+      break;
+    case "unread":
+      state = "";
+      break;
+    case "draft":
+      state = "برای تایید";
+      break;
+    case "normal":
+      state = "ثبت وارده و پروسس";
+      break;
+    case "to_process":
+      state = "راجع به اداره مربوطه";
+      break;
+    case "to_order":
+      state = "راجع برای احکام";
+      break;
+    case "archived":
+      state = "آرشیف";
+      break;
+  }
+
+  console.log(pdf);
 
   return (
     <div className="w-full min-h-screen h-auto bg-white p-8 relative">
@@ -147,6 +176,10 @@ function MaktoobFormat({
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
 
+      <div className="absolute bg-myAccent-error-300 text-white top-80 left-14 ">
+        <h1 className="font-bold py-2 px-3 rounded font-nazanin">{state}</h1>
+      </div>
+
       {pdf?.attachments?.length && (
         <Button label="نمایش ضمیمه ها" handleClick={togglePortal} />
       )}
@@ -159,182 +192,247 @@ function MaktoobFormat({
           </div>
         ))}
 
-      {pdf.state === "approved" && (
-        <div>
-          <form
-            onSubmit={(event: any) => {
-              event.preventDefault();
-              const fd = new FormData(event.target);
-              dispatch(
-                sendDocumentDraft({
-                  id: pdf.serial,
-                  remarks: fd.get("remarks"),
-                  summary: fd.get("summary"),
-                  callback: () => {
-                    toast.success("ارسال شد");
-                    push("/per/dashboard");
-                  },
-                })
-              );
-            }}
-          >
-            <InputField
-              label="summary"
-              name="summary"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <InputField
-              label="remarks"
-              name="remarks"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <Button intent={"primary"} label="ارسال" type="submit" />
-          </form>
-        </div>
-      )}
-
-      {pdf.state === "unread" && (
-        <div>
-          <form
-            onSubmit={(event: any) => {
-              event.preventDefault();
-              const fd = new FormData(event.target);
-              dispatch(
-                sendForOrder({
-                  id: pdf.serial,
-                  remarks: fd.get("remarks"),
-                  summary: fd.get("summary"),
-                  callback: () => {
-                    toast.success("موفقانه ثبت وارده شد");
-                    push("/per/dashboard");
-                  },
-                })
-              );
-            }}
-          >
-            <InputField
-              label="summary"
-              name="summary"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <InputField
-              label="remarks"
-              name="remarks"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <Button
-              intent={"primary"}
-              label="ثبت وارده و ارسال به احکام"
-              type="submit"
-            />
-          </form>
-        </div>
-      )}
-
-      {pdf.state === "to_order" && (
-        <div>
-          <form
-            onSubmit={(event: any) => {
-              event.preventDefault();
-              const fd = new FormData(event.target);
-              dispatch(
-                giveDirections({
-                  id: pdf.serial,
-                  orders: fd.get("orders"),
-                  callback: () => {
-                    toast.success("ثبت احکام و پروسس");
-                    push("/per/dashboard");
-                  },
-                })
-              );
-            }}
-          >
-            <InputField
-              label="orders"
-              name="orders"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <Button
-              intent={"primary"}
-              label="ثبت وارده و ارسال به احکام"
-              type="submit"
-            />
-          </form>
-        </div>
-      )}
-
-      {pdf.state === "to_process" &&
-        user?.role === "deputy" &&
-        pdf?.receiver?.authority?.title === user?.authority && (
-          <div>
-            <ForwardSelectComponent
-              receiver={forwardReceiver}
-              onSelectReceiver={setForwardReceiver}
-              documentType="maktoob"
-            />
-            <Button
-              handleClick={() => {
+      {showModal ? (
+        <div className="fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center h-screen ">
+          {pdf.state === "approved" && (
+            <form
+              className=" bg-white px-14 py-8 max-w-md space-y-4 "
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const fd = new FormData(event.target);
                 dispatch(
-                  forwardTo({
+                  sendDocumentDraft({
                     id: pdf.serial,
-                    user_ids: [forwardReceiver.id],
+                    remarks: fd.get("remarks"),
+                    summary: fd.get("summary"),
                     callback: () => {
-                      toast.success("موفقانه راجع شد");
+                      toast.success("ارسال شد");
                       push("/per/dashboard");
                     },
                   })
                 );
               }}
-              intent={"primary"}
-              label="راجع"
-              type="submit"
+            >
+              <GiCancel
+                className="hover:cursor-pointer"
+                size={24}
+                onClick={() => setShowModal(false)}
+              />
+
+              <h1 className="text-lg font-bold font-IranSans text-right">
+                ثبت صادره و ارسال
+              </h1>
+
+              <InputField
+                label="خلاصه"
+                name="summary"
+                fullWidth
+                inputType="text"
+                state={"Default"}
+                direction={"rtl"}
+              />
+              <InputField
+                label="ملاحظات"
+                name="remarks"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+                direction={"rtl"}
+              />
+              <Button
+                intent={"primary"}
+                label="ارسال"
+                type="submit"
+                width={"full"}
+              />
+            </form>
+          )}
+
+          {pdf.state === "unread" && (
+            <form
+              className=" bg-white px-14 py-8 max-w-md space-y-4 "
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const fd = new FormData(event.target);
+                dispatch(
+                  sendForOrder({
+                    id: pdf.serial,
+                    remarks: fd.get("remarks"),
+                    summary: fd.get("summary"),
+                    callback: () => {
+                      toast.success("موفقانه ثبت وارده شد");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <GiCancel
+                className="hover:cursor-pointer"
+                size={24}
+                onClick={() => setShowModal(false)}
+              />
+              <h1 className="font-bold text-lg font-IranSans">
+                ثبت وارده و ارسال به احکام
+              </h1>
+              <InputField
+                label="summary"
+                name="summary"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+                direction={"rtl"}
+              />
+              <InputField
+                label="remarks"
+                name="remarks"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+                direction={"rtl"}
+              />
+              <Button
+                intent={"primary"}
+                label="ثبت وارده و ارسال به احکام"
+                type="submit"
+              />
+            </form>
+          )}
+
+          {pdf.state === "to_order" && (
+            <form
+              className=" bg-white px-14 py-8 max-w-md space-y-4 "
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const fd = new FormData(event.target);
+                dispatch(
+                  giveDirections({
+                    id: pdf.serial,
+                    orders: fd.get("orders"),
+                    callback: () => {
+                      toast.success("ثبت احکام و پروسس");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <GiCancel
+                className="hover:cursor-pointer"
+                size={24}
+                onClick={() => setShowModal(false)}
+              />
+
+              <h1>ثبت احکام و پروسس</h1>
+
+              <InputField
+                label="orders"
+                name="orders"
+                fullWidth={false}
+                inputType="text"
+                state={"Default"}
+              />
+              <Button
+                intent={"primary"}
+                label="ثبت وارده و ارسال به احکام"
+                type="submit"
+              />
+            </form>
+          )}
+
+          {pdf.state === "to_process" &&
+            user?.role === "deputy" &&
+            pdf?.receiver?.authority?.title === user?.authority && (
+              <div className=" bg-white px-14 py-8 max-w-md space-y-4 ">
+                <GiCancel
+                  className="hover:cursor-pointer"
+                  size={24}
+                  onClick={() => setShowModal(false)}
+                />
+
+                <ForwardSelectComponent
+                  receiver={forwardReceiver}
+                  onSelectReceiver={setForwardReceiver}
+                  documentType="maktoob"
+                />
+                <Button
+                  handleClick={() => {
+                    dispatch(
+                      forwardTo({
+                        id: pdf.serial,
+                        user_ids: [forwardReceiver.id],
+                        callback: () => {
+                          toast.success("موفقانه راجع شد");
+                          push("/per/dashboard");
+                        },
+                      })
+                    );
+                  }}
+                  intent={"primary"}
+                  label="راجع"
+                  type="submit"
+                />
+              </div>
+            )}
+
+          {pdf?.sender?.id !== user?.user_id &&
+            !pdf?.read &&
+            pdf?.state === "normal" && <SabtWarida locale={locale} />}
+
+          {pdf?.state === "draft" && (
+            <form
+              className=" bg-white px-14 py-8 max-w-md space-y-4 "
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const fd = new FormData(event.target);
+                dispatch(
+                  approveDocumentDraft({
+                    id: pdf.serial,
+                    remarks: fd.get("remarks"),
+                    callback: () => {
+                      toast.success("تآیید شد");
+                      push("/per/dashboard");
+                    },
+                  })
+                );
+              }}
+            >
+              <GiCancel
+                className="hover:cursor-pointer"
+                size={24}
+                onClick={() => setShowModal(false)}
+              />
+              <h1 className="font-bold font-IranSans text-lg">
+                تایید مکتوب برای صادر شدن
+              </h1>
+              <InputField
+                name="remarks"
+                fullWidth
+                direction={"rtl"}
+                inputType="text"
+                state={"Default"}
+                placeholder="نظر خود را بنویسید"
+              />
+              <Button
+                intent={"primary"}
+                label="تایید"
+                type="submit"
+                width={"full"}
+              />
+            </form>
+          )}
+        </div>
+      ) : (
+        pdf.state !== "archived" &&
+        pdf.document_type === "maktoob" && (
+          <div className="absolute top-[370px] left-14">
+            <Button
+              label="اجرا پروسه بعدی"
+              handleClick={() => setShowModal(true)}
+              size={"large"}
             />
           </div>
-        )}
-
-      {pdf?.sender?.id !== user?.user_id &&
-        !pdf?.read &&
-        pdf?.state === "normal" && <SabtWarida locale={locale} />}
-
-      {pdf?.state === "draft" && (
-        <div>
-          <form
-            onSubmit={(event: any) => {
-              event.preventDefault();
-              const fd = new FormData(event.target);
-              console.log(fd.get("remarks"));
-              dispatch(
-                approveDocumentDraft({
-                  id: pdf.serial,
-                  remarks: fd.get("remarks"),
-                  callback: () => {
-                    toast.success("تآیید شد");
-                    push("/per/dashboard");
-                  },
-                })
-              );
-            }}
-          >
-            <InputField
-              label="remarks"
-              name="remarks"
-              fullWidth={false}
-              inputType="text"
-              state={"Default"}
-            />
-            <Button intent={"primary"} label="تایید" type="submit" />
-          </form>
-        </div>
+        )
       )}
     </div>
   );
