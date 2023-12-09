@@ -122,13 +122,13 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
             hasType="warida"
           />
 
-          <SideSubOption
+          {/* <SideSubOption
             url={`/${locale}/archive/bookmarks`}
             text={lang?.bookmarks}
             Icon={MdBookmarks}
             customClassName="pl-6"
             hasType="bookmark"
-          />
+          /> */}
         </div>
 
         {/* Broadcast  */}

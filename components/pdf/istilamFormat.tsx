@@ -62,6 +62,8 @@ function IstilamFormat({
 
   const { pdf, loading } = useAppSelector((store) => store.documents);
 
+  console.log(pdf.request);
+
   const quillRef = useRef<ReactQuill>(null);
   const [content, setContent] = useState("");
   useEffect(() => {
@@ -99,7 +101,16 @@ function IstilamFormat({
 
   const download = () => {
     const PDF_Container = document.getElementById("container");
-    html2pdf(PDF_Container);
+
+    var opt = {
+      margin: 0,
+      filename: "document.pdf",
+      image: { type: "jpeg", quality: 0.2 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "in", format: "a4", orientation: "p" },
+    };
+
+    html2pdf().set(opt).from(PDF_Container).save();
   };
 
   return Object.keys(pdf).length ? (
@@ -246,8 +257,9 @@ function IstilamFormat({
       </div>
 
       {pdf?.state === "draft" && (
-        <div>
+        <div className="flex justify-end ">
           <form
+            className="space-y-3 mr-4"
             onSubmit={(event: any) => {
               event.preventDefault();
               const fd = new FormData(event.target);
@@ -264,21 +276,30 @@ function IstilamFormat({
               );
             }}
           >
+            <h1 className="font-bold font-IranSans  text-right ">
+              نظر خود را بنویسید
+            </h1>
             <InputField
-              label="remarks"
               name="remarks"
               fullWidth={false}
               inputType="text"
               state={"Default"}
+              direction={"rtl"}
             />
-            <Button intent={"primary"} label="تایید" type="submit" />
+            <Button
+              intent={"primary"}
+              label="تایید"
+              type="submit"
+              width={"full"}
+            />
           </form>
         </div>
       )}
 
       {pdf.state === "approved" && (
-        <div>
+        <div className="flex justify-end">
           <form
+            className="space-y-3 mr-4 "
             onSubmit={(event: any) => {
               event.preventDefault();
               const fd = new FormData(event.target);
@@ -296,29 +317,40 @@ function IstilamFormat({
               );
             }}
           >
+            <h1 className="font-bold font-IranSans text-right">
+              ملاحظات را بنویسید
+            </h1>
             <InputField
-              label="summary"
               name="summary"
               fullWidth={false}
               inputType="text"
               state={"Default"}
+              direction={"rtl"}
+              placeholder="خلاصه"
             />
             <InputField
-              label="remarks"
               name="remarks"
               fullWidth={false}
               inputType="text"
               state={"Default"}
+              placeholder="ملاحظات"
+              direction={"rtl"}
             />
-            <Button intent={"primary"} label="ارسال" type="submit" />
+            <Button
+              width={"full"}
+              intent={"primary"}
+              label="ارسال"
+              type="submit"
+            />
           </form>
         </div>
       )}
 
       {pdf.state === "unread" &&
-        pdf?.receiver?.authority === user?.authority && (
-          <div>
+        pdf?.receiver?.authority?.title === user?.authority && (
+          <div className="flex justify-end ">
             <form
+              className="space-y-3"
               onSubmit={(event: any) => {
                 event.preventDefault();
                 const fd = new FormData(event.target);
@@ -336,32 +368,38 @@ function IstilamFormat({
                 );
               }}
             >
+              <h1 className="font-bold font-IranSans text-right ">
+                ثبت وارده{" "}
+              </h1>
               <InputField
-                label="summary"
                 name="summary"
-                fullWidth={false}
                 inputType="text"
                 state={"Default"}
+                direction={"rtl"}
+                fullWidth
+                placeholder="خلاصه"
               />
               <InputField
-                label="remarks"
                 name="remarks"
-                fullWidth={false}
+                fullWidth
                 inputType="text"
                 state={"Default"}
+                direction={"rtl"}
+                placeholder="ملاحظات"
               />
               <Button
                 intent={"primary"}
                 label="ثبت وارده و ارسال به احکام"
                 type="submit"
+                width={"full"}
               />
             </form>
           </div>
         )}
 
       {pdf.state === "to_resend" &&
-        pdf?.receiver?.authority === user?.authority && (
-          <div>
+        pdf?.receiver?.authority.title === user?.authority && (
+          <div className="flex justify-end mr-4">
             <form
               onSubmit={(event: any) => {
                 event.preventDefault();
@@ -377,13 +415,18 @@ function IstilamFormat({
                 );
               }}
             >
-              <Button intent={"primary"} label="ارسال دوباره" type="submit" />
+              <Button
+                intent={"primary"}
+                width={"full"}
+                label="ارسال دوباره"
+                type="submit"
+              />
             </form>
           </div>
         )}
       {pdf.state === "responded" &&
         pdf?.sender?.authority?.title === user?.authority && (
-          <div>
+          <div className="flex justify-end ">
             <form
               onSubmit={(event: any) => {
                 event.preventDefault();
@@ -399,7 +442,12 @@ function IstilamFormat({
                 );
               }}
             >
-              <Button intent={"primary"} label="آرشیف" type="submit" />
+              <Button
+                width={"full"}
+                intent={"primary"}
+                label="آرشیف"
+                type="submit"
+              />
             </form>
           </div>
         )}
