@@ -20,6 +20,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import SideBarProfile from "@/components/UI_Molecules/sideBarProfile";
 import { PiFileArchiveFill } from "react-icons/pi";
+import { IoMdMailUnread } from "react-icons/io";
 
 function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
   const { user } = useAppSelector((store) => store.user);
@@ -120,6 +121,13 @@ function SideBar({ locale, ...lang }: langProps_SideBar & { locale: string }) {
             text={lang?.all_warida}
             Icon={RiMailDownloadFill}
             hasType="warida"
+          />
+
+          <SideSubOption
+            url={`/${locale}/unread`}
+            text={lang?.unread}
+            Icon={IoMdMailUnread}
+            hasType="unread"
           />
 
           {/* <SideSubOption

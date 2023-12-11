@@ -11,15 +11,15 @@ function DocumentByID({
   params: {
     type: "broadcast" | "istilam" | "maktoob" | "pishnihad";
     serial: number;
-    locale : Locale
+    locale: Locale;
   };
 }) {
+  console.log("Type from archive page", type);
   return type === "maktoob" || type === "broadcast" ? (
     <MaktoobFormat type={type} serial={serial} locale={locale} />
   ) : (
-    <IstilamFormat type={type} serial={serial} locale={locale}/>
+    <IstilamFormat type={type} serial={serial} locale={locale} />
   );
-  
 }
 
 export default DocumentByID;

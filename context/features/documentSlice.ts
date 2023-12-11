@@ -676,6 +676,7 @@ const fetchDocumentsBySerial = createAsyncThunk(
         pishnihad: "documents",
         broadcast: "broadcasts",
       };
+      console.log("typefrom slice", type);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}/${urlMaps[type]}/${serial}`,
         {

@@ -126,6 +126,7 @@ export type langProps_SideBar = {
   show_profile: string;
   bookmarks: string;
   docsHard_Archive: string;
+  unread: string
 };
 
 export type sideBarSubOptionProps_SIDEBAR = {

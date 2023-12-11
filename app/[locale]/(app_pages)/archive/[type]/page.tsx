@@ -36,7 +36,9 @@ function Page({
   return !error ? (
     lang && (
       <div className="mx-4 2xl:max-w-6xl 2xl:ml-auto">
-        <SearchBar page="archive" locale={locale} type={type} />
+        {type !== "unread " && (
+          <SearchBar page="archive" locale={locale} type={type} />
+        )}
 
         <div className="flex justify-end mt-2">
           <Button

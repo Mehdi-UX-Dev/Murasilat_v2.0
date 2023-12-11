@@ -32,7 +32,8 @@ function SideSubOption({
           className={cx("h-2 w-2  rounded-full mr-2", {
             "bg-cyan-400": hasType === "sadira",
             "bg-green-400": hasType === "warida",
-            "bg-yellow-400" : hasType === "bookmark"
+            "bg-yellow-400": hasType === "bookmark",
+            "bg-myAccent-error-300": hasType === "unread",
           })}
         ></div>
       )}

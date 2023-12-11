@@ -450,7 +450,7 @@ function MaktoobFormat({
         </div>
       ) : (
         pdf.state !== "archived" &&
-        pdf.document_type === "maktoob"        && (
+        pdf.document_type === "maktoob"  && (
           <div className="absolute top-[370px] left-14">
             <Button
               label="اجرا پروسه بعدی"
