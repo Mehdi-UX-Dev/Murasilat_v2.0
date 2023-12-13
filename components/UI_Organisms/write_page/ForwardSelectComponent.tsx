@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { BsChevronDown } from "react-icons/bs";
-import Person from "@/components/UI_Molecules/personSendList";
-import SelectedPerson from "@/components/UI_Molecules/personSelectedAvatar";
+import React, { useEffect, useState } from 'react';
+import { BsChevronDown } from 'react-icons/bs';
+import Person from '@/components/UI_Molecules/personSendList';
+import SelectedPerson from '@/components/UI_Molecules/personSelectedAvatar';
 
-import { useAppSelector } from "@/context/hooks";
-import { cx } from "class-variance-authority";
-import axios from "axios";
+import { useAppSelector } from '@/context/hooks';
+import { cx } from 'class-variance-authority';
+import axios from 'axios';
 type receiverType = { id: number | any };
 
 function ForwardSelectComponent({
@@ -30,11 +30,11 @@ function ForwardSelectComponent({
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/users/`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization:
-            "Bearer " +
-            JSON.parse(localStorage.getItem("TOKENS") || "")?.access,
-          accept: "application/json",
+            'Bearer ' +
+            JSON.parse(localStorage.getItem('TOKENS') || '')?.access,
+          accept: 'application/json',
         },
       })
       .then((response) => {
@@ -42,14 +42,16 @@ function ForwardSelectComponent({
       });
   }, [receivers]);
 
+  console.log('hekjkj');
+
   return (
     <div
       dir="rtl"
       className={cx(
-        "relative   text-end pr-4 border-l border-primary-400 h-16 py-4 ",
+        'relative   text-end pr-4 border-l border-primary-400 h-16 py-4 ',
         {
-          "grow ml-2": documentType === "maktoob",
-          "w-1/2 ml-auto": documentType !== "maktoob",
+          'grow ml-2': documentType === 'maktoob',
+          'w-1/2 ml-auto': documentType !== 'maktoob',
         }
       )}
     >
@@ -61,7 +63,7 @@ function ForwardSelectComponent({
           <p>راجع به</p>
           <BsChevronDown className="mr-3" />
         </div>
-        {receiver ? <SelectedPerson {...receiver} /> : "گیرنده را انتخاب کنید"}
+        {receiver ? <SelectedPerson {...receiver} /> : 'گیرنده را انتخاب کنید'}
       </div>
       <div
         hidden={listVisbile}
