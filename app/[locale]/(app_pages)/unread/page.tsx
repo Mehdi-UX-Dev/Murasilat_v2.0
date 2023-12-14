@@ -1,6 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/context/hooks";
+import { fetchDocuments } from "@/context/features/documentSlice";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { GetShamsiDate } from "@/date-converter";
 import { getDictionary } from "@/i18n-server";
 import { langProps_LIST, localeProps } from "@/universalTypes";
@@ -11,6 +12,7 @@ function page({ params: { locale } }: localeProps) {
   const {
     documents: { unreadDocuments },
   } = useAppSelector((store) => store.documents);
+  const dispatch = useAppDispatch();
 
   const [lang, setLang] = useState<langProps_LIST>();
 
@@ -19,6 +21,10 @@ function page({ params: { locale } }: localeProps) {
       const lang = (await getDictionary(locale)).list_page;
       setLang(lang);
     })();
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchDocuments());
   }, []);
 
   const { push } = useRouter();
@@ -46,22 +52,29 @@ function page({ params: { locale } }: localeProps) {
             </tr>
           </thead>
           <tbody className="font-rounded ">
-            {unreadDocuments?.map((item: any) => (
-              <tr
-                key={item.document.serial}
-                className="border-b border-primary-500 hover:bg-primary-400 hover:cursor-pointer py-2"
-                onClick={() =>
-                  push(`${item.document.document_type}/${item.document.serial}`)
-                }
-              >
-                <td>{GetShamsiDate(item?.document?.date)}</td>
-                <td>{item?.document?.title}</td>
-                <td>{item?.document?.sender?.fullname}</td>
-                <td> {item?.document?.receiver?.fullname}</td>
-                <td>{item?.summary}</td>
-                <td>{item?.document?.serial}</td>
-              </tr>
-            ))}
+            {unreadDocuments?.map(
+              (item: any) => (
+                console.log(item),
+                (
+                  <tr
+                    key={item?.serial}
+                    className="border-b border-primary-500 hover:bg-primary-400 hover:cursor-pointer py-2"
+                    onClick={() =>
+                      push(
+                        `/per/archive/${item?.document_type}/${item?.serial}`
+                      )
+                    }
+                  >
+                    <td>{GetShamsiDate(item?.date)}</td>
+                    <td>{item?.title}</td>
+                    <td>{item?.sender?.fullname}</td>
+                    <td> {item?.receiver?.fullname}</td>
+                    <td>{item?.summary}</td>
+                    <td>{item?.serial}</td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
         </table>
       </div>

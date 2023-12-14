@@ -27,7 +27,7 @@ function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
   switch (type) {
     case "unreadDocuments":
       title = lang?.unread;
-      route = "archive/unread";
+      route = "unread";
       break;
 
     case "sentRecently":
@@ -93,13 +93,11 @@ function StackCards({ type, ...lang }: langProps_DASHBOARD & { type: string }) {
         {documents[type as keyof typeof documents].length ? (
           <div
             ref={containerRef}
-            // transition is not working properly
             className=" transition-transform duration-300 ease-in-out flex  space-x-4 max-w-screen-lg 2xl:max-w-screen-xl   ml-auto  overflow-x-auto py-2  scrollbar-hide "
           >
             {documents[type as keyof typeof documents].map((doc) => (
               <Card listType={type} key={doc.serial} doc={doc} locale="per" />
             ))}
-            {}
           </div>
         ) : (
           <div className="w-full text-right text-lg font-IranSans pr-3 ">
