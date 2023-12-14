@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/UI_Molecules/Button";
-import TypeGroup from "@/components/UI_Molecules/documentTypeRadioButtons";
-import CustomizedSelectComponent from "@/components/UI_Organisms/write_page/customizedSelectComponent";
-import modules from "../../../../../Quill.module.";
-import React, { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { getDictionary } from "@/i18n-server";
-import { GetShamsiDate } from "@/date-converter";
-import PDFTemplate from "@/components/pdf/pdfTemplate";
+import { Button } from '@/components/UI_Molecules/Button';
+import TypeGroup from '@/components/UI_Molecules/documentTypeRadioButtons';
+import CustomizedSelectComponent from '@/components/UI_Organisms/write_page/customizedSelectComponent';
+import modules from '../../../../../Quill.module.';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { getDictionary } from '@/i18n-server';
+import { GetShamsiDate } from '@/date-converter';
+import PDFTemplate from '@/components/pdf/pdfTemplate';
 import {
   langProps_PDF,
   langProps_WRITE,
   localeProps,
   writtenDocumentValues_PROPS,
-} from "@/universalTypes";
+} from '@/universalTypes';
 import {
   fetchHeadReceivers,
   fetchReceivers,
   writeDocument,
   writeMaktoob,
-} from "@/context/features/documentSlice";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import { usePathname, useRouter } from "next/navigation";
-import { FaSpinner } from "react-icons/fa";
-import { AiOutlinePlus } from "react-icons/ai";
-import { toast } from "react-toastify";
-import { cx } from "class-variance-authority";
+} from '@/context/features/documentSlice';
+import { useAppDispatch, useAppSelector } from '@/context/hooks';
+import { usePathname, useRouter } from 'next/navigation';
+import { FaSpinner } from 'react-icons/fa';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+import { cx } from 'class-variance-authority';
 
 function FileSelector({
   files,
@@ -84,18 +84,20 @@ function Page({ params: { locale } }: localeProps) {
     error: { writeDocumentError },
   } = useAppSelector((store) => store.documents);
 
-  let documentType = "";
+  const { user } = useAppSelector((store) => store.user);
+
+  let documentType = '';
   let path = usePathname();
 
   switch (path) {
-    case "/per/write/writeMaktoob":
-      documentType = "maktoob";
+    case '/per/write/writeMaktoob':
+      documentType = 'maktoob';
       break;
-    case "/per/write/writeIstilam":
-      documentType = "istilam";
+    case '/per/write/writeIstilam':
+      documentType = 'istilam';
       break;
-    case "/per/write/writePishnihad":
-      documentType = "pishnihad";
+    case '/per/write/writePishnihad':
+      documentType = 'pishnihad';
       break;
   }
 
@@ -103,24 +105,24 @@ function Page({ params: { locale } }: localeProps) {
   const quillRef = useRef<ReactQuill>(null);
   useEffect(() => {
     if (!quillRef.current) return;
-    quillRef.current.editor?.format("align", "right");
-    quillRef.current.editor?.format("direction", "rtl");
-    quillRef.current.editor?.format("size", "large");
+    quillRef.current.editor?.format('align', 'right');
+    quillRef.current.editor?.format('direction', 'rtl');
+    quillRef.current.editor?.format('size', 'large');
   }, []);
 
   const [docValue, setDocValue] = useState<writtenDocumentValues_PROPS>({
     date: new Date(),
-    urgency: "N",
-    content: "",
-    title: "",
-    summary: "",
+    urgency: 'N',
+    content: '',
+    title: '',
+    summary: '',
     attachments: [],
   });
 
   const handleDocSumbit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    documentType === "maktoob"
+    documentType === 'maktoob'
       ? dispatch(
           writeMaktoob({
             maktoobData: {
@@ -130,7 +132,7 @@ function Page({ params: { locale } }: localeProps) {
             },
             callback: () => {
               router.replace(`/${locale}/archive/sadira`);
-              toast.success("مکتوب ایجاد شد");
+              toast.success('مکتوب ایجاد شد');
             },
           })
         )
@@ -143,7 +145,7 @@ function Page({ params: { locale } }: localeProps) {
             },
             callback: () => {
               router.replace(`/${locale}/archive/sadira`);
-              toast.success("سند ایجاد شد");
+              toast.success('سند ایجاد شد');
             },
           })
         );
@@ -163,7 +165,7 @@ function Page({ params: { locale } }: localeProps) {
 
   useEffect(() => {
     if (recieverList.length) return;
-    if (["maktoob", "pishnihad", "istilam"].includes(documentType)) {
+    if (['maktoob', 'pishnihad', 'istilam'].includes(documentType) && user?.role==='deputy') {
       dispatch(fetchHeadReceivers());
     } else {
       dispatch(fetchReceivers());
@@ -227,13 +229,13 @@ function Page({ params: { locale } }: localeProps) {
 
           <div
             className={cx(
-              " items-center border border-b-0 border-primary-300  pl-2 ",
+              ' items-center border border-b-0 border-primary-300  pl-2 ',
               {
-                flex: documentType === "maktoob",
+                flex: documentType === 'maktoob',
               }
             )}
           >
-            {documentType === "maktoob" && (
+            {documentType === 'maktoob' && (
               <TypeGroup setDocValue={setDocValue} />
             )}
 

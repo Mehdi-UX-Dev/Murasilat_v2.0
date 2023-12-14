@@ -1,21 +1,28 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { MdBookmarkBorder } from "react-icons/md";
-import Image from "next/image";
-import { Button } from "../../UI_Molecules/Button";
-import { GetShamsiDate } from "@/date-converter";
+import React, { ReactNode, useEffect, useState } from 'react';
+import { MdBookmarkBorder } from 'react-icons/md';
+import Image from 'next/image';
+import { Button } from '../../UI_Molecules/Button';
+import { GetShamsiDate } from '@/date-converter';
 import {
   BsArrowDownCircle,
   BsArrowUpCircle,
   BsBookmarkFill,
-} from "react-icons/bs";
-import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/context/hooks";
+} from 'react-icons/bs';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/context/hooks';
 import {
   deleteFromBookMark,
   saveToBookMark,
   showBookmarkModal,
-} from "@/context/features/documentSlice";
-import { langProps_ARCHIVE } from "@/universalTypes";
+} from '@/context/features/documentSlice';
+import { langProps_ARCHIVE } from '@/universalTypes';
+import { GiTick } from 'react-icons/gi';
+import {
+  IoCheckmarkCircle,
+  IoCheckmarkDoneCircle,
+  IoCheckmarkDoneCircleSharp,
+  IoCheckmarkDoneSharp,
+} from 'react-icons/io5';
 
 //! docDataType did not correpond correctly and we had errors
 type docDataType = {
@@ -53,18 +60,18 @@ function Card({
   const path = usePathname();
 
   const [personData, setPersonDate] = useState({
-    fullname: "",
-    authority: "",
-    picture: "",
+    fullname: '',
+    authority: '',
+    picture: '',
   });
 
   useEffect(() => {
     if (!doc) return;
     if (
-      listType === "receivedRecently" ||
-      listType === "unreadDocuments" ||
-      path == "/per/archive/warida" ||
-      path === "/ps/archive/warida"
+      listType === 'receivedRecently' ||
+      listType === 'unreadDocuments' ||
+      path == '/per/archive/warida' ||
+      path === '/ps/archive/warida'
     ) {
       setPersonDate({
         fullname: doc?.sender?.fullname,
@@ -72,9 +79,9 @@ function Card({
         picture: doc?.sender?.profile_pic,
       });
     } else if (
-      listType === "sentRecently" ||
-      path === "/per/archive/sadira" ||
-      path === "/ps/archive/sadira"
+      listType === 'sentRecently' ||
+      path === '/per/archive/sadira' ||
+      path === '/ps/archive/sadira'
     ) {
       setPersonDate({
         fullname: doc?.receiver?.fullname,
@@ -86,22 +93,38 @@ function Card({
 
   return (
     <div className="border  relative flex-shrink-0 border-light shadow-md rounded-md w-[442px] p-8">
-      {(listType === "receivedRecently" ||
-        path === "/per/archive/warida" ||
-        path === "/ps/archive/warida") && (
+      {(listType === 'receivedRecently' ||
+        path === '/per/archive/warida' ||
+        path === '/ps/archive/warida') && (
         <BsArrowDownCircle
           size={20}
           className="absolute left-1 top-1 rounded-full  text-white bg-green-400"
         />
       )}
 
-      {(listType === "sentRecently" ||
-        path === "/per/archive/sadira" ||
-        path === "/ps/archive/sadira") && (
-        <BsArrowUpCircle
-          size={20}
-          className="absolute left-1 top-1 rounded-full  text-white bg-cyan-400"
-        />
+      {(listType === 'sentRecently' ||
+        path === '/per/archive/sadira' ||
+        path === '/ps/archive/sadira') && (
+        <>
+          <BsArrowUpCircle
+            size={20}
+            className="absolute left-1 top-1 rounded-full text-white bg-cyan-400"
+          />
+          {doc?.show_seen &&
+            (doc.seen ? (
+              <IoCheckmarkDoneCircleSharp
+                size={20}
+                title="خوانده شده"
+                className="absolute left-8 top-1 rounded-full text-white bg-cyan-400"
+              />
+            ) : (
+              <IoCheckmarkCircle
+                size={20}
+                title="ارسال شده"
+                className="absolute left-8 top-1 rounded-full text-white bg-slate-400"
+              />
+            ))}
+        </>
       )}
 
       <div className="flex justify-between items-center">
@@ -110,7 +133,6 @@ function Card({
           <p className="">{GetShamsiDate(doc?.date)}</p>
           <p>{lang?.[doc.document_type as keyof typeof lang]}</p>
         </div>
-
         <div className="flex space-x-[16px]">
           <div className="text-right">
             <p className="font-semibold text-xl">{personData.fullname}</p>
@@ -134,7 +156,7 @@ function Card({
         </h2>
 
         <p className="text-medium flex space-x-1 justify-end">
-          <span>{doc.subject ? doc?.subject : "موضوع ندارد"}</span>{" "}
+          <span>{doc.subject ? doc?.subject : 'موضوع ندارد'}</span>{' '}
           <span>:</span>
           <span> موضوع</span>
         </p>
@@ -179,7 +201,7 @@ function Card({
               `/${locale}/archive/${doc.document_type}/${doc.serial}`
             );
           }}
-          width={"full"}
+          width={'full'}
         />
       </div>
     </div>

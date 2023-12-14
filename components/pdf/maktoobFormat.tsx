@@ -174,7 +174,7 @@ function MaktoobFormat({
         <GrDocumentDownload size={36} onClick={() => download()} />
       </div>
 
-      {pdf.document_type !== "broadcast" && (
+      {pdf.document_type !== "broadcast" && !pdf.forwarded && (
         <div className="absolute bg-myAccent-error-300 text-white top-80 left-14 ">
           <h1 className="font-bold py-2 px-3 rounded font-nazanin">{state}</h1>
         </div>
@@ -352,15 +352,16 @@ function MaktoobFormat({
               <h1>ثبت احکام و پروسس</h1>
 
               <InputField
-                label="orders"
+                label="احکام"
                 name="orders"
                 fullWidth={false}
                 inputType="text"
                 state={"Default"}
+                direction={"rtl"}
               />
               <Button
                 intent={"primary"}
-                label="ثبت وارده و ارسال به احکام"
+                label="ثبت احکام و پروسس"
                 type="submit"
               />
             </form>
@@ -450,7 +451,7 @@ function MaktoobFormat({
         </div>
       ) : (
         pdf.state !== "archived" &&
-        pdf.document_type === "maktoob"        && (
+        pdf.document_type === "maktoob" && (
           <div className="absolute top-[370px] left-14">
             <Button
               label="اجرا پروسه بعدی"
