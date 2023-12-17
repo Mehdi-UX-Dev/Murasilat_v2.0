@@ -212,6 +212,19 @@ function MaktoobFormat({
           </div>
         ))}
 
+      {pdf.attachments.length &&
+        showAttachments &&
+        (console.log(pdf),
+        (
+          <a
+            className="bg-primary-900 text-white py-2 px-2 rounded hover:bg-primary-600"
+            href={`${pdf.attachments[0].attachment}`}
+            download={"file"}
+          >
+            دانلود
+          </a>
+        ))}
+
       {showModal ? (
         <div className="fixed inset-0 overflow-auto bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center h-screen ">
           {pdf.state === "approved" && (

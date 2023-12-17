@@ -153,8 +153,8 @@ function Administrator() {
                   <option value="head">Head</option>
                   <option value="deputy">Deputy</option>
                   <option value="department">Department</option>
-                  <option value="professor">Professor</option>
-                  <option value="member">member</option>
+                  {/* <option value="professor">Professor</option> */}
+                  {/* <option value="member">member</option> */}
                 </select>
                 <label htmlFor="level" className="font-bold text-lg">
                   رول
@@ -174,12 +174,14 @@ function Administrator() {
                   }
                 >
                   <option selected value=""></option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+
+                  <option value="1">1/آمریت</option>
+                  <option value="2">2/مدیریت</option>
+                  <option value="3">3 معاونیت/پوهنخی</option>
+                  <option value="4">4 ریاست </option>
+                  {/* <option value="4">4</option> */}
+                  {/* <option value="5">5</option> */}
+                  {/* <option value="6">6</option> */}
                 </select>
                 <label htmlFor="level" className="font-bold text-lg">
                   حد صلاحیت

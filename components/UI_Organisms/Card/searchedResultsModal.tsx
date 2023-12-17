@@ -20,7 +20,9 @@ function SearchedResults({ ...lang }) {
           >
             <div
               onClick={() =>
-                router.push(`archive/documents/${item.document.serial}`)
+                router.push(
+                  `archive/${item.document.document_type}/${item.document.serial}`
+                )
               }
               className="bg-white flex items-center justify-end space-x-4 shadow-lg grow p-1.5 rounded-md space-y-1 hover:bg-primary-300 hover:cursor-pointer "
             >
