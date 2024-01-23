@@ -1,5 +1,3 @@
-// @todo Bring back the import when middleware.ts stops crashing because of that
-// import "server-only";
 
 import { type Locale } from "./i18n-config";
 import { i18n } from "./i18n-config";
