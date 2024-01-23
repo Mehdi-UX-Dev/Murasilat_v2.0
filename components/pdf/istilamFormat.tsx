@@ -62,8 +62,6 @@ function IstilamFormat({
 
   const { pdf, loading } = useAppSelector((store) => store.documents);
 
-  console.log(pdf.request);
-
   const quillRef = useRef<ReactQuill>(null);
   const [content, setContent] = useState("");
   useEffect(() => {
@@ -113,6 +111,8 @@ function IstilamFormat({
     html2pdf().set(opt).from(PDF_Container).save();
   };
 
+  console.log(pdf);
+
   return Object.keys(pdf).length ? (
     <div className="relative">
       <div className="flex items-center space-x-2 ">
@@ -138,8 +138,8 @@ function IstilamFormat({
               className="bg-slate-400 rounded-[50%]"
             />
             <div className="flex flex-col text-lg items-center ">
+              <span>د لورو زده کرو وزارت</span>
               <span>د کابل پوهنتون ریاست</span>
-              <span>Kabul University</span>
               <span>{user?.authority}</span>
               <span>{user?.title}</span>
             </div>
@@ -194,12 +194,24 @@ function IstilamFormat({
             <div className="border-b border-black h-10 text-center">
               پیشنهاد
             </div>
-            <div
-              className="py-2 px-4"
-              dangerouslySetInnerHTML={{
-                __html: pdf?.request || "",
-              }}
-            ></div>
+
+            <div className="py-2 px-4 space-y-6 ">
+              <div className="font-bold text-xl font-IranSans flex space-x-2 justify-end">
+                <p>{pdf.receiver.authority.title}</p>
+                <p>به مقام محترم</p>
+              </div>
+              <div
+                className=" font-nazanin text-lg text-right "
+                dangerouslySetInnerHTML={{
+                  __html: pdf?.request || "",
+                }}
+              ></div>
+              {/* <div className="text-right font-bold">
+                <p>با احترام</p>
+                <p>{pdf.sender.fullname}</p>
+                <p>{pdf.sender.title}</p>
+              </div> */}
+            </div>
           </div>
           {/*  */}
           <div className="border border-black w-3">

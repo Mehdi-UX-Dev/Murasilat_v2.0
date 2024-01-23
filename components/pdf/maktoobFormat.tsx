@@ -255,7 +255,7 @@ function MaktoobFormat({
               <h1 className="text-lg font-bold font-IranSans text-right">
                 ثبت صادره و ارسال
               </h1>
-
+              {/* 
               <InputField
                 label="خلاصه"
                 name="summary"
@@ -271,7 +271,25 @@ function MaktoobFormat({
                 inputType="text"
                 state={"Default"}
                 direction={"rtl"}
-              />
+              /> */}
+
+              <textarea
+                dir="rtl"
+                name="summary"
+                id="summary"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
+
+              <textarea
+                dir="rtl"
+                name="remarks"
+                id="remarks"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
               <Button
                 intent={"primary"}
                 label="ارسال"
@@ -310,22 +328,39 @@ function MaktoobFormat({
                   ? "ثبت وارده و ارسال به احکام"
                   : "ثبت وارده"}
               </h1>
-              <InputField
+              {/* <InputField
                 label="خلاصه"
-                name="summary"
+                name=""
                 fullWidth={false}
                 inputType="text"
                 state={"Default"}
                 direction={"rtl"}
-              />
-              <InputField
+              /> */}
+              {/* <InputField
                 label="ملاحظات"
                 name="remarks"
                 fullWidth={false}
                 inputType="text"
                 state={"Default"}
                 direction={"rtl"}
-              />
+              /> */}
+              <textarea
+                dir="rtl"
+                name="summary"
+                id="summary"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
+
+              <textarea
+                dir="rtl"
+                name="remarks"
+                id="remarks"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
               <Button
                 intent={"primary"}
                 label={
@@ -363,7 +398,7 @@ function MaktoobFormat({
               />
 
               <h1>ثبت احکام و پروسس</h1>
-
+              {/* 
               <InputField
                 label="احکام"
                 name="orders"
@@ -371,7 +406,15 @@ function MaktoobFormat({
                 inputType="text"
                 state={"Default"}
                 direction={"rtl"}
-              />
+              /> */}
+              <textarea
+                dir="rtl"
+                name="orders"
+                id="orders"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
               <Button
                 intent={"primary"}
                 label="ثبت احکام و پروسس"
@@ -445,14 +488,22 @@ function MaktoobFormat({
               <h1 className="font-bold font-IranSans text-lg">
                 تایید مکتوب برای صادر شدن
               </h1>
-              <InputField
+              {/* <InputField
                 name="remarks"
                 fullWidth
                 direction={"rtl"}
                 inputType="text"
                 state={"Default"}
                 placeholder="نظر خود را بنویسید"
-              />
+              /> */}
+              <textarea
+                dir="rtl"
+                name="remarks"
+                id="orders"
+                className="border border-black rounded"
+                cols={30}
+                rows={5}
+              ></textarea>
               <Button
                 intent={"primary"}
                 label="تایید"

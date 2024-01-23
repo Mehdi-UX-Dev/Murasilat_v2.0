@@ -4,6 +4,7 @@ import { saveToWarida } from "@/context/features/documentSlice";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { getDictionary } from "@/i18n-server";
 import { langProps_PDF } from "@/universalTypes";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,6 +12,7 @@ function SabtWarida({ locale }: { locale: string }) {
   const dispatch = useAppDispatch();
   const { pdf } = useAppSelector((store) => store.documents);
   const [pdfLang, setPdfLang] = useState<langProps_PDF>();
+  const { push } = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -35,6 +37,7 @@ function SabtWarida({ locale }: { locale: string }) {
               ...updateDocument,
               callback: () => {
                 toast.success("ثبت وارده گردید");
+                push("/per/dashboard");
               },
             })
           );
